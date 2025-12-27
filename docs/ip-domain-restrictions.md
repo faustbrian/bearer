@@ -211,5 +211,5 @@ $token = Bearer::for($user)
 
 ## Next Steps
 
-- **[Rate Limiting](/bearer/rate-limiting/)** - Throttling token usage
-- **[Authentication](/bearer/authentication/)** - Middleware for checking restrictions
+- **[Rate Limiting](./rate-limiting.md)** - Throttling token usage
+- **[Authentication](./authentication.md)** - Middleware for checking restrictions

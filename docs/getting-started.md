@@ -194,6 +194,6 @@ use Cline\Bearer\Facades\Bearer;
 
 ## Next Steps
 
-- **[Basic Usage](/bearer/basic-usage/)** - Creating, validating, and managing tokens
-- **[Authentication](/bearer/authentication/)** - Integrating with Laravel authentication
-- **[Custom Token Types](/bearer/custom-token-types/)** - Defining typed tokens with abilities
+- **[Basic Usage](./basic-usage.md)** - Creating, validating, and managing tokens
+- **[Authentication](./authentication.md)** - Integrating with Laravel authentication
+- **[Custom Token Types](./custom-token-types.md)** - Defining typed tokens with abilities

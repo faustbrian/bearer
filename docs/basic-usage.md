@@ -108,6 +108,6 @@ $env = $user->tokenEnvironment(); // 'test' or 'live'
 
 ## Next Steps
 
-- **[Authentication](/bearer/authentication/)** - Protecting routes and checking permissions
-- **[Custom Token Types](/bearer/custom-token-types/)** - Creating your own token types
-- **[Token Metadata](/bearer/token-metadata/)** - Attaching custom data to tokens
+- **[Authentication](./authentication.md)** - Protecting routes and checking permissions
+- **[Custom Token Types](./custom-token-types.md)** - Creating your own token types
+- **[Token Metadata](./token-metadata.md)** - Attaching custom data to tokens

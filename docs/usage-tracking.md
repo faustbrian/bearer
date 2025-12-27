@@ -256,5 +256,5 @@ Event::listen(TokenAuthenticated::class, function (TokenAuthenticated $event) {
 
 ## Next Steps
 
-- **[Audit Logging](/bearer/audit-logging/)** - Configure audit drivers
-- **[Rate Limiting](/bearer/rate-limiting/)** - Throttle based on usage patterns
+- **[Audit Logging](./audit-logging.md)** - Configure audit drivers
+- **[Rate Limiting](./rate-limiting.md)** - Throttle based on usage patterns

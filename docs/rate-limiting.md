@@ -188,5 +188,5 @@ RateLimiter::for('bearer-endpoint', function ($request) {
 
 ## Next Steps
 
-- **[Usage Tracking](/bearer/usage-tracking/)** - Monitor token activity
-- **[Audit Logging](/bearer/audit-logging/)** - Record rate limit events
+- **[Usage Tracking](./usage-tracking.md)** - Monitor token activity
+- **[Audit Logging](./audit-logging.md)** - Record rate limit events

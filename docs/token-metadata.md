@@ -242,5 +242,5 @@ final class ValidatedTokenType extends AbstractTokenType
 
 ## Next Steps
 
-- **[Revocation & Rotation](/bearer/revocation-rotation/)** - Token lifecycle management
-- **[Audit Logging](/bearer/audit-logging/)** - Recording token events
+- **[Revocation & Rotation](./revocation-rotation.md)** - Token lifecycle management
+- **[Audit Logging](./audit-logging.md)** - Recording token events

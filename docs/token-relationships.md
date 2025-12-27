@@ -241,6 +241,6 @@ $token = Bearer::for($admin)
 
 ## Next Steps
 
-- **[Authentication](/bearer/authentication/)** - Protecting routes and checking permissions
-- **[Revocation & Rotation](/bearer/revocation-rotation/)** - Managing token lifecycle
-- **[Derived Keys](/bearer/derived-keys/)** - Creating child tokens with restricted abilities
+- **[Authentication](./authentication.md)** - Protecting routes and checking permissions
+- **[Revocation & Rotation](./revocation-rotation.md)** - Managing token lifecycle
+- **[Derived Keys](./derived-keys.md)** - Creating child tokens with restricted abilities

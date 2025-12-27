@@ -205,5 +205,5 @@ $allTypes = $registry->all(); // ['sk' => ..., 'pk' => ..., 'wh' => ...]
 
 ## Next Steps
 
-- **[Token Generators](/bearer/token-generators/)** - Custom token generation strategies
-- **[Token Metadata](/bearer/token-metadata/)** - Attaching custom data to tokens
+- **[Token Generators](./token-generators.md)** - Custom token generation strategies
+- **[Token Metadata](./token-metadata.md)** - Attaching custom data to tokens

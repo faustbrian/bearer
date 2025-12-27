@@ -347,7 +347,7 @@ Bearer::revoke($resellerMaster->accessToken)->withDescendants();
 
 ## Related Documentation
 
-- [Basic Usage](/bearer/basic-usage/) - Creating and managing tokens
-- [Revocation & Rotation](/bearer/revocation-rotation/) - Token lifecycle management
-- [Token Metadata](/bearer/token-metadata/) - Attaching and querying metadata
-- [Audit Logging](/bearer/audit-logging/) - Recording token events
+- [Basic Usage](./basic-usage.md) - Creating and managing tokens
+- [Revocation & Rotation](./revocation-rotation.md) - Token lifecycle management
+- [Token Metadata](./token-metadata.md) - Attaching and querying metadata
+- [Audit Logging](./audit-logging.md) - Recording token events

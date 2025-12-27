@@ -158,5 +158,5 @@ $group->revokeAll();
 
 ## Next Steps
 
-- **[Audit Logging](/bearer/audit-logging/)** - Track all revocation and rotation events
-- **[Usage Tracking](/bearer/usage-tracking/)** - Monitor token activity before revoking
+- **[Audit Logging](./audit-logging.md)** - Track all revocation and rotation events
+- **[Usage Tracking](./usage-tracking.md)** - Monitor token activity before revoking

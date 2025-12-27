@@ -210,5 +210,5 @@ Or disable only usage logging (still logs create/revoke/rotate):
 
 ## Next Steps
 
-- **[Usage Tracking](/bearer/usage-tracking/)** - Analyze token usage patterns
-- **[Revocation & Rotation](/bearer/revocation-rotation/)** - Token lifecycle events
+- **[Usage Tracking](./usage-tracking.md)** - Analyze token usage patterns
+- **[Revocation & Rotation](./revocation-rotation.md)** - Token lifecycle events

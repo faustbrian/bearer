@@ -186,6 +186,6 @@ Route::middleware('auth:bearer')->group(function () {
 
 ## Next Steps
 
-- **[IP & Domain Restrictions](/bearer/ip-domain-restrictions/)** - Network-based access control
-- **[Rate Limiting](/bearer/rate-limiting/)** - Throttling token usage
-- **[Audit Logging](/bearer/audit-logging/)** - Recording token events
+- **[IP & Domain Restrictions](./ip-domain-restrictions.md)** - Network-based access control
+- **[Rate Limiting](./rate-limiting.md)** - Throttling token usage
+- **[Audit Logging](./audit-logging.md)** - Recording token events
