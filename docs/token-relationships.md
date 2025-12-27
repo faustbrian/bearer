@@ -1,8 +1,3 @@
----
-title: Token Relationships
-description: Bearer uses a three-tier relationship model for access tokens, enabling sophisticated multi-tenant and delegation scenarios.
----
-
 ## Relationship Model
 
 | Relationship | Purpose | Required | Example |

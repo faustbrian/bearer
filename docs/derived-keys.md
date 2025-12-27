@@ -1,8 +1,3 @@
----
-title: Derived Keys
-description: This guide covers token derivation, which enables hierarchical token structures where parent tokens can create child tokens with inherited restrictions but more limited abilities and lifespans.
----
-
 ## Overview
 
 Token derivation is useful for reseller scenarios where master tokens need to issue customer tokens without those customers requiring full accounts in your system. Child tokens:

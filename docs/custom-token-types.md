@@ -1,8 +1,3 @@
----
-title: Custom Token Types
-description: This guide demonstrates how to create and register custom token types.
----
-
 ## Using Configurable Token Types (Via Config)
 
 Add custom types directly in your configuration:

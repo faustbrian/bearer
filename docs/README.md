@@ -1,8 +1,3 @@
----
-title: Getting Started
-description: Bearer provides Stripe-style typed API tokens with groups, environments, and audit logging for Laravel applications.
----
-
 ## Requirements
 
 Bearer requires PHP 8.4+ and Laravel 11+.

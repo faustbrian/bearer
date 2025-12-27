@@ -1,8 +1,3 @@
----
-title: Usage Tracking
-description: This guide demonstrates how to track and query token usage history.
----
-
 ## Automatic Usage Tracking
 
 Bearer automatically tracks every authentication event. Unlike Sanctum's simple `last_used_at`, we maintain full history.

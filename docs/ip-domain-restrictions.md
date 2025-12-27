@@ -1,8 +1,3 @@
----
-title: IP & Domain Restrictions
-description: This guide demonstrates how to restrict tokens by IP address and domain.
----
-
 ## IP Restrictions
 
 Restrict token to specific IP addresses:

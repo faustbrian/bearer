@@ -1,8 +1,3 @@
----
-title: Authentication
-description: This guide demonstrates how to authenticate requests using Bearer tokens.
----
-
 ## Protecting Routes
 
 Basic authentication with any valid token:

@@ -1,8 +1,3 @@
----
-title: Audit Logging
-description: This guide demonstrates how to use audit logging for token activity.
----
-
 ## Automatic Logging
 
 Bearer automatically logs these events:

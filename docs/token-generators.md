@@ -1,8 +1,3 @@
----
-title: Token Generators
-description: This guide demonstrates how to configure and create custom token generators.
----
-
 ## Built-in Generators
 
 ### Seam Generator (Default)

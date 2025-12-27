@@ -1,8 +1,3 @@
----
-title: Revocation & Rotation
-description: This guide demonstrates how to revoke and rotate tokens.
----
-
 ## Revoking Tokens
 
 ```php

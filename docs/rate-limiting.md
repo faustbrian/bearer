@@ -1,8 +1,3 @@
----
-title: Rate Limiting
-description: This guide demonstrates how to configure and use rate limiting per token type.
----
-
 ## Default Rate Limits (Per Token Type)
 
 Each token type can have a default rate limit:

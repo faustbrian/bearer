@@ -1,8 +1,3 @@
----
-title: Token Metadata
-description: This guide demonstrates how to store and use custom metadata with tokens.
----
-
 ## Storing Metadata
 
 Add metadata during token creation:

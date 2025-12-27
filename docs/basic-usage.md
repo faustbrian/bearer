@@ -1,8 +1,3 @@
----
-title: Basic Usage
-description: This guide demonstrates the fundamental operations of the Bearer package.
----
-
 ## Issuing Tokens
 
 Issue a single secret key (server-side only):
