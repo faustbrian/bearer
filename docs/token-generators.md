@@ -271,4 +271,4 @@ bin2hex(random_bytes(16));           // 128 bits of entropy
 ## Next Steps
 
 - **[Custom Token Types](./custom-token-types.md)** - Assign generators to token types
-- **[Getting Started](./getting-started.md)** - Configuration overview
+- **[Getting Started](./README.md)** - Configuration overview
