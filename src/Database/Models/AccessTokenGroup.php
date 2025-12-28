@@ -9,8 +9,8 @@
 
 namespace Cline\Bearer\Database\Models;
 
-use Cline\VariableKeys\Database\Concerns\HasVariablePrimaryKey;
 use Cline\Bearer\Database\Factories\AccessTokenGroupFactory;
+use Cline\VariableKeys\Database\Concerns\HasVariablePrimaryKey;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;

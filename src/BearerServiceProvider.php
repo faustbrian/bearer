@@ -14,12 +14,7 @@ use Cline\Bearer\AuditDrivers\DatabaseAuditDriver;
 use Cline\Bearer\AuditDrivers\NullAuditDriver;
 use Cline\Bearer\AuditDrivers\SpatieActivityLogDriver;
 use Cline\Bearer\Console\Commands\PruneAuditLogsCommand;
-use Cline\Bearer\Database\Models\AccessToken;
-use Cline\Bearer\Database\Models\AccessTokenAuditLog;
-use Cline\Bearer\Database\Models\AccessTokenGroup;
 use Cline\Bearer\Console\Commands\PruneExpiredCommand;
-use Cline\VariableKeys\Enums\PrimaryKeyType;
-use Cline\VariableKeys\Facades\VariableKeys;
 use Cline\Bearer\Contracts\AuditDriver;
 use Cline\Bearer\Contracts\RevocationStrategy;
 use Cline\Bearer\Contracts\RotationStrategy;
@@ -27,6 +22,9 @@ use Cline\Bearer\Contracts\TokenGenerator;
 use Cline\Bearer\Contracts\TokenHasher;
 use Cline\Bearer\Contracts\TokenType;
 use Cline\Bearer\Database\ModelRegistry;
+use Cline\Bearer\Database\Models\AccessToken;
+use Cline\Bearer\Database\Models\AccessTokenAuditLog;
+use Cline\Bearer\Database\Models\AccessTokenGroup;
 use Cline\Bearer\Guards\BearerGuard;
 use Cline\Bearer\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use Cline\Bearer\RevocationStrategies\CascadeStrategy;
@@ -47,6 +45,8 @@ use Cline\Bearer\TokenHashers\Sha512TokenHasher;
 use Cline\Bearer\TokenHashers\TokenHasherRegistry;
 use Cline\Bearer\TokenTypes\ConfigurableTokenType;
 use Cline\Bearer\TokenTypes\TokenTypeRegistry;
+use Cline\VariableKeys\Enums\PrimaryKeyType;
+use Cline\VariableKeys\Facades\VariableKeys;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Auth\RequestGuard;
 use Illuminate\Contracts\Foundation\Application;
@@ -559,7 +559,7 @@ final class BearerServiceProvider extends PackageServiceProvider
     {
         /** @var int|string $configValue */
         $configValue = Config::get('bearer.primary_key_type', 'id');
-        $primaryKeyType = PrimaryKeyType::tryFrom($configValue) ?? PrimaryKeyType::Id;
+        $primaryKeyType = PrimaryKeyType::tryFrom($configValue) ?? PrimaryKeyType::ID;
 
         VariableKeys::map([
             AccessToken::class => [

@@ -9,9 +9,9 @@
 
 namespace Cline\Bearer\Database\Models;
 
-use Cline\VariableKeys\Database\Concerns\HasVariablePrimaryKey;
 use Cline\Bearer\Database\Factories\AccessTokenAuditLogFactory;
 use Cline\Bearer\Enums\AuditEvent;
+use Cline\VariableKeys\Database\Concerns\HasVariablePrimaryKey;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

@@ -221,7 +221,7 @@ describe('PrimaryKeyType', function (): void {
     describe('Happy Path', function (): void {
         test('has id case', function (): void {
             // Act & Assert
-            expect(PrimaryKeyType::Id->value)->toBe('id');
+            expect(PrimaryKeyType::ID->value)->toBe('id');
         });
 
         test('has uuid case', function (): void {
@@ -240,7 +240,7 @@ describe('PrimaryKeyType', function (): void {
 
             // Assert
             expect($cases)->toHaveCount(3);
-            expect($cases)->toContain(PrimaryKeyType::Id);
+            expect($cases)->toContain(PrimaryKeyType::ID);
             expect($cases)->toContain(PrimaryKeyType::UUID);
             expect($cases)->toContain(PrimaryKeyType::ULID);
         });
@@ -252,7 +252,7 @@ describe('PrimaryKeyType', function (): void {
             $ulid = PrimaryKeyType::from('ulid');
 
             // Assert
-            expect($id)->toBe(PrimaryKeyType::Id);
+            expect($id)->toBe(PrimaryKeyType::ID);
             expect($uuid)->toBe(PrimaryKeyType::UUID);
             expect($ulid)->toBe(PrimaryKeyType::ULID);
         });

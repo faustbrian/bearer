@@ -38,7 +38,7 @@ return new class() extends Migration
      */
     public function up(): void
     {
-        $primaryKeyType = PrimaryKeyType::tryFrom(config('bearer.primary_key_type', 'id')) ?? PrimaryKeyType::Id;
+        $primaryKeyType = PrimaryKeyType::tryFrom(config('bearer.primary_key_type', 'id')) ?? PrimaryKeyType::ID;
         $morphType = MorphType::tryFrom(config('bearer.morph_type', 'string')) ?? MorphType::String;
 
         $connection = config('bearer.connection') ?? config('database.default');
@@ -175,7 +175,7 @@ return new class() extends Migration
         match ($type) {
             PrimaryKeyType::ULID => $table->ulid('id')->primary(),
             PrimaryKeyType::UUID => $table->uuid('id')->primary(),
-            PrimaryKeyType::Id => $table->id(),
+            PrimaryKeyType::ID => $table->id(),
         };
     }
 
@@ -227,7 +227,7 @@ return new class() extends Migration
         $foreignKey = match ($type) {
             PrimaryKeyType::ULID => $nullable ? $table->foreignUlid($column)->nullable() : $table->foreignUlid($column),
             PrimaryKeyType::UUID => $nullable ? $table->foreignUuid($column)->nullable() : $table->foreignUuid($column),
-            PrimaryKeyType::Id => $nullable ? $table->foreignId($column)->nullable() : $table->foreignId($column),
+            PrimaryKeyType::ID => $nullable ? $table->foreignId($column)->nullable() : $table->foreignId($column),
         };
 
         $foreignKey->constrained($referencedTable)->cascadeOnDelete();
