@@ -1,0 +1,23 @@
+parameters:
+    level: max
+    paths:
+        - src
+
+    reportUnmatchedIgnoredErrors: true
+    treatPhpDocTypesAsCertain: false
+
+    ignoreErrors:
+        # Trait is used by models that implement HasApiTokens contract
+        - '#Trait .* is used zero times and is not analysed#'
+
+        # Carbon\CarbonInterface is compatible with Illuminate\Support\Carbon in practice
+        -
+            message: '#Property .* does not accept Carbon\\CarbonInterface#'
+            paths:
+                - src/Database/Models/AccessToken.php
+                - src/Database/Models/AccessTokenAuditLog.php
+
+        # Activity model defines inLog and latest as query scopes via @method annotations
+        -
+            message: '#Call to an undefined method .*(inLog|latest)\(\)#'
+            path: src/AuditDrivers/SpatieActivityLogDriver.php
