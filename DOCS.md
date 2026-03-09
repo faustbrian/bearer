@@ -1,18 +1,18 @@
 ## Table of Contents
 
-1. [Getting Started](#doc-docs-readme) (`docs/README.md`)
-2. [Basic Usage](#doc-docs-basic-usage) (`docs/basic-usage.md`)
-3. [Authentication](#doc-docs-authentication) (`docs/authentication.md`)
-4. [Custom Token Types](#doc-docs-custom-token-types) (`docs/custom-token-types.md`)
-5. [Token Metadata](#doc-docs-token-metadata) (`docs/token-metadata.md`)
-6. [Derived Keys](#doc-docs-derived-keys) (`docs/derived-keys.md`)
-7. [Revocation & Rotation](#doc-docs-revocation-rotation) (`docs/revocation-rotation.md`)
-8. [IP & Domain Restrictions](#doc-docs-ip-domain-restrictions) (`docs/ip-domain-restrictions.md`)
-9. [Rate Limiting](#doc-docs-rate-limiting) (`docs/rate-limiting.md`)
-10. [Usage Tracking](#doc-docs-usage-tracking) (`docs/usage-tracking.md`)
-11. [Audit Logging](#doc-docs-audit-logging) (`docs/audit-logging.md`)
-12. [Token Generators](#doc-docs-token-generators) (`docs/token-generators.md`)
-13. [Token Relationships](#doc-docs-token-relationships) (`docs/token-relationships.md`)
+1. [Getting Started](#doc-docs-readme)
+2. [Basic Usage](#doc-docs-basic-usage)
+3. [Authentication](#doc-docs-authentication)
+4. [Custom Token Types](#doc-docs-custom-token-types)
+5. [Token Metadata](#doc-docs-token-metadata)
+6. [Derived Keys](#doc-docs-derived-keys)
+7. [Revocation & Rotation](#doc-docs-revocation-rotation)
+8. [IP & Domain Restrictions](#doc-docs-ip-domain-restrictions)
+9. [Rate Limiting](#doc-docs-rate-limiting)
+10. [Usage Tracking](#doc-docs-usage-tracking)
+11. [Audit Logging](#doc-docs-audit-logging)
+12. [Token Generators](#doc-docs-token-generators)
+13. [Token Relationships](#doc-docs-token-relationships)
 <a id="doc-docs-readme"></a>
 
 ## Requirements
