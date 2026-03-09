@@ -19,18 +19,18 @@ composer require cline/bearer
 
 ## Documentation
 
-- **[Getting Started](cookbook/getting-started.md)** - Installation, configuration, and first steps
-- **[Basic Usage](cookbook/basic-usage.md)** - Creating, validating, and managing tokens
-- **[Authentication](cookbook/authentication.md)** - Integrating with Laravel authentication
-- **[Custom Token Types](cookbook/custom-token-types.md)** - Defining typed tokens with abilities
-- **[Token Metadata](cookbook/token-metadata.md)** - Attaching and querying token metadata
-- **[Derived Keys](cookbook/derived-keys.md)** - Hierarchical token derivation for resellers
-- **[Revocation & Rotation](cookbook/revocation-rotation.md)** - Token lifecycle management
-- **[IP & Domain Restrictions](cookbook/ip-domain-restrictions.md)** - Network-based access control
-- **[Rate Limiting](cookbook/rate-limiting.md)** - Throttling token usage
-- **[Usage Tracking](cookbook/usage-tracking.md)** - Monitoring token activity
-- **[Audit Logging](cookbook/audit-logging.md)** - Recording token events
-- **[Token Generators](cookbook/token-generators.md)** - Custom token generation strategies
+- **[Getting Started](DOCS.md#doc-docs-readme)** - Installation, configuration, and first steps
+- **[Basic Usage](DOCS.md#doc-docs-basic-usage)** - Creating, validating, and managing tokens
+- **[Authentication](DOCS.md#doc-docs-authentication)** - Integrating with Laravel authentication
+- **[Custom Token Types](DOCS.md#doc-docs-custom-token-types)** - Defining typed tokens with abilities
+- **[Token Metadata](DOCS.md#doc-docs-token-metadata)** - Attaching and querying token metadata
+- **[Derived Keys](DOCS.md#doc-docs-derived-keys)** - Hierarchical token derivation for resellers
+- **[Revocation & Rotation](DOCS.md#doc-docs-revocation-rotation)** - Token lifecycle management
+- **[IP & Domain Restrictions](DOCS.md#doc-docs-ip-domain-restrictions)** - Network-based access control
+- **[Rate Limiting](DOCS.md#doc-docs-rate-limiting)** - Throttling token usage
+- **[Usage Tracking](DOCS.md#doc-docs-usage-tracking)** - Monitoring token activity
+- **[Audit Logging](DOCS.md#doc-docs-audit-logging)** - Recording token events
+- **[Token Generators](DOCS.md#doc-docs-token-generators)** - Custom token generation strategies
 
 ## Change log
 

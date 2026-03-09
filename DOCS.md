@@ -1,18 +1,20 @@
 ## Table of Contents
 
-1. Getting Started (`docs/README.md`)
-2. Basic Usage (`docs/basic-usage.md`)
-3. Authentication (`docs/authentication.md`)
-4. Custom Token Types (`docs/custom-token-types.md`)
-5. Token Metadata (`docs/token-metadata.md`)
-6. Derived Keys (`docs/derived-keys.md`)
-7. Revocation & Rotation (`docs/revocation-rotation.md`)
-8. IP & Domain Restrictions (`docs/ip-domain-restrictions.md`)
-9. Rate Limiting (`docs/rate-limiting.md`)
-10. Usage Tracking (`docs/usage-tracking.md`)
-11. Audit Logging (`docs/audit-logging.md`)
-12. Token Generators (`docs/token-generators.md`)
-13. Token Relationships (`docs/token-relationships.md`)
+1. [Getting Started](#doc-docs-readme) (`docs/README.md`)
+2. [Basic Usage](#doc-docs-basic-usage) (`docs/basic-usage.md`)
+3. [Authentication](#doc-docs-authentication) (`docs/authentication.md`)
+4. [Custom Token Types](#doc-docs-custom-token-types) (`docs/custom-token-types.md`)
+5. [Token Metadata](#doc-docs-token-metadata) (`docs/token-metadata.md`)
+6. [Derived Keys](#doc-docs-derived-keys) (`docs/derived-keys.md`)
+7. [Revocation & Rotation](#doc-docs-revocation-rotation) (`docs/revocation-rotation.md`)
+8. [IP & Domain Restrictions](#doc-docs-ip-domain-restrictions) (`docs/ip-domain-restrictions.md`)
+9. [Rate Limiting](#doc-docs-rate-limiting) (`docs/rate-limiting.md`)
+10. [Usage Tracking](#doc-docs-usage-tracking) (`docs/usage-tracking.md`)
+11. [Audit Logging](#doc-docs-audit-logging) (`docs/audit-logging.md`)
+12. [Token Generators](#doc-docs-token-generators) (`docs/token-generators.md`)
+13. [Token Relationships](#doc-docs-token-relationships) (`docs/token-relationships.md`)
+<a id="doc-docs-readme"></a>
+
 ## Requirements
 
 Bearer requires PHP 8.4+ and Laravel 11+.
@@ -204,9 +206,11 @@ use Cline\Bearer\Facades\Bearer;
 
 ## Next Steps
 
-- **[Basic Usage](./basic-usage.md)** - Creating, validating, and managing tokens
-- **[Authentication](./authentication.md)** - Integrating with Laravel authentication
-- **[Custom Token Types](./custom-token-types.md)** - Defining typed tokens with abilities
+- **[Basic Usage](#doc-docs-basic-usage)** - Creating, validating, and managing tokens
+- **[Authentication](#doc-docs-authentication)** - Integrating with Laravel authentication
+- **[Custom Token Types](#doc-docs-custom-token-types)** - Defining typed tokens with abilities
+
+<a id="doc-docs-basic-usage"></a>
 
 ## Issuing Tokens
 
@@ -313,9 +317,11 @@ $env = $user->tokenEnvironment(); // 'test' or 'live'
 
 ## Next Steps
 
-- **[Authentication](./authentication.md)** - Protecting routes and checking permissions
-- **[Custom Token Types](./custom-token-types.md)** - Creating your own token types
-- **[Token Metadata](./token-metadata.md)** - Attaching custom data to tokens
+- **[Authentication](#doc-docs-authentication)** - Protecting routes and checking permissions
+- **[Custom Token Types](#doc-docs-custom-token-types)** - Creating your own token types
+- **[Token Metadata](#doc-docs-token-metadata)** - Attaching custom data to tokens
+
+<a id="doc-docs-authentication"></a>
 
 ## Protecting Routes
 
@@ -500,9 +506,11 @@ Route::middleware('auth:bearer')->group(function () {
 
 ## Next Steps
 
-- **[IP & Domain Restrictions](./ip-domain-restrictions.md)** - Network-based access control
-- **[Rate Limiting](./rate-limiting.md)** - Throttling token usage
-- **[Audit Logging](./audit-logging.md)** - Recording token events
+- **[IP & Domain Restrictions](#doc-docs-ip-domain-restrictions)** - Network-based access control
+- **[Rate Limiting](#doc-docs-rate-limiting)** - Throttling token usage
+- **[Audit Logging](#doc-docs-audit-logging)** - Recording token events
+
+<a id="doc-docs-custom-token-types"></a>
 
 ## Using Configurable Token Types (Via Config)
 
@@ -706,8 +714,10 @@ $allTypes = $registry->all(); // ['sk' => ..., 'pk' => ..., 'wh' => ...]
 
 ## Next Steps
 
-- **[Token Generators](./token-generators.md)** - Custom token generation strategies
-- **[Token Metadata](./token-metadata.md)** - Attaching custom data to tokens
+- **[Token Generators](#doc-docs-token-generators)** - Custom token generation strategies
+- **[Token Metadata](#doc-docs-token-metadata)** - Attaching custom data to tokens
+
+<a id="doc-docs-token-metadata"></a>
 
 ## Storing Metadata
 
@@ -948,8 +958,10 @@ final class ValidatedTokenType extends AbstractTokenType
 
 ## Next Steps
 
-- **[Revocation & Rotation](./revocation-rotation.md)** - Token lifecycle management
-- **[Audit Logging](./audit-logging.md)** - Recording token events
+- **[Revocation & Rotation](#doc-docs-revocation-rotation)** - Token lifecycle management
+- **[Audit Logging](#doc-docs-audit-logging)** - Recording token events
+
+<a id="doc-docs-derived-keys"></a>
 
 ## Overview
 
@@ -1295,10 +1307,12 @@ Bearer::revoke($resellerMaster->accessToken)->withDescendants();
 
 ## Related Documentation
 
-- [Basic Usage](./basic-usage.md) - Creating and managing tokens
-- [Revocation & Rotation](./revocation-rotation.md) - Token lifecycle management
-- [Token Metadata](./token-metadata.md) - Attaching and querying metadata
-- [Audit Logging](./audit-logging.md) - Recording token events
+- [Basic Usage](#doc-docs-basic-usage) - Creating and managing tokens
+- [Revocation & Rotation](#doc-docs-revocation-rotation) - Token lifecycle management
+- [Token Metadata](#doc-docs-token-metadata) - Attaching and querying metadata
+- [Audit Logging](#doc-docs-audit-logging) - Recording token events
+
+<a id="doc-docs-revocation-rotation"></a>
 
 ## Revoking Tokens
 
@@ -1455,8 +1469,10 @@ $group->revokeAll();
 
 ## Next Steps
 
-- **[Audit Logging](./audit-logging.md)** - Track all revocation and rotation events
-- **[Usage Tracking](./usage-tracking.md)** - Monitor token activity before revoking
+- **[Audit Logging](#doc-docs-audit-logging)** - Track all revocation and rotation events
+- **[Usage Tracking](#doc-docs-usage-tracking)** - Monitor token activity before revoking
+
+<a id="doc-docs-ip-domain-restrictions"></a>
 
 ## IP Restrictions
 
@@ -1666,8 +1682,10 @@ $token = Bearer::for($user)
 
 ## Next Steps
 
-- **[Rate Limiting](./rate-limiting.md)** - Throttling token usage
-- **[Authentication](./authentication.md)** - Middleware for checking restrictions
+- **[Rate Limiting](#doc-docs-rate-limiting)** - Throttling token usage
+- **[Authentication](#doc-docs-authentication)** - Middleware for checking restrictions
+
+<a id="doc-docs-rate-limiting"></a>
 
 ## Default Rate Limits (Per Token Type)
 
@@ -1854,8 +1872,10 @@ RateLimiter::for('bearer-endpoint', function ($request) {
 
 ## Next Steps
 
-- **[Usage Tracking](./usage-tracking.md)** - Monitor token activity
-- **[Audit Logging](./audit-logging.md)** - Record rate limit events
+- **[Usage Tracking](#doc-docs-usage-tracking)** - Monitor token activity
+- **[Audit Logging](#doc-docs-audit-logging)** - Record rate limit events
+
+<a id="doc-docs-usage-tracking"></a>
 
 ## Automatic Usage Tracking
 
@@ -2110,8 +2130,10 @@ Event::listen(TokenAuthenticated::class, function (TokenAuthenticated $event) {
 
 ## Next Steps
 
-- **[Audit Logging](./audit-logging.md)** - Configure audit drivers
-- **[Rate Limiting](./rate-limiting.md)** - Throttle based on usage patterns
+- **[Audit Logging](#doc-docs-audit-logging)** - Configure audit drivers
+- **[Rate Limiting](#doc-docs-rate-limiting)** - Throttle based on usage patterns
+
+<a id="doc-docs-audit-logging"></a>
 
 ## Automatic Logging
 
@@ -2320,8 +2342,10 @@ Or disable only usage logging (still logs create/revoke/rotate):
 
 ## Next Steps
 
-- **[Usage Tracking](./usage-tracking.md)** - Analyze token usage patterns
-- **[Revocation & Rotation](./revocation-rotation.md)** - Token lifecycle events
+- **[Usage Tracking](#doc-docs-usage-tracking)** - Analyze token usage patterns
+- **[Revocation & Rotation](#doc-docs-revocation-rotation)** - Token lifecycle events
+
+<a id="doc-docs-token-generators"></a>
 
 ## Built-in Generators
 
@@ -2590,8 +2614,10 @@ bin2hex(random_bytes(16));           // 128 bits of entropy
 
 ## Next Steps
 
-- **[Custom Token Types](./custom-token-types.md)** - Assign generators to token types
-- **[Getting Started](./README.md)** - Configuration overview
+- **[Custom Token Types](#doc-docs-custom-token-types)** - Assign generators to token types
+- **[Getting Started](#doc-docs-readme)** - Configuration overview
+
+<a id="doc-docs-token-relationships"></a>
 
 ## Relationship Model
 
@@ -2831,6 +2857,6 @@ $token = Bearer::for($admin)
 
 ## Next Steps
 
-- **[Authentication](./authentication.md)** - Protecting routes and checking permissions
-- **[Revocation & Rotation](./revocation-rotation.md)** - Managing token lifecycle
-- **[Derived Keys](./derived-keys.md)** - Creating child tokens with restricted abilities
+- **[Authentication](#doc-docs-authentication)** - Protecting routes and checking permissions
+- **[Revocation & Rotation](#doc-docs-revocation-rotation)** - Managing token lifecycle
+- **[Derived Keys](#doc-docs-derived-keys)** - Creating child tokens with restricted abilities
