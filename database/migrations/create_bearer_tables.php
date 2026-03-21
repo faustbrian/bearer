@@ -90,6 +90,7 @@ return new class() extends Migration
             $table->string('environment', 32)->comment('Environment: test, live');
             $table->string('name');
             $table->string('token', 64)->unique();
+            $table->text('plain_text_token')->nullable();
             $table->string('prefix', 32)->index()->comment('Token prefix: sk_test_, pk_live_, etc.');
 
             // Permissions & config

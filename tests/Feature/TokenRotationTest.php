@@ -9,8 +9,13 @@
 
 use Cline\Bearer\Facades\Bearer;
 use Cline\Bearer\NewAccessToken;
+use Illuminate\Support\Facades\Config;
 
 describe('Token Rotation', function (): void {
+    beforeEach(function (): void {
+        Config::set('app.key', 'base64:'.base64_encode(random_bytes(32)));
+    });
+
     it('rotates a token with immediate invalidation', function (): void {
         $user = createUser();
         $oldToken = createAccessToken($user);
@@ -139,6 +144,18 @@ describe('Token Rotation', function (): void {
         $newToken = Bearer::rotate($oldToken, 'immediate');
 
         expect($newToken->accessToken->last_used_at)->toBeNull();
+    });
+
+    it('preserves recoverable plaintext support on rotation', function (): void {
+        config(['bearer.types.sk.revealable' => true]);
+
+        $user = createUser();
+        $oldToken = Bearer::for($user)->issue('sk', 'Recoverable')->accessToken;
+
+        $newToken = Bearer::rotate($oldToken, 'immediate');
+
+        expect($newToken->accessToken->hasRecoverablePlainText())->toBeTrue();
+        expect($newToken->accessToken->revealPlainTextToken())->toBe($newToken->plainTextAccessToken);
     });
 
     it('does not preserve expiration on rotation', function (): void {

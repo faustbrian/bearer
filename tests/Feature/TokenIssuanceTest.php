@@ -9,8 +9,13 @@
 
 use Cline\Bearer\Facades\Bearer;
 use Cline\Bearer\NewAccessToken;
+use Illuminate\Support\Facades\Config;
 
 describe('Token Issuance', function (): void {
+    beforeEach(function (): void {
+        Config::set('app.key', 'base64:'.base64_encode(random_bytes(32)));
+    });
+
     it('issues a single token', function (): void {
         $user = createUser();
 
@@ -152,6 +157,31 @@ describe('Token Issuance', function (): void {
 
         expect($result->accessToken->token)->not->toBe($result->plainTextAccessToken);
         expect($result->accessToken->token)->toBe(hash('sha256', $result->plainTextAccessToken));
+    });
+
+    it('stores encrypted plaintext for recoverable token types', function (): void {
+        config(['bearer.types.sk.revealable' => true]);
+
+        $user = createUser();
+
+        $result = Bearer::for($user)->issue('sk', 'Legacy API Key');
+
+        expect($result->accessToken->hasRecoverablePlainText())->toBeTrue();
+        expect($result->accessToken->revealPlainTextToken())->toBe($result->plainTextAccessToken);
+        expect($result->accessToken->getRawOriginal('plain_text_token'))
+            ->not->toBe($result->plainTextAccessToken);
+    });
+
+    it('does not store encrypted plaintext for non-recoverable token types', function (): void {
+        config(['bearer.types.sk.revealable' => false]);
+
+        $user = createUser();
+
+        $result = Bearer::for($user)->issue('sk', 'Modern API Key');
+
+        expect($result->accessToken->hasRecoverablePlainText())->toBeFalse();
+        expect($result->accessToken->revealPlainTextToken())->toBeNull();
+        expect($result->accessToken->getRawOriginal('plain_text_token'))->toBeNull();
     });
 
     it('assigns correct token prefix based on type', function (): void {

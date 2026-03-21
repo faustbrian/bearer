@@ -37,6 +37,7 @@ use Throwable;
 
 use function config;
 use function explode;
+use function method_exists;
 use function property_exists;
 use function str_contains;
 
@@ -168,6 +169,24 @@ final readonly class BearerManager
         return AccessToken::query()
             ->where('prefix', $prefix)
             ->first();
+    }
+
+    /**
+     * Determine if a token type should store a recoverable plaintext copy.
+     *
+     * Custom token types that do not expose an isRevealable method default to false.
+     *
+     * @param  TokenType $tokenType The token type to inspect
+     * @return bool      True when recoverable plaintext storage is enabled
+     */
+    public function shouldStoreRecoverablePlainText(TokenType $tokenType): bool
+    {
+        if (!method_exists($tokenType, 'isRevealable')) {
+            return false;
+        }
+
+        /** @var bool */
+        return $tokenType->isRevealable();
     }
 
     /**

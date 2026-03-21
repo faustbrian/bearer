@@ -13,6 +13,7 @@ use Cline\Bearer\Exceptions\InvalidAbilitiesTypeConfigurationException;
 use Cline\Bearer\Exceptions\InvalidEnvironmentsTypeConfigurationException;
 use Cline\Bearer\Exceptions\InvalidExpirationTypeConfigurationException;
 use Cline\Bearer\Exceptions\InvalidRateLimitTypeConfigurationException;
+use Cline\Bearer\Exceptions\InvalidRevealableTypeConfigurationException;
 use Cline\Bearer\Exceptions\InvalidServerSideOnlyTypeConfigurationException;
 use Cline\Bearer\Exceptions\MissingNameConfigurationException;
 use Cline\Bearer\Exceptions\MissingPrefixConfigurationException;
@@ -102,6 +103,7 @@ final class ConfigurableTokenType extends AbstractTokenType
      * @throws InvalidEnvironmentsTypeConfigurationException   If environments is not an array
      * @throws InvalidExpirationTypeConfigurationException     If expiration is not a positive integer or null
      * @throws InvalidRateLimitTypeConfigurationException      If rate_limit is not a positive integer or null
+     * @throws InvalidRevealableTypeConfigurationException     If revealable is not a boolean
      * @throws InvalidServerSideOnlyTypeConfigurationException If server_side_only is not a boolean
      * @throws MissingNameConfigurationException               If name is missing or invalid
      * @throws MissingPrefixConfigurationException             If prefix is missing or invalid
@@ -150,6 +152,12 @@ final class ConfigurableTokenType extends AbstractTokenType
             throw InvalidServerSideOnlyTypeConfigurationException::create();
         }
 
+        $revealable = $config['revealable'] ?? false;
+
+        if (!is_bool($revealable)) {
+            throw InvalidRevealableTypeConfigurationException::create();
+        }
+
         return new self(
             name: $config['name'],
             prefix: $config['prefix'],
@@ -158,6 +166,7 @@ final class ConfigurableTokenType extends AbstractTokenType
             defaultRateLimit: $rateLimit,
             allowedEnvironments: array_values(array_filter($environments, is_string(...))),
             serverSideOnly: $serverSideOnly,
+            revealable: $revealable,
         );
     }
 }

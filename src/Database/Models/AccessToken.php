@@ -11,6 +11,8 @@ namespace Cline\Bearer\Database\Models;
 
 use Cline\Ancestry\Concerns\HasAncestry;
 use Cline\Bearer\Contracts\HasAbilities;
+use Cline\Bearer\Enums\AuditEvent;
+use Cline\Bearer\Facades\Bearer;
 use Cline\VariableKeys\Database\Concerns\HasVariablePrimaryKey;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,6 +24,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
 use Override;
+use Throwable;
 
 use function array_diff;
 use function array_flip;
@@ -73,6 +76,7 @@ use function now;
  * @property null|Model                $owner                 The entity that owns this token
  * @property string                    $owner_id              Polymorphic foreign key ID for owner
  * @property string                    $owner_type            Polymorphic foreign key type for owner
+ * @property null|string               $plain_text_token      Encrypted plaintext token copy for legacy reveal flows
  * @property string                    $prefix                Token prefix for visual identification (e.g., 'sk', 'pk')
  * @property null|int                  $rate_limit_per_minute Rate limit threshold (requests per minute)
  * @property null|Carbon               $revoked_at            Revocation timestamp (null for active tokens)
@@ -104,6 +108,7 @@ final class AccessToken extends Model implements HasAbilities
         'last_used_at' => 'datetime',
         'expires_at' => 'datetime',
         'revoked_at' => 'datetime',
+        'plain_text_token' => 'encrypted',
     ];
 
     /**
@@ -118,6 +123,7 @@ final class AccessToken extends Model implements HasAbilities
         'environment',
         'name',
         'token',
+        'plain_text_token',
         'prefix',
         'abilities',
         'metadata',
@@ -142,6 +148,7 @@ final class AccessToken extends Model implements HasAbilities
     #[Override()]
     protected $hidden = [
         'token',
+        'plain_text_token',
     ];
 
     /**
@@ -244,6 +251,39 @@ final class AccessToken extends Model implements HasAbilities
     public function auditLogs(): HasMany
     {
         return $this->hasMany(AccessTokenAuditLog::class, 'token_id');
+    }
+
+    /**
+     * Determine if this token has a recoverable plaintext copy.
+     *
+     * @return bool True when an encrypted plaintext value is stored
+     */
+    public function hasRecoverablePlainText(): bool
+    {
+        return $this->getRawOriginal('plain_text_token') !== null;
+    }
+
+    /**
+     * Reveal the token plaintext when a recoverable copy exists.
+     *
+     * Emits an audit log entry for explicit reveal operations and returns
+     * null for tokens that do not store a recoverable copy.
+     *
+     * @return null|string The revealed plaintext token or null when unavailable
+     */
+    public function revealPlainTextToken(): ?string
+    {
+        if (!$this->hasRecoverablePlainText()) {
+            return null;
+        }
+
+        try {
+            Bearer::auditDriver()->log($this, AuditEvent::Revealed);
+        } catch (Throwable) {
+            // Do not block secret retrieval if audit logging fails.
+        }
+
+        return $this->plain_text_token;
     }
 
     /**

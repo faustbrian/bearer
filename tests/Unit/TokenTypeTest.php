@@ -125,6 +125,35 @@ describe('ConfigurableTokenType (Secret)', function (): void {
             // Act & Assert
             expect($type->isServerSideOnly())->toBeTrue();
         });
+
+        test('is not revealable by default', function (): void {
+            $type = ConfigurableTokenType::fromConfig([
+                'name' => 'Secret',
+                'prefix' => 'sk',
+                'abilities' => ['*'],
+                'expiration' => null,
+                'rate_limit' => null,
+                'environments' => ['test', 'live'],
+                'server_side_only' => true,
+            ]);
+
+            expect($type->isRevealable())->toBeFalse();
+        });
+
+        test('can be marked as revealable', function (): void {
+            $type = ConfigurableTokenType::fromConfig([
+                'name' => 'Secret',
+                'prefix' => 'sk',
+                'abilities' => ['*'],
+                'expiration' => null,
+                'rate_limit' => null,
+                'environments' => ['test', 'live'],
+                'server_side_only' => true,
+                'revealable' => true,
+            ]);
+
+            expect($type->isRevealable())->toBeTrue();
+        });
     });
 });
 

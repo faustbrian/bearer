@@ -59,12 +59,17 @@ describe('AuditEvent', function (): void {
             expect(AuditEvent::Expired->value)->toBe('expired');
         });
 
+        test('has revealed case', function (): void {
+            // Act & Assert
+            expect(AuditEvent::Revealed->value)->toBe('revealed');
+        });
+
         test('has all expected cases', function (): void {
             // Act
             $cases = AuditEvent::cases();
 
             // Assert
-            expect($cases)->toHaveCount(10);
+            expect($cases)->toHaveCount(11);
             expect($cases)->toContain(AuditEvent::Created);
             expect($cases)->toContain(AuditEvent::Authenticated);
             expect($cases)->toContain(AuditEvent::Revoked);
@@ -75,6 +80,7 @@ describe('AuditEvent', function (): void {
             expect($cases)->toContain(AuditEvent::DomainBlocked);
             expect($cases)->toContain(AuditEvent::Expired);
             expect($cases)->toContain(AuditEvent::Derived);
+            expect($cases)->toContain(AuditEvent::Revealed);
         });
 
         test('can create from value', function (): void {

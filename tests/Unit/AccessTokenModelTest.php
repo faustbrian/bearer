@@ -8,9 +8,14 @@
  */
 
 use Cline\Bearer\Facades\Bearer;
+use Illuminate\Support\Facades\Config;
 use Tests\Fixtures\User;
 
 describe('AccessToken Model', function (): void {
+    beforeEach(function (): void {
+        Config::set('app.key', 'base64:'.base64_encode(random_bytes(32)));
+    });
+
     describe('Happy Path', function (): void {
         test('findAccessToken() locates token by plain text hash when no prefix', function (): void {
             // Arrange
@@ -64,6 +69,23 @@ describe('AccessToken Model', function (): void {
             expect($restrictedKey)->not->toBeNull();
             expect($restrictedKey->type)->toBe('rk');
             expect($restrictedKey->group_id)->toBe($secretKey->group_id);
+        });
+
+        test('revealPlainTextToken() returns null for non-recoverable tokens', function (): void {
+            $user = createUser();
+            $token = Bearer::for($user)->issue('sk', 'Modern Token')->accessToken;
+
+            expect($token->hasRecoverablePlainText())->toBeFalse();
+            expect($token->revealPlainTextToken())->toBeNull();
+        });
+
+        test('recoverable plaintext is hidden from serialization', function (): void {
+            config(['bearer.types.sk.revealable' => true]);
+
+            $user = createUser();
+            $token = Bearer::for($user)->issue('sk', 'Legacy Token')->accessToken->fresh();
+
+            expect($token->toArray())->not->toHaveKey('plain_text_token');
         });
     });
 

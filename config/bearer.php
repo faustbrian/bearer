@@ -246,6 +246,7 @@ return [
             'rate_limit' => null, // unlimited
             'environments' => ['test', 'live'],
             'server_side_only' => true,
+            'revealable' => false,
             'generator' => null, // uses default generator
         ],
         /*
@@ -268,6 +269,7 @@ return [
             'rate_limit' => 1000, // requests per minute
             'environments' => ['test', 'live'],
             'server_side_only' => false,
+            'revealable' => false,
             'generator' => null, // uses default generator
         ],
         /*
@@ -290,6 +292,7 @@ return [
             'rate_limit' => 100, // requests per minute
             'environments' => ['test', 'live'],
             'server_side_only' => true,
+            'revealable' => false,
             'generator' => null, // uses default generator
         ],
 

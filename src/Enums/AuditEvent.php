@@ -92,4 +92,12 @@ enum AuditEvent: string
      * hierarchical derivation relationship.
      */
     case Derived = 'derived';
+
+    /**
+     * Token plaintext was explicitly revealed.
+     *
+     * Logged when a recoverable token is decrypted and returned after
+     * the original creation flow has completed.
+     */
+    case Revealed = 'revealed';
 }

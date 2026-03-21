@@ -115,6 +115,9 @@ final readonly class TokenRotationConductor
             'environment' => $this->token->environment,
             'name' => $this->token->name,
             'token' => $hasher->hash($plainTextAccessToken),
+            'plain_text_token' => $this->manager->shouldStoreRecoverablePlainText($tokenType)
+                ? $plainTextAccessToken
+                : null,
             'prefix' => $tokenType->prefix(),
             'abilities' => $this->token->abilities,
             'metadata' => array_merge(

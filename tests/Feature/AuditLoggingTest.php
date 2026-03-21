@@ -10,8 +10,13 @@
 use Cline\Bearer\Database\Models\AccessTokenAuditLog;
 use Cline\Bearer\Enums\AuditEvent;
 use Cline\Bearer\Facades\Bearer;
+use Illuminate\Support\Facades\Config;
 
 describe('Audit Logging', function (): void {
+    beforeEach(function (): void {
+        Config::set('app.key', 'base64:'.base64_encode(random_bytes(32)));
+    });
+
     it('logs token creation event', function (): void {
         $user = createUser();
 
@@ -77,6 +82,23 @@ describe('Audit Logging', function (): void {
 
         expect($auditLog->created_at)->toBeGreaterThanOrEqual($beforeCreation);
         expect($auditLog->created_at)->toBeLessThanOrEqual(now()->addSecond());
+    });
+
+    it('logs token reveal event', function (): void {
+        config(['bearer.types.sk.revealable' => true]);
+
+        $user = createUser();
+        $token = Bearer::for($user)->issue('sk', 'Legacy Key');
+
+        $revealed = $token->accessToken->revealPlainTextToken();
+
+        $auditLog = AccessTokenAuditLog::query()->where('token_id', $token->accessToken->id)
+            ->where('event', AuditEvent::Revealed)
+            ->first();
+
+        expect($revealed)->toBe($token->plainTextAccessToken);
+        expect($auditLog)->not->toBeNull();
+        expect($auditLog->event)->toBe(AuditEvent::Revealed);
     });
 
     it('maintains audit trail through token lifecycle', function (): void {
@@ -273,6 +295,8 @@ describe('Audit Logging', function (): void {
             AuditEvent::IpBlocked,
             AuditEvent::DomainBlocked,
             AuditEvent::Expired,
+            AuditEvent::Derived,
+            AuditEvent::Revealed,
         ];
 
         foreach ($events as $event) {

@@ -227,13 +227,43 @@ $token = Bearer::for($user)->issue(
 );
 
 // The plain text token is only available at creation time
-echo $token->plainTextToken; // sk_test_abc123...
+echo $token->plainTextAccessToken; // sk_test_abc123...
 
 // Access the token model
 $token->accessToken->type;        // 'sk'
 $token->accessToken->environment; // 'test'
 $token->accessToken->name;        // 'Production API Key'
 ```
+
+### Recoverable Legacy Tokens
+
+If a legacy integration must show tokens again after creation, enable
+`revealable` on that token type. Bearer will still hash the token for
+authentication and will also keep an encrypted copy in `plain_text_token`
+for explicit reveal flows.
+
+```php
+// config/bearer.php
+'types' => [
+    'sk' => [
+        'name' => 'Secret',
+        'prefix' => 'sk',
+        'abilities' => ['*'],
+        'server_side_only' => true,
+        'revealable' => true,
+    ],
+],
+```
+
+```php
+$token = Bearer::for($user)->issue('sk', 'Legacy API Key');
+
+// Explicit reveal API for later settings-page access
+$plainText = $token->accessToken->revealPlainTextToken();
+```
+
+`revealPlainTextToken()` returns `null` for non-revealable tokens and logs a
+`revealed` audit event when a stored plaintext copy is accessed.
 
 ## Issuing Token Groups
 
@@ -530,6 +560,7 @@ return [
             'prefix' => 'wh',
             'name' => 'Webhook',
             'server_side_only' => true,
+            'revealable' => false,
             'default_abilities' => ['webhooks:receive'],
             'default_expiration' => null, // Never expires
             'default_rate_limit' => 10000, // High limit for webhooks
@@ -541,6 +572,7 @@ return [
             'prefix' => 'tmp',
             'name' => 'Temporary',
             'server_side_only' => false,
+            'revealable' => true,
             'default_abilities' => ['read'],
             'default_expiration' => 60, // 1 hour
             'default_rate_limit' => 100,
@@ -574,6 +606,7 @@ final class WebhookTokenType extends AbstractTokenType
             defaultRateLimit: 50000, // Very high limit
             allowedEnvironments: ['test', 'live'],
             serverSideOnly: true,
+            revealable: false,
         );
     }
 }
@@ -606,6 +639,7 @@ final class TenantTokenType extends AbstractTokenType
             defaultRateLimit: 1000,
             allowedEnvironments: ['live'],
             serverSideOnly: false,
+            revealable: false,
         );
     }
 }
@@ -669,6 +703,9 @@ final class ApiKeyTokenType implements TokenType
     }
 }
 ```
+
+Interface-based custom token types default to non-revealable behavior. To opt
+into revealable support, extend `AbstractTokenType` and set `revealable: true`.
 
 ## Token Types with Custom Generators
 

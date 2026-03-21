@@ -204,6 +204,8 @@ describe('SpatieActivityLogDriver', function (): void {
                 AuditEvent::IpBlocked,
                 AuditEvent::DomainBlocked,
                 AuditEvent::Expired,
+                AuditEvent::Derived,
+                AuditEvent::Revealed,
             ];
 
             // Act
@@ -212,7 +214,7 @@ describe('SpatieActivityLogDriver', function (): void {
             }
 
             // Assert
-            expect(Activity::query()->count())->toBe(9);
+            expect(Activity::query()->count())->toBe(11);
 
             $expectedEvents = [
                 'created',
@@ -224,6 +226,8 @@ describe('SpatieActivityLogDriver', function (): void {
                 'ip_blocked',
                 'domain_blocked',
                 'expired',
+                'derived',
+                'revealed',
             ];
 
             $actualEvents = Activity::query()->pluck('event')->toArray();

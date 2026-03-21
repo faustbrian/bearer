@@ -15,11 +15,16 @@ use Cline\Bearer\Exceptions\CannotDeriveTokenException;
 use Cline\Bearer\Exceptions\InvalidDerivedAbilitiesException;
 use Cline\Bearer\Exceptions\InvalidDerivedExpirationException;
 use Cline\Bearer\Facades\Bearer;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Date;
 
 use function Pest\Laravel\assertDatabaseHas;
 
 describe('Token Derivation', function (): void {
+    beforeEach(function (): void {
+        Config::set('app.key', 'base64:'.base64_encode(random_bytes(32)));
+    });
+
     test('can derive token from parent', function (): void {
         $user = createUser();
 
@@ -179,6 +184,21 @@ describe('Token Derivation', function (): void {
             'token_id' => $childToken->accessToken->id,
             'event' => AuditEvent::Derived->value,
         ]);
+    });
+
+    test('stores encrypted plaintext for recoverable derived tokens', function (): void {
+        config(['bearer.types.sk.revealable' => true]);
+
+        $user = createUser();
+
+        $parentToken = Bearer::for($user)->issue('sk', 'Parent', abilities: ['*']);
+
+        $childToken = Bearer::derive($parentToken->accessToken)
+            ->abilities(['users:read'])
+            ->as('Child');
+
+        expect($childToken->accessToken->hasRecoverablePlainText())->toBeTrue();
+        expect($childToken->accessToken->revealPlainTextToken())->toBe($childToken->plainTextAccessToken);
     });
 
     test('cascade descendants revocation strategy revokes all descendants', function (): void {

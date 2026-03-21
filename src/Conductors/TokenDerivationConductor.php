@@ -197,6 +197,9 @@ final readonly class TokenDerivationConductor
             'environment' => $this->parentToken->environment,
             'name' => $name,
             'token' => $hasher->hash($plainTextAccessToken),
+            'plain_text_token' => $this->manager->shouldStoreRecoverablePlainText($tokenType)
+                ? $plainTextAccessToken
+                : null,
             'prefix' => $tokenType->prefix(),
             'abilities' => $this->abilities,
             'metadata' => $this->parentToken->metadata,

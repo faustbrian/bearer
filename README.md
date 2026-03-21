@@ -5,7 +5,7 @@
 
 ------
 
-Stripe-style typed API tokens with groups, environments, and audit logging for Laravel. Features conductor-based API, token rotation, revocation strategies, and seamless Sanctum integration.
+Stripe-style typed API tokens with groups, environments, and audit logging for Laravel. Features conductor-based API, token rotation, revocation strategies, seamless Sanctum integration, and optional recoverable legacy tokens for systems that must display keys after creation.
 
 ## Requirements
 

@@ -9,4 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Added repository-level maintainer guidance in `AGENTS.md`.
+- Added optional recoverable legacy token support via per-type `revealable`
+  configuration, encrypted `plain_text_token` storage, explicit
+  `revealPlainTextToken()` access, and `revealed` audit events.
 - Initial release

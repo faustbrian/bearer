@@ -33,6 +33,7 @@ abstract class AbstractTokenType implements TokenType
      * @param null|int           $defaultRateLimit    Requests per minute, or null for no limit
      * @param array<int, string> $allowedEnvironments Environments where tokens can be used
      * @param bool               $serverSideOnly      Whether tokens must stay server-side
+     * @param bool               $revealable          Whether tokens may be retrieved later
      */
     public function __construct(
         protected readonly string $name,
@@ -42,6 +43,7 @@ abstract class AbstractTokenType implements TokenType
         protected readonly ?int $defaultRateLimit = null,
         protected readonly array $allowedEnvironments = ['test', 'live'],
         protected readonly bool $serverSideOnly = false,
+        protected readonly bool $revealable = false,
     ) {}
 
     /**
@@ -112,5 +114,15 @@ abstract class AbstractTokenType implements TokenType
     public function isServerSideOnly(): bool
     {
         return $this->serverSideOnly;
+    }
+
+    /**
+     * Determine if tokens of this type may be revealed after creation.
+     *
+     * @return bool True if tokens may be retrieved later, false otherwise
+     */
+    public function isRevealable(): bool
+    {
+        return $this->revealable;
     }
 }

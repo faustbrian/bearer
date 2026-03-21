@@ -184,6 +184,9 @@ final readonly class TokenIssuanceConductor
             'environment' => $env,
             'name' => $name,
             'token' => $hasher->hash($plainTextAccessToken),
+            'plain_text_token' => $this->manager->shouldStoreRecoverablePlainText($tokenType)
+                ? $plainTextAccessToken
+                : null,
             'prefix' => $tokenType->prefix(),
             'abilities' => $abilities === [] ? $this->abilities : $abilities,
             'metadata' => $metadata === [] ? $this->metadata : $metadata,
@@ -272,6 +275,9 @@ final readonly class TokenIssuanceConductor
                 'environment' => $env,
                 'name' => $name,
                 'token' => $hasher->hash($plainTextAccessToken),
+                'plain_text_token' => $this->manager->shouldStoreRecoverablePlainText($tokenType)
+                    ? $plainTextAccessToken
+                    : null,
                 'prefix' => $tokenType->prefix(),
                 'abilities' => $abilities === [] ? $this->abilities : $abilities,
                 'metadata' => $metadata === [] ? $this->metadata : $metadata,
