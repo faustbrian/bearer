@@ -20,7 +20,7 @@ use RuntimeException;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-abstract class TokenRevokedException extends RuntimeException implements BearerException
+abstract class AbstractTokenRevokedException extends RuntimeException implements BearerExceptionInterface
 {
     // Abstract base class - see concrete implementations
 }

@@ -8,7 +8,7 @@
  */
 
 use Cline\Bearer\AuditDrivers\SpatieActivityLogDriver;
-use Cline\Bearer\Contracts\AuditDriver;
+use Cline\Bearer\Contracts\AuditDriverInterface;
 use Cline\Bearer\Enums\AuditEvent;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Schema\Blueprint;
@@ -52,8 +52,8 @@ describe('SpatieActivityLogDriver', function (): void {
         Schema::dropIfExists('activity_log');
     });
 
-    it('implements AuditDriver contract', function (): void {
-        expect($this->driver)->toBeInstanceOf(AuditDriver::class);
+    it('implements AuditDriverInterface contract', function (): void {
+        expect($this->driver)->toBeInstanceOf(AuditDriverInterface::class);
     });
 
     describe('log()', function (): void {

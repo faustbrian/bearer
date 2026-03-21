@@ -19,7 +19,7 @@ use RuntimeException;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class AuthenticationException extends RuntimeException implements BearerException
+final class AuthenticationException extends RuntimeException implements BearerExceptionInterface
 {
     /**
      * Create an exception for unauthenticated access.

@@ -21,7 +21,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class NonStringUuidException extends InvalidPrimaryKeyValueException
+final class NonStringUuidException extends AbstractInvalidPrimaryKeyValueException
 {
     /**
      * Create exception for non-string value assigned to UUID primary key.

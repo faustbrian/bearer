@@ -37,7 +37,7 @@ use Illuminate\Support\Collection;
  * - Debugging authentication issues
  *
  * ```php
- * class DatabaseAuditDriver implements AuditDriver
+ * class DatabaseAuditDriver implements AuditDriverInterface
  * {
  *     public function log(AccessToken $token, AuditEvent $event, array $context = []): void
  *     {
@@ -62,7 +62,7 @@ use Illuminate\Support\Collection;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-interface AuditDriver
+interface AuditDriverInterface
 {
     /**
      * Log an audit event for a token.

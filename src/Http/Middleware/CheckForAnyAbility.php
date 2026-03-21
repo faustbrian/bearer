@@ -9,8 +9,8 @@
 
 namespace Cline\Bearer\Http\Middleware;
 
-use Cline\Bearer\Contracts\HasAbilities;
-use Cline\Bearer\Contracts\HasAccessTokens;
+use Cline\Bearer\Contracts\HasAbilitiesInterface;
+use Cline\Bearer\Contracts\HasAccessTokensInterface;
 use Cline\Bearer\Exceptions\AnyAbilityMissingException;
 use Cline\Bearer\Exceptions\AuthenticationException;
 use Closure;
@@ -21,7 +21,7 @@ use Illuminate\Http\Request;
  *
  * This middleware validates that the authenticated user's current access token
  * possesses at least one of the abilities listed in the middleware parameters.
- * If none of the abilities are present, a MissingAbilityException is thrown.
+ * If none of the abilities are present, a AbstractMissingAbilityException is thrown.
  *
  * Use this when an endpoint can be accessed with any one of several permissions.
  *
@@ -57,7 +57,7 @@ final class CheckForAnyAbility
     {
         $user = $request->user();
 
-        if (!$user instanceof HasAccessTokens || !$user->currentAccessToken() instanceof HasAbilities) {
+        if (!$user instanceof HasAccessTokensInterface || !$user->currentAccessToken() instanceof HasAbilitiesInterface) {
             throw AuthenticationException::unauthenticated();
         }
 

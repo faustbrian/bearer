@@ -9,7 +9,7 @@
 
 namespace Cline\Bearer\RevocationStrategies;
 
-use Cline\Bearer\Contracts\RevocationStrategy;
+use Cline\Bearer\Contracts\RevocationStrategyInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 use Illuminate\Support\Collection;
 
@@ -31,7 +31,7 @@ use function now;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class NoneStrategy implements RevocationStrategy
+final class NoneStrategy implements RevocationStrategyInterface
 {
     /**
      * Revoke only the specified token.

@@ -19,7 +19,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class TokenHasherNotFoundException extends TokenHasherNotRegisteredException
+final class TokenHasherNotFoundException extends AbstractTokenHasherNotRegisteredException
 {
     /**
      * Create an exception for an unregistered hasher.

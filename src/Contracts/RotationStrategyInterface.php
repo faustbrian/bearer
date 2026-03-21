@@ -32,7 +32,7 @@ use Cline\Bearer\Database\Models\AccessToken;
  * - Parallel validity: Both tokens work until old expires
  *
  * ```php
- * class GracePeriodRotation implements RotationStrategy
+ * class GracePeriodRotation implements RotationStrategyInterface
  * {
  *     public function __construct(private int $gracePeriodMinutes = 5) {}
  *
@@ -65,7 +65,7 @@ use Cline\Bearer\Database\Models\AccessToken;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-interface RotationStrategy
+interface RotationStrategyInterface
 {
     /**
      * Perform the rotation from an old token to a new token.

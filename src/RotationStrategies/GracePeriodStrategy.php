@@ -9,7 +9,7 @@
 
 namespace Cline\Bearer\RotationStrategies;
 
-use Cline\Bearer\Contracts\RotationStrategy;
+use Cline\Bearer\Contracts\RotationStrategyInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 
 use function now;
@@ -39,7 +39,7 @@ use function now;
  *
  * @psalm-immutable
  */
-final readonly class GracePeriodStrategy implements RotationStrategy
+final readonly class GracePeriodStrategy implements RotationStrategyInterface
 {
     /**
      * Create a new grace period strategy instance.

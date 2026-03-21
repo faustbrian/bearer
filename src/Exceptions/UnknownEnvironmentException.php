@@ -17,7 +17,7 @@ namespace Cline\Bearer\Exceptions;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class UnknownEnvironmentException extends InvalidEnvironmentException
+final class UnknownEnvironmentException extends AbstractInvalidEnvironmentException
 {
     /**
      * Create an exception for an unknown environment.

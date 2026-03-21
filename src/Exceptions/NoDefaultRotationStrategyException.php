@@ -17,7 +17,7 @@ namespace Cline\Bearer\Exceptions;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class NoDefaultRotationStrategyException extends RotationStrategyNotRegisteredException
+final class NoDefaultRotationStrategyException extends AbstractRotationStrategyNotRegisteredException
 {
     /**
      * Create an exception when no default strategy is registered.

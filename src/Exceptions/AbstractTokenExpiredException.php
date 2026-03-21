@@ -20,7 +20,7 @@ use RuntimeException;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-abstract class TokenExpiredException extends RuntimeException implements BearerException
+abstract class AbstractTokenExpiredException extends RuntimeException implements BearerExceptionInterface
 {
     // Abstract base class - use specific subclasses
 }

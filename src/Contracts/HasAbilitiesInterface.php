@@ -36,7 +36,7 @@ namespace Cline\Bearer\Contracts;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-interface HasAbilities
+interface HasAbilitiesInterface
 {
     /**
      * Determine if the token has a given ability.

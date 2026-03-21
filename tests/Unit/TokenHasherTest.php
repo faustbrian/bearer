@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-use Cline\Bearer\Contracts\TokenHasher;
+use Cline\Bearer\Contracts\TokenHasherInterface;
 use Cline\Bearer\Exceptions\NoDefaultTokenHasherException;
 use Cline\Bearer\Exceptions\TokenHasherNotFoundException;
 use Cline\Bearer\TokenHashers\Sha256TokenHasher;
@@ -482,7 +482,7 @@ describe('TokenHasherRegistry', function (): void {
             $registry = new TokenHasherRegistry();
 
             // Act & Assert
-            expect(fn (): TokenHasher => $registry->get('nonexistent'))
+            expect(fn (): TokenHasherInterface => $registry->get('nonexistent'))
                 ->toThrow(TokenHasherNotFoundException::class, "Token hasher 'nonexistent' is not registered.");
         });
 
@@ -491,7 +491,7 @@ describe('TokenHasherRegistry', function (): void {
             $registry = new TokenHasherRegistry();
 
             // Act & Assert
-            expect(fn (): TokenHasher => $registry->default())
+            expect(fn (): TokenHasherInterface => $registry->default())
                 ->toThrow(NoDefaultTokenHasherException::class, 'No default token hasher has been set.');
         });
 
@@ -503,7 +503,7 @@ describe('TokenHasherRegistry', function (): void {
             $registry->setDefault('unregistered');
 
             // Assert
-            expect(fn (): TokenHasher => $registry->default())
+            expect(fn (): TokenHasherInterface => $registry->default())
                 ->toThrow(TokenHasherNotFoundException::class, "Token hasher 'unregistered' is not registered.");
         });
     });

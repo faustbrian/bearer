@@ -10,13 +10,13 @@
 namespace Cline\Bearer\Guards;
 
 use Cline\Bearer\BearerManager;
-use Cline\Bearer\Concerns\HasAccessTokens;
+use Cline\Bearer\Contracts\HasAccessTokensInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Events\TokenAuthenticated;
+use Cline\Bearer\Exceptions\AbstractDomainRestrictionException;
+use Cline\Bearer\Exceptions\AbstractIpRestrictionException;
 use Cline\Bearer\Exceptions\DisallowedDomainException;
 use Cline\Bearer\Exceptions\DisallowedIpException;
-use Cline\Bearer\Exceptions\DomainRestrictionException;
-use Cline\Bearer\Exceptions\IpRestrictionException;
 use Cline\Bearer\Exceptions\MissingDomainHeaderException;
 use Cline\Bearer\Exceptions\TokenHasBeenRevokedException;
 use Cline\Bearer\Exceptions\TokenHasExpiredException;
@@ -29,7 +29,6 @@ use Illuminate\Support\Arr;
 use const PHP_URL_HOST;
 
 use function assert;
-use function class_uses_recursive;
 use function config;
 use function event;
 use function in_array;
@@ -93,7 +92,7 @@ final readonly class BearerGuard
 
             if ($user = $this->auth->guard($guard)->user()) {
                 if ($this->supportsTokens($user)) {
-                    assert($user instanceof \Cline\Bearer\Contracts\HasAccessTokens);
+                    assert($user instanceof HasAccessTokensInterface);
 
                     return $user->withAccessToken(
                         new TransientToken(),
@@ -127,18 +126,18 @@ final readonly class BearerGuard
         // Validate IP restrictions
         try {
             $this->validateIpRestrictions($accessToken, $request);
-        } catch (IpRestrictionException) {
+        } catch (AbstractIpRestrictionException) {
             return null;
         }
 
         // Validate domain restrictions
         try {
             $this->validateDomainRestrictions($accessToken, $request);
-        } catch (DomainRestrictionException) {
+        } catch (AbstractDomainRestrictionException) {
             return null;
         }
 
-        assert($accessToken->owner instanceof \Cline\Bearer\Contracts\HasAccessTokens);
+        assert($accessToken->owner instanceof HasAccessTokensInterface);
 
         // Attach token to owner
         $owner = $accessToken->owner->withAccessToken($accessToken);
@@ -216,7 +215,7 @@ final readonly class BearerGuard
      * @param AccessToken $token   The token to validate
      * @param Request     $request The incoming request
      *
-     * @throws IpRestrictionException If IP is not allowed
+     * @throws AbstractIpRestrictionException If IP is not allowed
      */
     private function validateIpRestrictions(AccessToken $token, Request $request): void
     {
@@ -241,7 +240,7 @@ final readonly class BearerGuard
      * @param AccessToken $token   The token to validate
      * @param Request     $request The incoming request
      *
-     * @throws DomainRestrictionException If domain is not allowed
+     * @throws AbstractDomainRestrictionException If domain is not allowed
      */
     private function validateDomainRestrictions(AccessToken $token, Request $request): void
     {
@@ -270,7 +269,7 @@ final readonly class BearerGuard
     /**
      * Determine if the owner model supports access tokens.
      *
-     * Checks if the owner model uses the HasAccessTokens contract.
+     * Checks if the owner model implements the HasAccessTokensInterface contract.
      *
      * @param  mixed $owner The model to check
      * @return bool  True if model supports tokens, false otherwise
@@ -285,7 +284,7 @@ final readonly class BearerGuard
             return false;
         }
 
-        return in_array(HasAccessTokens::class, class_uses_recursive($owner::class), true);
+        return $owner instanceof HasAccessTokensInterface;
     }
 
     /**

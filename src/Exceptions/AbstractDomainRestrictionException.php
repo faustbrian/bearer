@@ -21,7 +21,7 @@ use RuntimeException;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-abstract class DomainRestrictionException extends RuntimeException implements BearerException
+abstract class AbstractDomainRestrictionException extends RuntimeException implements BearerExceptionInterface
 {
     // Abstract base class - no factory methods
 }

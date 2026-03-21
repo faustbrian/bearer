@@ -22,7 +22,7 @@ use function implode;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class InvalidDerivedAbilitiesException extends RuntimeException implements BearerException
+final class InvalidDerivedAbilitiesException extends RuntimeException implements BearerExceptionInterface
 {
     /**
      * Create an exception for abilities that are not a valid subset.

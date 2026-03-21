@@ -20,7 +20,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class DisallowedIpException extends IpRestrictionException
+final class DisallowedIpException extends AbstractIpRestrictionException
 {
     /**
      * Create an exception for a disallowed IP address without listing allowed IPs.

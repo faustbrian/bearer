@@ -19,7 +19,7 @@ use function implode;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class AnyAbilityMissingException extends MissingAbilityException
+final class AnyAbilityMissingException extends AbstractMissingAbilityException
 {
     /**
      * Create an exception for missing any of several abilities.

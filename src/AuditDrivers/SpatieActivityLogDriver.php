@@ -9,7 +9,7 @@
 
 namespace Cline\Bearer\AuditDrivers;
 
-use Cline\Bearer\Contracts\AuditDriver;
+use Cline\Bearer\Contracts\AuditDriverInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Enums\AuditEvent;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -55,7 +55,7 @@ use function request;
  *
  * @psalm-immutable
  */
-final readonly class SpatieActivityLogDriver implements AuditDriver
+final readonly class SpatieActivityLogDriver implements AuditDriverInterface
 {
     /**
      * Create a new Spatie Activity Log driver instance.

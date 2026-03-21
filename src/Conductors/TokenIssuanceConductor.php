@@ -10,7 +10,7 @@
 namespace Cline\Bearer\Conductors;
 
 use Cline\Bearer\BearerManager;
-use Cline\Bearer\Contracts\HasAccessTokens as HasAccessTokensContract;
+use Cline\Bearer\Contracts\HasAccessTokensInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Database\Models\AccessTokenGroup;
 use Cline\Bearer\Enums\AuditEvent;
@@ -78,44 +78,44 @@ final readonly class TokenIssuanceConductor
     /**
      * Create a new token issuance conductor instance.
      *
-     * @param BearerManager                 $manager            core bearer manager instance providing
-     *                                                          access to token types, generation, hashing,
-     *                                                          and audit functionality
-     * @param HasAccessTokensContract&Model $owner              Eloquent model that will own the issued
-     *                                                          token(s). Typically a User model or similar
-     *                                                          entity with HasAccessTokens trait applied.
-     * @param null|Model                    $context            Optional context entity that the token acts
-     *                                                          on behalf of (e.g., ServiceAccount, Application).
-     *                                                          If null, the token acts on behalf of the owner.
-     * @param null|Model                    $boundary           Optional boundary entity for tenant/workspace
-     *                                                          isolation (e.g., Team, Organization). If null,
-     *                                                          the token has no tenant scope restrictions.
-     * @param array<int, string>            $abilities          Default token abilities/permissions that will
-     *                                                          be assigned to issued tokens unless overridden
-     *                                                          during issuance. Can be empty for unrestricted
-     *                                                          access or contain specific permissions.
-     * @param null|string                   $environment        Default environment designation (e.g., 'production',
-     *                                                          'development') for issued tokens. Falls back to
-     *                                                          config value if not specified during issuance.
-     * @param null|array<int, string>       $allowedIps         Default IP address whitelist for issued tokens.
-     *                                                          Restricts token usage to specific IP addresses
-     *                                                          for enhanced security. Null allows all IPs.
-     * @param null|array<int, string>       $allowedDomains     Default domain whitelist for issued tokens.
-     *                                                          Restricts token usage to requests from specific
-     *                                                          domains. Null allows all domains.
-     * @param null|int                      $rateLimitPerMinute Default rate limit (requests per minute) for
-     *                                                          issued tokens. Null means no rate limiting.
-     *                                                          Used for throttling API requests.
-     * @param null|DateTimeInterface        $expiresAt          Default expiration timestamp for issued tokens.
-     *                                                          Null creates non-expiring tokens. Can be
-     *                                                          overridden during individual token issuance.
-     * @param array<string, mixed>          $metadata           Default arbitrary metadata to attach to issued
-     *                                                          tokens. Useful for storing application-specific
-     *                                                          context, tracking info, or integration data.
+     * @param BearerManager                  $manager            core bearer manager instance providing
+     *                                                           access to token types, generation, hashing,
+     *                                                           and audit functionality
+     * @param HasAccessTokensInterface&Model $owner              Eloquent model that will own the issued
+     *                                                           token(s). Typically a User model or similar
+     *                                                           entity with HasAccessTokensTrait applied.
+     * @param null|Model                     $context            Optional context entity that the token acts
+     *                                                           on behalf of (e.g., ServiceAccount, Application).
+     *                                                           If null, the token acts on behalf of the owner.
+     * @param null|Model                     $boundary           Optional boundary entity for tenant/workspace
+     *                                                           isolation (e.g., Team, Organization). If null,
+     *                                                           the token has no tenant scope restrictions.
+     * @param array<int, string>             $abilities          Default token abilities/permissions that will
+     *                                                           be assigned to issued tokens unless overridden
+     *                                                           during issuance. Can be empty for unrestricted
+     *                                                           access or contain specific permissions.
+     * @param null|string                    $environment        Default environment designation (e.g., 'production',
+     *                                                           'development') for issued tokens. Falls back to
+     *                                                           config value if not specified during issuance.
+     * @param null|array<int, string>        $allowedIps         Default IP address whitelist for issued tokens.
+     *                                                           Restricts token usage to specific IP addresses
+     *                                                           for enhanced security. Null allows all IPs.
+     * @param null|array<int, string>        $allowedDomains     Default domain whitelist for issued tokens.
+     *                                                           Restricts token usage to requests from specific
+     *                                                           domains. Null allows all domains.
+     * @param null|int                       $rateLimitPerMinute Default rate limit (requests per minute) for
+     *                                                           issued tokens. Null means no rate limiting.
+     *                                                           Used for throttling API requests.
+     * @param null|DateTimeInterface         $expiresAt          Default expiration timestamp for issued tokens.
+     *                                                           Null creates non-expiring tokens. Can be
+     *                                                           overridden during individual token issuance.
+     * @param array<string, mixed>           $metadata           Default arbitrary metadata to attach to issued
+     *                                                           tokens. Useful for storing application-specific
+     *                                                           context, tracking info, or integration data.
      */
     public function __construct(
         private BearerManager $manager,
-        private Model&HasAccessTokensContract $owner,
+        private Model&HasAccessTokensInterface $owner,
         private ?Model $context = null,
         private ?Model $boundary = null,
         private array $abilities = [],

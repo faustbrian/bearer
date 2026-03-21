@@ -8,13 +8,13 @@
  */
 
 use Cline\Bearer\BearerManager;
-use Cline\Bearer\Contracts\AuditDriver;
-use Cline\Bearer\Contracts\RevealableTokenType;
-use Cline\Bearer\Contracts\RevocationStrategy;
-use Cline\Bearer\Contracts\RotationStrategy;
-use Cline\Bearer\Contracts\TokenGenerator;
-use Cline\Bearer\Contracts\TokenHasher;
-use Cline\Bearer\Contracts\TokenType;
+use Cline\Bearer\Contracts\AuditDriverInterface;
+use Cline\Bearer\Contracts\RevealableTokenTypeInterface;
+use Cline\Bearer\Contracts\RevocationStrategyInterface;
+use Cline\Bearer\Contracts\RotationStrategyInterface;
+use Cline\Bearer\Contracts\TokenGeneratorInterface;
+use Cline\Bearer\Contracts\TokenHasherInterface;
+use Cline\Bearer\Contracts\TokenTypeInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Enums\AuditEvent;
 use Cline\Bearer\Facades\Bearer;
@@ -98,7 +98,7 @@ describe('BearerManager - Revocation with Audit Failures', function (): void {
         $token = createAccessToken($user);
 
         // Create a custom audit driver that always throws
-        $failingDriver = new class() implements AuditDriver
+        $failingDriver = new class() implements AuditDriverInterface
         {
             public function log(AccessToken $token, AuditEvent $event, array $metadata = []): void
             {
@@ -133,7 +133,7 @@ describe('BearerManager - Revocation with Audit Failures', function (): void {
         $token = createAccessToken($user);
 
         // Create audit driver that throws on log
-        $throwingDriver = new class() implements AuditDriver
+        $throwingDriver = new class() implements AuditDriverInterface
         {
             public function log(AccessToken $token, AuditEvent $event, array $metadata = []): void
             {
@@ -160,8 +160,8 @@ describe('BearerManager - Revocation with Audit Failures', function (): void {
 });
 
 describe('BearerManager - Registration Methods', function (): void {
-    it('defaults direct TokenType implementations to non-recoverable', function (): void {
-        $customType = new class() implements TokenType
+    it('defaults direct TokenTypeInterface implementations to non-recoverable', function (): void {
+        $customType = new class() implements TokenTypeInterface
         {
             public function name(): string
             {
@@ -204,7 +204,7 @@ describe('BearerManager - Registration Methods', function (): void {
     });
 
     it('uses the revealable interface for recoverable token types', function (): void {
-        $customType = new class() implements RevealableTokenType, TokenType
+        $customType = new class() implements RevealableTokenTypeInterface, TokenTypeInterface
         {
             public function name(): string
             {
@@ -281,7 +281,7 @@ describe('BearerManager - Registration Methods', function (): void {
     });
 
     it('registers custom token generator', function (): void {
-        $customGenerator = new class() implements TokenGenerator
+        $customGenerator = new class() implements TokenGeneratorInterface
         {
             public function generate(string $prefix, string $environment): string
             {
@@ -314,7 +314,7 @@ describe('BearerManager - Registration Methods', function (): void {
     });
 
     it('registers custom token hasher', function (): void {
-        $customHasher = new class() implements TokenHasher
+        $customHasher = new class() implements TokenHasherInterface
         {
             public function hash(string $token): string
             {
@@ -337,7 +337,7 @@ describe('BearerManager - Registration Methods', function (): void {
     });
 
     it('registers custom audit driver', function (): void {
-        $customDriver = new class() implements AuditDriver
+        $customDriver = new class() implements AuditDriverInterface
         {
             public array $logs = [];
 
@@ -366,7 +366,7 @@ describe('BearerManager - Registration Methods', function (): void {
     });
 
     it('registers custom revocation strategy', function (): void {
-        $customStrategy = new class() implements RevocationStrategy
+        $customStrategy = new class() implements RevocationStrategyInterface
         {
             public int $revokeCount = 0;
 
@@ -399,7 +399,7 @@ describe('BearerManager - Registration Methods', function (): void {
     });
 
     it('registers custom rotation strategy', function (): void {
-        $customStrategy = new class() implements RotationStrategy
+        $customStrategy = new class() implements RotationStrategyInterface
         {
             public int $rotateCount = 0;
 
@@ -450,7 +450,7 @@ describe('BearerManager - Registration Methods', function (): void {
     it('can override default implementations via registration', function (): void {
         $originalHasher = resolve(BearerManager::class)->tokenHasher('sha256');
 
-        $customHasher = new class() implements TokenHasher
+        $customHasher = new class() implements TokenHasherInterface
         {
             public function hash(string $token): string
             {
@@ -508,7 +508,7 @@ describe('BearerManager - Integration with Registered Components', function (): 
     it('uses registered token generator for token issuance', function (): void {
         $testMarker = 'CUSTOM_'.Date::now()->getTimestamp();
 
-        $customGenerator = new readonly class($testMarker) implements TokenGenerator
+        $customGenerator = new readonly class($testMarker) implements TokenGeneratorInterface
         {
             public function __construct(
                 private string $marker,
@@ -553,7 +553,7 @@ describe('BearerManager - Integration with Registered Components', function (): 
     it('uses registered revocation strategy in revoke operation', function (): void {
         $callLog = [];
 
-        $loggingStrategy = new class($callLog) implements RevocationStrategy
+        $loggingStrategy = new class($callLog) implements RevocationStrategyInterface
         {
             public function __construct(
                 private array &$log,
@@ -585,7 +585,7 @@ describe('BearerManager - Integration with Registered Components', function (): 
     it('uses registered rotation strategy in rotate operation', function (): void {
         $callLog = [];
 
-        $loggingStrategy = new class($callLog) implements RotationStrategy
+        $loggingStrategy = new class($callLog) implements RotationStrategyInterface
         {
             public function __construct(
                 private array &$log,

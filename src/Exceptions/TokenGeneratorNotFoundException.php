@@ -19,7 +19,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class TokenGeneratorNotFoundException extends TokenGeneratorNotRegisteredException
+final class TokenGeneratorNotFoundException extends AbstractTokenGeneratorNotRegisteredException
 {
     /**
      * Create an exception for an unregistered token generator.

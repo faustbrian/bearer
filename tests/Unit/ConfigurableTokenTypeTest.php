@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-use Cline\Bearer\Exceptions\InvalidConfigurationException;
+use Cline\Bearer\Exceptions\AbstractInvalidConfigurationException;
 use Cline\Bearer\TokenTypes\ConfigurableTokenType;
 
 describe('ConfigurableTokenType', function (): void {
@@ -194,7 +194,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type configuration must include a non-empty "name" field.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type configuration must include a non-empty "name" field.');
         });
 
         test('throws exception when name is empty string', function (): void {
@@ -206,7 +206,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type configuration must include a non-empty "name" field.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type configuration must include a non-empty "name" field.');
         });
 
         test('throws exception when name is not a string', function (): void {
@@ -218,7 +218,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type configuration must include a non-empty "name" field.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type configuration must include a non-empty "name" field.');
         });
 
         test('throws exception when name is null', function (): void {
@@ -230,7 +230,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type configuration must include a non-empty "name" field.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type configuration must include a non-empty "name" field.');
         });
 
         test('throws exception when name is array', function (): void {
@@ -242,7 +242,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type configuration must include a non-empty "name" field.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type configuration must include a non-empty "name" field.');
         });
 
         test('throws exception when name is boolean', function (): void {
@@ -254,7 +254,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type configuration must include a non-empty "name" field.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type configuration must include a non-empty "name" field.');
         });
     });
 
@@ -267,7 +267,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type configuration must include a non-empty "prefix" field.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type configuration must include a non-empty "prefix" field.');
         });
 
         test('throws exception when prefix is empty string', function (): void {
@@ -279,7 +279,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type configuration must include a non-empty "prefix" field.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type configuration must include a non-empty "prefix" field.');
         });
 
         test('throws exception when prefix is not a string', function (): void {
@@ -291,7 +291,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type configuration must include a non-empty "prefix" field.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type configuration must include a non-empty "prefix" field.');
         });
 
         test('throws exception when prefix is null', function (): void {
@@ -303,7 +303,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type configuration must include a non-empty "prefix" field.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type configuration must include a non-empty "prefix" field.');
         });
 
         test('throws exception when prefix is array', function (): void {
@@ -315,7 +315,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type configuration must include a non-empty "prefix" field.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type configuration must include a non-empty "prefix" field.');
         });
 
         test('throws exception when prefix is boolean', function (): void {
@@ -327,7 +327,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type configuration must include a non-empty "prefix" field.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type configuration must include a non-empty "prefix" field.');
         });
     });
 
@@ -342,7 +342,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type "abilities" must be an array.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type "abilities" must be an array.');
         });
 
         test('throws exception when abilities is integer', function (): void {
@@ -355,7 +355,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type "abilities" must be an array.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type "abilities" must be an array.');
         });
 
         test('throws exception when abilities is boolean', function (): void {
@@ -368,7 +368,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type "abilities" must be an array.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type "abilities" must be an array.');
         });
 
         test('accepts null abilities and applies default', function (): void {
@@ -398,7 +398,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type "expiration" must be a positive integer or null.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type "expiration" must be a positive integer or null.');
         });
 
         test('throws exception when expiration is negative', function (): void {
@@ -411,7 +411,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type "expiration" must be a positive integer or null.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type "expiration" must be a positive integer or null.');
         });
 
         test('throws exception when expiration is float', function (): void {
@@ -424,7 +424,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type "expiration" must be a positive integer or null.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type "expiration" must be a positive integer or null.');
         });
 
         test('throws exception when expiration is boolean', function (): void {
@@ -437,7 +437,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type "expiration" must be a positive integer or null.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type "expiration" must be a positive integer or null.');
         });
 
         test('throws exception when expiration is array', function (): void {
@@ -450,7 +450,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type "expiration" must be a positive integer or null.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type "expiration" must be a positive integer or null.');
         });
     });
 
@@ -465,7 +465,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type "rate_limit" must be a positive integer or null.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type "rate_limit" must be a positive integer or null.');
         });
 
         test('throws exception when rate_limit is negative', function (): void {
@@ -478,7 +478,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type "rate_limit" must be a positive integer or null.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type "rate_limit" must be a positive integer or null.');
         });
 
         test('throws exception when rate_limit is float', function (): void {
@@ -491,7 +491,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type "rate_limit" must be a positive integer or null.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type "rate_limit" must be a positive integer or null.');
         });
 
         test('throws exception when rate_limit is boolean', function (): void {
@@ -504,7 +504,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type "rate_limit" must be a positive integer or null.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type "rate_limit" must be a positive integer or null.');
         });
 
         test('throws exception when rate_limit is array', function (): void {
@@ -517,7 +517,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type "rate_limit" must be a positive integer or null.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type "rate_limit" must be a positive integer or null.');
         });
     });
 
@@ -532,7 +532,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type "environments" must be an array.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type "environments" must be an array.');
         });
 
         test('throws exception when environments is integer', function (): void {
@@ -545,7 +545,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type "environments" must be an array.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type "environments" must be an array.');
         });
 
         test('throws exception when environments is boolean', function (): void {
@@ -558,7 +558,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type "environments" must be an array.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type "environments" must be an array.');
         });
 
         test('accepts null environments and applies default', function (): void {
@@ -588,7 +588,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type "server_side_only" must be a boolean.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type "server_side_only" must be a boolean.');
         });
 
         test('throws exception when server_side_only is integer', function (): void {
@@ -601,7 +601,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type "server_side_only" must be a boolean.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type "server_side_only" must be a boolean.');
         });
 
         test('accepts null server_side_only and applies default', function (): void {
@@ -629,7 +629,7 @@ describe('ConfigurableTokenType', function (): void {
 
             // Act & Assert
             expect(fn (): ConfigurableTokenType => ConfigurableTokenType::fromConfig($config))
-                ->toThrow(InvalidConfigurationException::class, 'Token type "server_side_only" must be a boolean.');
+                ->toThrow(AbstractInvalidConfigurationException::class, 'Token type "server_side_only" must be a boolean.');
         });
     });
 

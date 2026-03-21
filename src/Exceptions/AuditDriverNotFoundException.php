@@ -19,7 +19,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class AuditDriverNotFoundException extends AuditDriverNotRegisteredException
+final class AuditDriverNotFoundException extends AbstractAuditDriverNotRegisteredException
 {
     /**
      * Create an exception for an unregistered audit driver.

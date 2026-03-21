@@ -19,7 +19,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class CannotSetDefaultRevocationStrategyException extends RevocationStrategyNotRegisteredException
+final class CannotSetDefaultRevocationStrategyException extends AbstractRevocationStrategyNotRegisteredException
 {
     /**
      * Create an exception when trying to set an unregistered strategy as default.

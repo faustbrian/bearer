@@ -17,7 +17,7 @@ namespace Cline\Bearer\Exceptions;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class MissingNameConfigurationException extends InvalidConfigurationException
+final class MissingNameConfigurationException extends AbstractInvalidConfigurationException
 {
     /**
      * Create an exception for a missing or empty name field.

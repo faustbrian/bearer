@@ -21,7 +21,7 @@ use RuntimeException;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-abstract class IpRestrictionException extends RuntimeException implements BearerException
+abstract class AbstractIpRestrictionException extends RuntimeException implements BearerExceptionInterface
 {
     // Base exception class - implementations provide specific factory methods
 }

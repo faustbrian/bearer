@@ -154,7 +154,7 @@ return [
         | - random: Creates cryptographically secure random tokens using
         |           Laravel's Str::random() helper
         |
-        | You may add custom generators by implementing the TokenGenerator
+        | You may add custom generators by implementing the TokenGeneratorInterface
         | contract and registering them here.
         |
         */
@@ -203,7 +203,7 @@ return [
         | - sha256: SHA-256 hashing (64 character hex output) - recommended
         | - sha512: SHA-512 hashing (128 character hex output) - stronger security
         |
-        | You may add custom hashers by implementing the TokenHasher contract
+        | You may add custom hashers by implementing the TokenHasherInterface contract
         | and registering them here.
         |
         */
@@ -513,7 +513,7 @@ return [
         | - partial: Revokes only server-side tokens (sk, rk) in the group
         | - timed: Schedules revocation after a delay period
         |
-        | You may add custom strategies by implementing the RevocationStrategy
+        | You may add custom strategies by implementing the RevocationStrategyInterface
         | contract and registering them here.
         |
         */
@@ -596,7 +596,7 @@ return [
         | - grace_period: Old token remains valid for a configured duration
         | - dual_valid: Both tokens remain valid until old one expires
         |
-        | You may add custom strategies by implementing the RotationStrategy
+        | You may add custom strategies by implementing the RotationStrategyInterface
         | contract and registering them here.
         |
         */

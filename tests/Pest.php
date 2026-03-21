@@ -9,10 +9,10 @@
 
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Facades\Bearer;
+use Tests\AbstractTestCase;
 use Tests\Fixtures\User;
-use Tests\TestCase;
 
-pest()->extend(TestCase::class)->in(__DIR__);
+pest()->extend(AbstractTestCase::class)->in(__DIR__);
 
 /**
  * Create a test user with default or custom attributes.

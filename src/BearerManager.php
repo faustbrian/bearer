@@ -13,14 +13,14 @@ use Cline\Bearer\AuditDrivers\AuditDriverRegistry;
 use Cline\Bearer\Conductors\TokenDerivationConductor;
 use Cline\Bearer\Conductors\TokenIssuanceConductor;
 use Cline\Bearer\Conductors\TokenRevocationConductor;
-use Cline\Bearer\Contracts\AuditDriver;
-use Cline\Bearer\Contracts\HasAccessTokens;
-use Cline\Bearer\Contracts\RevealableTokenType;
-use Cline\Bearer\Contracts\RevocationStrategy;
-use Cline\Bearer\Contracts\RotationStrategy;
-use Cline\Bearer\Contracts\TokenGenerator;
-use Cline\Bearer\Contracts\TokenHasher;
-use Cline\Bearer\Contracts\TokenType;
+use Cline\Bearer\Contracts\AuditDriverInterface;
+use Cline\Bearer\Contracts\HasAccessTokensInterface;
+use Cline\Bearer\Contracts\RevealableTokenTypeInterface;
+use Cline\Bearer\Contracts\RevocationStrategyInterface;
+use Cline\Bearer\Contracts\RotationStrategyInterface;
+use Cline\Bearer\Contracts\TokenGeneratorInterface;
+use Cline\Bearer\Contracts\TokenHasherInterface;
+use Cline\Bearer\Contracts\TokenTypeInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Enums\AuditEvent;
 use Cline\Bearer\RevocationStrategies\RevocationStrategyRegistry;
@@ -81,8 +81,8 @@ final readonly class BearerManager
      * methods to set abilities, restrictions, metadata, context, boundary, and
      * other token properties before issuing the final token.
      *
-     * @param  HasAccessTokens&Model  $owner The model that will own the issued token
-     * @return TokenIssuanceConductor Fluent conductor for token configuration
+     * @param  HasAccessTokensInterface&Model $owner The model that will own the issued token
+     * @return TokenIssuanceConductor         Fluent conductor for token configuration
      */
     public function for(Model $owner): TokenIssuanceConductor
     {
@@ -174,14 +174,14 @@ final readonly class BearerManager
     /**
      * Determine if a token type should store a recoverable plaintext copy.
      *
-     * Custom token types that do not expose an isRevealable method default to false.
+     * Custom token types that do not implement the revealable interface default to false.
      *
-     * @param  TokenType $tokenType The token type to inspect
-     * @return bool      True when recoverable plaintext storage is enabled
+     * @param  TokenTypeInterface $tokenType The token type to inspect
+     * @return bool               True when recoverable plaintext storage is enabled
      */
-    public function shouldStoreRecoverablePlainText(TokenType $tokenType): bool
+    public function shouldStoreRecoverablePlainText(TokenTypeInterface $tokenType): bool
     {
-        if (!$tokenType instanceof RevealableTokenType) {
+        if (!$tokenType instanceof RevealableTokenTypeInterface) {
             return false;
         }
 
@@ -238,7 +238,7 @@ final readonly class BearerManager
         $rotationStrategy = $this->rotationStrategy($strategyName);
 
         // Create new token preserving all settings from original
-        /** @var HasAccessTokens&Model $owner */
+        /** @var HasAccessTokensInterface&Model $owner */
         $owner = $token->owner;
         $conductor = $this->for($owner)
             ->abilities($token->abilities ?? [])
@@ -288,10 +288,10 @@ final readonly class BearerManager
     /**
      * Retrieve a token type instance by its key.
      *
-     * @param  string    $type The token type key (e.g., 'sk', 'pk', 'rk')
-     * @return TokenType The token type implementation
+     * @param  string             $type The token type key (e.g., 'sk', 'pk', 'rk')
+     * @return TokenTypeInterface The token type implementation
      */
-    public function tokenType(string $type): TokenType
+    public function tokenType(string $type): TokenTypeInterface
     {
         return $this->tokenTypes->get($type);
     }
@@ -299,10 +299,10 @@ final readonly class BearerManager
     /**
      * Retrieve a token generator instance by name.
      *
-     * @param  null|string    $name The generator name or null to use the default from config
-     * @return TokenGenerator The token generator implementation
+     * @param  null|string             $name The generator name or null to use the default from config
+     * @return TokenGeneratorInterface The token generator implementation
      */
-    public function tokenGenerator(?string $name = null): TokenGenerator
+    public function tokenGenerator(?string $name = null): TokenGeneratorInterface
     {
         /** @var string $generatorName */
         $generatorName = $name ?? config('bearer.generator.default', 'seam');
@@ -313,10 +313,10 @@ final readonly class BearerManager
     /**
      * Retrieve a token hasher instance by name.
      *
-     * @param  null|string $name The hasher name or null to use the default from config
-     * @return TokenHasher The token hasher implementation
+     * @param  null|string          $name The hasher name or null to use the default from config
+     * @return TokenHasherInterface The token hasher implementation
      */
-    public function tokenHasher(?string $name = null): TokenHasher
+    public function tokenHasher(?string $name = null): TokenHasherInterface
     {
         /** @var string $hasherName */
         $hasherName = $name ?? config('bearer.hasher.default', 'sha256');
@@ -327,10 +327,10 @@ final readonly class BearerManager
     /**
      * Retrieve an audit driver instance by name.
      *
-     * @param  null|string $name The driver name or null to use the default from config
-     * @return AuditDriver The audit driver implementation
+     * @param  null|string          $name The driver name or null to use the default from config
+     * @return AuditDriverInterface The audit driver implementation
      */
-    public function auditDriver(?string $name = null): AuditDriver
+    public function auditDriver(?string $name = null): AuditDriverInterface
     {
         /** @var string $driverName */
         $driverName = $name ?? config('bearer.audit.driver', 'database');
@@ -341,10 +341,10 @@ final readonly class BearerManager
     /**
      * Register a custom token type implementation.
      *
-     * @param string    $key  Unique identifier for the token type
-     * @param TokenType $type The token type implementation to register
+     * @param string             $key  Unique identifier for the token type
+     * @param TokenTypeInterface $type The token type implementation to register
      */
-    public function registerTokenType(string $key, TokenType $type): void
+    public function registerTokenType(string $key, TokenTypeInterface $type): void
     {
         $this->tokenTypes->register($key, $type);
     }
@@ -352,10 +352,10 @@ final readonly class BearerManager
     /**
      * Register a custom token generator implementation.
      *
-     * @param string         $name      Unique identifier for the generator
-     * @param TokenGenerator $generator The generator implementation to register
+     * @param string                  $name      Unique identifier for the generator
+     * @param TokenGeneratorInterface $generator The generator implementation to register
      */
-    public function registerTokenGenerator(string $name, TokenGenerator $generator): void
+    public function registerTokenGenerator(string $name, TokenGeneratorInterface $generator): void
     {
         $this->tokenGenerators->register($name, $generator);
     }
@@ -363,10 +363,10 @@ final readonly class BearerManager
     /**
      * Register a custom token hasher implementation.
      *
-     * @param string      $name   Unique identifier for the hasher
-     * @param TokenHasher $hasher The hasher implementation to register
+     * @param string               $name   Unique identifier for the hasher
+     * @param TokenHasherInterface $hasher The hasher implementation to register
      */
-    public function registerTokenHasher(string $name, TokenHasher $hasher): void
+    public function registerTokenHasher(string $name, TokenHasherInterface $hasher): void
     {
         $this->tokenHashers->register($name, $hasher);
     }
@@ -374,10 +374,10 @@ final readonly class BearerManager
     /**
      * Register a custom audit driver implementation.
      *
-     * @param string      $name   Unique identifier for the driver
-     * @param AuditDriver $driver The audit driver implementation to register
+     * @param string               $name   Unique identifier for the driver
+     * @param AuditDriverInterface $driver The audit driver implementation to register
      */
-    public function registerAuditDriver(string $name, AuditDriver $driver): void
+    public function registerAuditDriver(string $name, AuditDriverInterface $driver): void
     {
         $this->auditDrivers->register($name, $driver);
     }
@@ -385,10 +385,10 @@ final readonly class BearerManager
     /**
      * Retrieve a revocation strategy instance by name.
      *
-     * @param  null|string        $name The strategy name or null to use the default from config
-     * @return RevocationStrategy The revocation strategy implementation
+     * @param  null|string                 $name The strategy name or null to use the default from config
+     * @return RevocationStrategyInterface The revocation strategy implementation
      */
-    public function revocationStrategy(?string $name = null): RevocationStrategy
+    public function revocationStrategy(?string $name = null): RevocationStrategyInterface
     {
         /** @var string $strategyName */
         $strategyName = $name ?? config('bearer.revocation.default', 'none');
@@ -399,10 +399,10 @@ final readonly class BearerManager
     /**
      * Register a custom revocation strategy implementation.
      *
-     * @param string             $name     Unique identifier for the strategy
-     * @param RevocationStrategy $strategy The strategy implementation to register
+     * @param string                      $name     Unique identifier for the strategy
+     * @param RevocationStrategyInterface $strategy The strategy implementation to register
      */
-    public function registerRevocationStrategy(string $name, RevocationStrategy $strategy): void
+    public function registerRevocationStrategy(string $name, RevocationStrategyInterface $strategy): void
     {
         $this->revocationStrategies->register($name, $strategy);
     }
@@ -410,10 +410,10 @@ final readonly class BearerManager
     /**
      * Retrieve a rotation strategy instance by name.
      *
-     * @param  null|string      $name The strategy name or null to use the default from config
-     * @return RotationStrategy The rotation strategy implementation
+     * @param  null|string               $name The strategy name or null to use the default from config
+     * @return RotationStrategyInterface The rotation strategy implementation
      */
-    public function rotationStrategy(?string $name = null): RotationStrategy
+    public function rotationStrategy(?string $name = null): RotationStrategyInterface
     {
         /** @var string $strategyName */
         $strategyName = $name ?? config('bearer.rotation.default', 'immediate');
@@ -424,10 +424,10 @@ final readonly class BearerManager
     /**
      * Register a custom rotation strategy implementation.
      *
-     * @param string           $name     Unique identifier for the strategy
-     * @param RotationStrategy $strategy The strategy implementation to register
+     * @param string                    $name     Unique identifier for the strategy
+     * @param RotationStrategyInterface $strategy The strategy implementation to register
      */
-    public function registerRotationStrategy(string $name, RotationStrategy $strategy): void
+    public function registerRotationStrategy(string $name, RotationStrategyInterface $strategy): void
     {
         $this->rotationStrategies->register($name, $strategy);
     }
@@ -479,11 +479,11 @@ final readonly class BearerManager
      * user in the application. Primarily used in test scenarios to simulate
      * authenticated API requests without going through the full authentication flow.
      *
-     * @param  Authenticatable&HasAccessTokens $user      The user to authenticate
-     * @param  array<string>                   $abilities Token abilities (defaults to ['*'] for all)
-     * @param  null|string                     $type      Optional token type identifier
-     * @param  string                          $guard     Authentication guard name (defaults to 'bearer')
-     * @return Authenticatable                 The authenticated user instance
+     * @param  Authenticatable&HasAccessTokensInterface $user      The user to authenticate
+     * @param  array<string>                            $abilities Token abilities (defaults to ['*'] for all)
+     * @param  null|string                              $type      Optional token type identifier
+     * @param  string                                   $guard     Authentication guard name (defaults to 'bearer')
+     * @return Authenticatable                          The authenticated user instance
      */
     public function actingAs(Authenticatable $user, array $abilities = [], ?string $type = null, string $guard = 'bearer'): Authenticatable
     {

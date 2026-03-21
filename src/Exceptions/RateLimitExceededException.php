@@ -23,7 +23,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class RateLimitExceededException extends RuntimeException implements BearerException
+final class RateLimitExceededException extends RuntimeException implements BearerExceptionInterface
 {
     /**
      * Number of seconds until the rate limit resets and new requests can be made.

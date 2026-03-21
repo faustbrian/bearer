@@ -17,7 +17,7 @@ namespace Cline\Bearer\Exceptions;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class NoDefaultTokenHasherException extends TokenHasherNotRegisteredException
+final class NoDefaultTokenHasherException extends AbstractTokenHasherNotRegisteredException
 {
     /**
      * Create an exception for when no default hasher is set.

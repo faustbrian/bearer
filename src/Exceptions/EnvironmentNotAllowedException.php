@@ -20,7 +20,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class EnvironmentNotAllowedException extends InvalidEnvironmentException
+final class EnvironmentNotAllowedException extends AbstractInvalidEnvironmentException
 {
     /**
      * Create an exception for a disallowed environment.

@@ -20,7 +20,7 @@ use InvalidArgumentException;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-abstract class RotationStrategyNotRegisteredException extends InvalidArgumentException implements BearerException
+abstract class AbstractRotationStrategyNotRegisteredException extends InvalidArgumentException implements BearerExceptionInterface
 {
     // Base exception class - see concrete implementations
 }

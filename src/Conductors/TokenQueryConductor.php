@@ -9,7 +9,7 @@
 
 namespace Cline\Bearer\Conductors;
 
-use Cline\Bearer\Contracts\HasAccessTokens as HasAccessTokensContract;
+use Cline\Bearer\Contracts\HasAccessTokensInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -63,13 +63,13 @@ final readonly class TokenQueryConductor
     /**
      * Create a new token query conductor instance.
      *
-     * @param HasAccessTokensContract&Model $owner Eloquent model that owns the tokens to be queried.
-     *                                             Typically a User model with HasAccessTokens trait.
-     *                                             The conductor builds queries against this model's
-     *                                             tokens relationship for filtering and retrieval.
+     * @param HasAccessTokensInterface&Model $owner Eloquent model that owns the tokens to be queried.
+     *                                              Typically a User model with HasAccessTokensTrait.
+     *                                              The conductor builds queries against this model's
+     *                                              tokens relationship for filtering and retrieval.
      */
     public function __construct(
-        private Model&HasAccessTokensContract $owner,
+        private Model&HasAccessTokensInterface $owner,
     ) {
         /** @var Builder<AccessToken> $query */
         $query = $this->owner->accessTokens()->getQuery();

@@ -34,7 +34,7 @@ use Illuminate\Support\Collection;
  * - Hierarchical token systems with parent-child relationships
  *
  * ```php
- * class SingleTokenRevocation implements RevocationStrategy
+ * class SingleTokenRevocation implements RevocationStrategyInterface
  * {
  *     public function revoke(AccessToken $token): void
  *     {
@@ -47,7 +47,7 @@ use Illuminate\Support\Collection;
  *     }
  * }
  *
- * class TokenFamilyRevocation implements RevocationStrategy
+ * class TokenFamilyRevocation implements RevocationStrategyInterface
  * {
  *     public function revoke(AccessToken $token): void
  *     {
@@ -65,7 +65,7 @@ use Illuminate\Support\Collection;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-interface RevocationStrategy
+interface RevocationStrategyInterface
 {
     /**
      * Revoke a token according to this strategy.

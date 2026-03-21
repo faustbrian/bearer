@@ -19,7 +19,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class RevocationStrategyNotFoundException extends RevocationStrategyNotRegisteredException
+final class RevocationStrategyNotFoundException extends AbstractRevocationStrategyNotRegisteredException
 {
     /**
      * Create an exception for an unregistered revocation strategy.

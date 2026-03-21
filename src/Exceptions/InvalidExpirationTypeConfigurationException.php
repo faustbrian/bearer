@@ -17,7 +17,7 @@ namespace Cline\Bearer\Exceptions;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class InvalidExpirationTypeConfigurationException extends InvalidConfigurationException
+final class InvalidExpirationTypeConfigurationException extends AbstractInvalidConfigurationException
 {
     /**
      * Create an exception for invalid expiration field type.

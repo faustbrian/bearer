@@ -20,7 +20,7 @@ use InvalidArgumentException;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-abstract class AuditDriverNotRegisteredException extends InvalidArgumentException implements BearerException
+abstract class AbstractAuditDriverNotRegisteredException extends InvalidArgumentException implements BearerExceptionInterface
 {
     // Abstract base class - use concrete implementations
 }

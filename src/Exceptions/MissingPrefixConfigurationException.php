@@ -17,7 +17,7 @@ namespace Cline\Bearer\Exceptions;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class MissingPrefixConfigurationException extends InvalidConfigurationException
+final class MissingPrefixConfigurationException extends AbstractInvalidConfigurationException
 {
     /**
      * Create an exception for a missing or empty prefix field.

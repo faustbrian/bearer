@@ -9,7 +9,7 @@
 
 namespace Cline\Bearer\TokenGenerators;
 
-use Cline\Bearer\Contracts\TokenGenerator;
+use Cline\Bearer\Contracts\TokenGeneratorInterface;
 use Cline\Bearer\Support\TokenComponents;
 
 use function count;
@@ -31,7 +31,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class SeamTokenGenerator implements TokenGenerator
+final class SeamTokenGenerator implements TokenGeneratorInterface
 {
     /**
      * Base58 alphabet excluding ambiguous characters (0, O, I, l).

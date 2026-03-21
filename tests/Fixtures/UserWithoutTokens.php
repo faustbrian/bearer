@@ -14,7 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Override;
 
 /**
- * Test fixture user model WITHOUT HasAccessTokens trait.
+ * Test fixture user model WITHOUT HasAccessTokensTrait.
  *
  * Used to test edge cases where authenticated users don't support tokens.
  *

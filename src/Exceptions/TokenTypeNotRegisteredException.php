@@ -20,7 +20,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class TokenTypeNotRegisteredException extends InvalidTokenTypeException
+final class TokenTypeNotRegisteredException extends AbstractInvalidTokenTypeException
 {
     /**
      * Create an exception for a token type that has not been registered.

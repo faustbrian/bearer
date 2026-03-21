@@ -14,10 +14,10 @@ use RuntimeException;
 /**
  * @author Brian Faust <brian@cline.sh>
  */
-final class InvalidTokenableException extends RuntimeException implements BearerException
+final class InvalidTokenableException extends RuntimeException implements BearerExceptionInterface
 {
     public static function mustImplementHasAccessTokens(): self
     {
-        return new self('Tokenable model must implement HasAccessTokens interface');
+        return new self('Tokenable model must implement HasAccessTokensInterface');
     }
 }

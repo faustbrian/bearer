@@ -13,12 +13,12 @@ namespace Cline\Bearer\Exceptions;
  * Exception thrown when a parent token lacks an associated owner model.
  *
  * During token derivation, the parent token must have a valid owner relationship
- * that implements the HasAccessTokens contract. This exception occurs when the
+ * that implements the HasAccessTokensInterface contract. This exception occurs when the
  * parent token's owner is null or does not implement the required interface.
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class MissingTokenableForParentException extends MissingTokenableException
+final class MissingTokenableForParentException extends AbstractMissingTokenableException
 {
     /**
      * Create an exception for a parent token without an owner model.

@@ -9,7 +9,7 @@
 
 namespace Cline\Bearer;
 
-use Cline\Bearer\Contracts\HasAbilities;
+use Cline\Bearer\Contracts\HasAbilitiesInterface;
 
 /**
  * An in-memory token that grants all abilities without database persistence.
@@ -24,7 +24,7 @@ use Cline\Bearer\Contracts\HasAbilities;
  * - Exists only in memory for the request lifetime
  * - Is never persisted to the database
  *
- * This provides a consistent HasAbilities interface whether authentication is
+ * This provides a consistent HasAbilitiesInterface interface whether authentication is
  * via session or token, simplifying authorization logic throughout the application.
  *
  * Example usage:
@@ -40,7 +40,7 @@ use Cline\Bearer\Contracts\HasAbilities;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class TransientToken implements HasAbilities
+final class TransientToken implements HasAbilitiesInterface
 {
     /**
      * Determine if the token has a given ability.

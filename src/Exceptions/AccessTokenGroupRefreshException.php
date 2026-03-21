@@ -20,7 +20,7 @@ use RuntimeException;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class AccessTokenGroupRefreshException extends RuntimeException implements BearerException
+final class AccessTokenGroupRefreshException extends RuntimeException implements BearerExceptionInterface
 {
     /**
      * Create an exception for a failed token group refresh after creation.

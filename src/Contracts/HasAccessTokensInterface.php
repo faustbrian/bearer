@@ -33,7 +33,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * - Check permissions via the active token
  *
  * ```php
- * class User extends Model implements HasAccessTokens
+ * class User extends Model implements HasAccessTokensInterface
  * {
  *     use HasAccessTokensTrait;
  *
@@ -51,7 +51,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-interface HasAccessTokens
+interface HasAccessTokensInterface
 {
     /**
      * Get all access tokens owned by this model.
@@ -101,9 +101,9 @@ interface HasAccessTokens
      * to authenticate. Returns null if the model is not currently authenticated
      * via a token (e.g., session authentication) or outside of a request context.
      *
-     * @return null|HasAbilities The current token instance, or null if not authenticated via token
+     * @return null|HasAbilitiesInterface The current token instance, or null if not authenticated via token
      */
-    public function currentAccessToken(): ?HasAbilities;
+    public function currentAccessToken(): ?HasAbilitiesInterface;
 
     /**
      * Set the current access token for this model.
@@ -112,10 +112,10 @@ interface HasAccessTokens
      * This is typically called by authentication guards after successful token
      * validation.
      *
-     * @param  HasAbilities $accessToken The authenticated token instance
-     * @return static       Fluent interface for method chaining
+     * @param  HasAbilitiesInterface $accessToken The authenticated token instance
+     * @return static                Fluent interface for method chaining
      */
-    public function withAccessToken(HasAbilities $accessToken): static;
+    public function withAccessToken(HasAbilitiesInterface $accessToken): static;
 
     /**
      * Determine if the current token has a given ability.

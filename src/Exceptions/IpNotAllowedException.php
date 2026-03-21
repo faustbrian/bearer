@@ -21,7 +21,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class IpNotAllowedException extends IpRestrictionException
+final class IpNotAllowedException extends AbstractIpRestrictionException
 {
     /**
      * Create an exception for a disallowed IP address.

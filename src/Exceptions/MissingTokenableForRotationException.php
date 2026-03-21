@@ -13,12 +13,12 @@ namespace Cline\Bearer\Exceptions;
  * Exception thrown when a token lacks an associated owner model during rotation.
  *
  * During token rotation, the token must have a valid owner relationship
- * that implements the HasAccessTokens contract. This exception occurs when the
+ * that implements the HasAccessTokensInterface contract. This exception occurs when the
  * owner is null or does not implement the required interface.
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class MissingTokenableForRotationException extends MissingTokenableException
+final class MissingTokenableForRotationException extends AbstractMissingTokenableException
 {
     /**
      * Create an exception for a token without a valid owner model during rotation.

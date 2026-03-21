@@ -23,7 +23,7 @@ use RuntimeException;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-abstract class InvalidConfigurationException extends RuntimeException implements BearerException, ProvidesSolution
+abstract class AbstractInvalidConfigurationException extends RuntimeException implements BearerExceptionInterface, ProvidesSolution
 {
     // Abstract base class - no factory methods
 

@@ -20,7 +20,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class DisallowedDomainException extends DomainRestrictionException
+final class DisallowedDomainException extends AbstractDomainRestrictionException
 {
     /**
      * Create an exception for a disallowed domain without listing allowed domains.

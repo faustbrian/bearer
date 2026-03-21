@@ -9,7 +9,7 @@
 
 namespace Cline\Bearer\TokenTypes;
 
-use Cline\Bearer\Contracts\TokenType;
+use Cline\Bearer\Contracts\TokenTypeInterface;
 use Cline\Bearer\Exceptions\TokenTypeNotRegisteredException;
 
 use function array_key_exists;
@@ -44,7 +44,7 @@ final class TokenTypeRegistry
     /**
      * Registered token types indexed by their name.
      *
-     * @var array<string, TokenType>
+     * @var array<string, TokenTypeInterface>
      */
     private array $types = [];
 
@@ -54,10 +54,10 @@ final class TokenTypeRegistry
      * Associates a token type instance with a unique key for later retrieval.
      * If a type with the same key already exists, it will be replaced.
      *
-     * @param string    $key  Unique identifier for this token type
-     * @param TokenType $type Token type instance to register
+     * @param string             $key  Unique identifier for this token type
+     * @param TokenTypeInterface $type Token type instance to register
      */
-    public function register(string $key, TokenType $type): void
+    public function register(string $key, TokenTypeInterface $type): void
     {
         $this->types[$key] = $type;
     }
@@ -69,9 +69,9 @@ final class TokenTypeRegistry
      *
      * @throws TokenTypeNotRegisteredException If no token type is registered with the given key
      *
-     * @return TokenType The registered token type
+     * @return TokenTypeInterface The registered token type
      */
-    public function get(string $key): TokenType
+    public function get(string $key): TokenTypeInterface
     {
         if (!$this->has($key)) {
             throw TokenTypeNotRegisteredException::notRegistered($key);
@@ -94,7 +94,7 @@ final class TokenTypeRegistry
     /**
      * Get all registered token types.
      *
-     * @return array<string, TokenType> All registered token types indexed by key
+     * @return array<string, TokenTypeInterface> All registered token types indexed by key
      */
     public function all(): array
     {
@@ -108,10 +108,10 @@ final class TokenTypeRegistry
      * prefix. This is useful for automatically determining token type from
      * a token string (e.g., 'sk_abc123' -> SecretTokenType).
      *
-     * @param  string         $prefix Token prefix to search for
-     * @return null|TokenType The matching token type, or null if none found
+     * @param  string                  $prefix Token prefix to search for
+     * @return null|TokenTypeInterface The matching token type, or null if none found
      */
-    public function findByPrefix(string $prefix): ?TokenType
+    public function findByPrefix(string $prefix): ?TokenTypeInterface
     {
         foreach ($this->types as $type) {
             if ($type->prefix() === $prefix) {

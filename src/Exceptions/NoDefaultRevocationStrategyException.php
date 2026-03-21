@@ -17,7 +17,7 @@ namespace Cline\Bearer\Exceptions;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class NoDefaultRevocationStrategyException extends RevocationStrategyNotRegisteredException
+final class NoDefaultRevocationStrategyException extends AbstractRevocationStrategyNotRegisteredException
 {
     /**
      * Create an exception when no default strategy is registered.

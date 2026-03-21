@@ -8,20 +8,23 @@
  */
 
 use Carbon\CarbonImmutable;
+use Cline\Bearer\Exceptions\AbstractDomainRestrictionException;
+use Cline\Bearer\Exceptions\AbstractInvalidEnvironmentException;
+use Cline\Bearer\Exceptions\AbstractInvalidPrimaryKeyValueException;
+use Cline\Bearer\Exceptions\AbstractInvalidTokenTypeException;
+use Cline\Bearer\Exceptions\AbstractIpRestrictionException;
+use Cline\Bearer\Exceptions\AbstractMissingAbilityException;
+use Cline\Bearer\Exceptions\AbstractTokenExpiredException;
+use Cline\Bearer\Exceptions\AbstractTokenNotFoundException;
+use Cline\Bearer\Exceptions\AbstractTokenRevokedException;
 use Cline\Bearer\Exceptions\AnyAbilityMissingException;
 use Cline\Bearer\Exceptions\CannotSetDefaultTokenGeneratorException;
 use Cline\Bearer\Exceptions\DisallowedDomainException;
 use Cline\Bearer\Exceptions\DisallowedIpException;
 use Cline\Bearer\Exceptions\DomainNotAllowedException;
-use Cline\Bearer\Exceptions\DomainRestrictionException;
 use Cline\Bearer\Exceptions\EnvironmentNotAllowedException;
-use Cline\Bearer\Exceptions\InvalidEnvironmentException;
 use Cline\Bearer\Exceptions\InvalidMorphTypeConfigurationException;
-use Cline\Bearer\Exceptions\InvalidPrimaryKeyValueException;
-use Cline\Bearer\Exceptions\InvalidTokenTypeException;
 use Cline\Bearer\Exceptions\IpNotAllowedException;
-use Cline\Bearer\Exceptions\IpRestrictionException;
-use Cline\Bearer\Exceptions\MissingAbilityException;
 use Cline\Bearer\Exceptions\MissingAuditDriverConfigurationException;
 use Cline\Bearer\Exceptions\MissingDomainHeaderException;
 use Cline\Bearer\Exceptions\MissingTokenTypeConfigurationException;
@@ -31,22 +34,19 @@ use Cline\Bearer\Exceptions\NonStringUuidException;
 use Cline\Bearer\Exceptions\RateLimitExceededException;
 use Cline\Bearer\Exceptions\SingleAbilityMissingException;
 use Cline\Bearer\Exceptions\TokenExpiredAtException;
-use Cline\Bearer\Exceptions\TokenExpiredException;
 use Cline\Bearer\Exceptions\TokenGeneratorNotFoundException;
 use Cline\Bearer\Exceptions\TokenHasBeenRevokedException;
 use Cline\Bearer\Exceptions\TokenHasExpiredException;
 use Cline\Bearer\Exceptions\TokenNotFoundByIdException;
 use Cline\Bearer\Exceptions\TokenNotFoundByPrefixException;
-use Cline\Bearer\Exceptions\TokenNotFoundException;
 use Cline\Bearer\Exceptions\TokenRevokedAtException;
-use Cline\Bearer\Exceptions\TokenRevokedException;
 use Cline\Bearer\Exceptions\TokenTypeNotAllowedException;
 use Cline\Bearer\Exceptions\TokenTypeNotRegisteredException;
 use Cline\Bearer\Exceptions\UnknownEnvironmentException;
 use Cline\Bearer\Exceptions\UnknownTokenTypeException;
 use Illuminate\Support\Facades\Date;
 
-describe('DomainRestrictionException', function (): void {
+describe('AbstractDomainRestrictionException', function (): void {
     describe('Happy Path', function (): void {
         test('creates exception with notAllowed factory method', function (): void {
             // Arrange
@@ -57,7 +57,7 @@ describe('DomainRestrictionException', function (): void {
             $exception = DomainNotAllowedException::notAllowed($domain, $allowedDomains);
 
             // Assert
-            expect($exception)->toBeInstanceOf(DomainRestrictionException::class);
+            expect($exception)->toBeInstanceOf(AbstractDomainRestrictionException::class);
             expect($exception->getMessage())->toBe("Domain 'evil.com' is not allowed. Allowed domains: example.com, api.example.com");
         });
 
@@ -93,7 +93,7 @@ describe('DomainRestrictionException', function (): void {
             $exception = DisallowedDomainException::forDomain($domain);
 
             // Assert
-            expect($exception)->toBeInstanceOf(DomainRestrictionException::class);
+            expect($exception)->toBeInstanceOf(AbstractDomainRestrictionException::class);
             expect($exception->getMessage())->toBe('Domain unauthorized.com is not allowed for this token.');
         });
 
@@ -102,7 +102,7 @@ describe('DomainRestrictionException', function (): void {
             $exception = MissingDomainHeaderException::missingHeader();
 
             // Assert
-            expect($exception)->toBeInstanceOf(DomainRestrictionException::class);
+            expect($exception)->toBeInstanceOf(AbstractDomainRestrictionException::class);
             expect($exception->getMessage())->toBe('No origin or referer header present for domain validation.');
         });
     });
@@ -156,7 +156,7 @@ describe('InvalidMorphTypeConfigurationException', function (): void {
     });
 });
 
-describe('InvalidEnvironmentException', function (): void {
+describe('AbstractInvalidEnvironmentException', function (): void {
     describe('Happy Path', function (): void {
         test('creates exception for unknown environment', function (): void {
             // Arrange
@@ -166,7 +166,7 @@ describe('InvalidEnvironmentException', function (): void {
             $exception = UnknownEnvironmentException::unknown($environment);
 
             // Assert
-            expect($exception)->toBeInstanceOf(InvalidEnvironmentException::class);
+            expect($exception)->toBeInstanceOf(AbstractInvalidEnvironmentException::class);
             expect($exception->getMessage())->toBe('Unknown environment: staging');
         });
 
@@ -179,7 +179,7 @@ describe('InvalidEnvironmentException', function (): void {
             $exception = EnvironmentNotAllowedException::notAllowed($environment, $allowed);
 
             // Assert
-            expect($exception)->toBeInstanceOf(InvalidEnvironmentException::class);
+            expect($exception)->toBeInstanceOf(AbstractInvalidEnvironmentException::class);
             expect($exception->getMessage())->toBe("Environment 'production' is not allowed. Allowed environments: test, live");
         });
 
@@ -197,7 +197,7 @@ describe('InvalidEnvironmentException', function (): void {
     });
 });
 
-describe('InvalidPrimaryKeyValueException', function (): void {
+describe('AbstractInvalidPrimaryKeyValueException', function (): void {
     describe('Happy Path', function (): void {
         test('creates exception for non-string UUID', function (): void {
             // Arrange
@@ -207,7 +207,7 @@ describe('InvalidPrimaryKeyValueException', function (): void {
             $exception = NonStringUuidException::nonStringUuid($value);
 
             // Assert
-            expect($exception)->toBeInstanceOf(InvalidPrimaryKeyValueException::class);
+            expect($exception)->toBeInstanceOf(AbstractInvalidPrimaryKeyValueException::class);
             expect($exception->getMessage())->toBe('Cannot assign non-string value to UUID primary key. Got: integer');
         });
 
@@ -219,7 +219,7 @@ describe('InvalidPrimaryKeyValueException', function (): void {
             $exception = NonStringUlidException::nonStringUlid($value);
 
             // Assert
-            expect($exception)->toBeInstanceOf(InvalidPrimaryKeyValueException::class);
+            expect($exception)->toBeInstanceOf(AbstractInvalidPrimaryKeyValueException::class);
             expect($exception->getMessage())->toBe('Cannot assign non-string value to ULID primary key. Got: array');
         });
 
@@ -249,7 +249,7 @@ describe('InvalidPrimaryKeyValueException', function (): void {
     });
 });
 
-describe('InvalidTokenTypeException', function (): void {
+describe('AbstractInvalidTokenTypeException', function (): void {
     describe('Happy Path', function (): void {
         test('creates exception for unknown token type', function (): void {
             // Arrange
@@ -259,7 +259,7 @@ describe('InvalidTokenTypeException', function (): void {
             $exception = UnknownTokenTypeException::unknown($type);
 
             // Assert
-            expect($exception)->toBeInstanceOf(InvalidTokenTypeException::class);
+            expect($exception)->toBeInstanceOf(AbstractInvalidTokenTypeException::class);
             expect($exception->getMessage())->toBe('Unknown token type: unknown');
         });
 
@@ -271,7 +271,7 @@ describe('InvalidTokenTypeException', function (): void {
             $exception = TokenTypeNotRegisteredException::notRegistered($type);
 
             // Assert
-            expect($exception)->toBeInstanceOf(InvalidTokenTypeException::class);
+            expect($exception)->toBeInstanceOf(AbstractInvalidTokenTypeException::class);
             expect($exception->getMessage())->toBe("Token type 'custom' is not registered in the configuration.");
         });
 
@@ -284,7 +284,7 @@ describe('InvalidTokenTypeException', function (): void {
             $exception = TokenTypeNotAllowedException::notAllowedForRequest($currentType, $allowedTypes);
 
             // Assert
-            expect($exception)->toBeInstanceOf(InvalidTokenTypeException::class);
+            expect($exception)->toBeInstanceOf(AbstractInvalidTokenTypeException::class);
             expect($exception->getMessage())->toBe("Token type 'personal' is not allowed. Allowed types: admin, service");
         });
 
@@ -326,7 +326,7 @@ describe('IpNotAllowedException', function (): void {
 
             // Assert
             expect($exception)->toBeInstanceOf(IpNotAllowedException::class);
-            expect($exception)->toBeInstanceOf(IpRestrictionException::class);
+            expect($exception)->toBeInstanceOf(AbstractIpRestrictionException::class);
             expect($exception->getMessage())->toBe("IP address '192.168.1.100' is not allowed. Allowed IPs: 10.0.0.0/8, 192.168.1.1");
         });
 
@@ -368,13 +368,13 @@ describe('DisallowedIpException', function (): void {
 
             // Assert
             expect($exception)->toBeInstanceOf(DisallowedIpException::class);
-            expect($exception)->toBeInstanceOf(IpRestrictionException::class);
+            expect($exception)->toBeInstanceOf(AbstractIpRestrictionException::class);
             expect($exception->getMessage())->toBe('IP address 203.0.113.42 is not allowed for this token.');
         });
     });
 });
 
-describe('MissingAbilityException', function (): void {
+describe('AbstractMissingAbilityException', function (): void {
     describe('Happy Path', function (): void {
         test('creates exception for missing single ability', function (): void {
             // Arrange
@@ -384,7 +384,7 @@ describe('MissingAbilityException', function (): void {
             $exception = SingleAbilityMissingException::missing($ability);
 
             // Assert
-            expect($exception)->toBeInstanceOf(MissingAbilityException::class);
+            expect($exception)->toBeInstanceOf(AbstractMissingAbilityException::class);
             expect($exception->getMessage())->toBe('Token is missing required ability: delete:posts');
         });
 
@@ -396,7 +396,7 @@ describe('MissingAbilityException', function (): void {
             $exception = AnyAbilityMissingException::missingAny($abilities);
 
             // Assert
-            expect($exception)->toBeInstanceOf(MissingAbilityException::class);
+            expect($exception)->toBeInstanceOf(AbstractMissingAbilityException::class);
             expect($exception->getMessage())->toBe('Token is missing any of the required abilities: read:users, write:users, delete:users');
         });
 
@@ -454,7 +454,7 @@ describe('RateLimitExceededException', function (): void {
     });
 });
 
-describe('TokenExpiredException', function (): void {
+describe('AbstractTokenExpiredException', function (): void {
     describe('Happy Path', function (): void {
         test('creates exception with expiration timestamp', function (): void {
             // Arrange
@@ -464,7 +464,7 @@ describe('TokenExpiredException', function (): void {
             $exception = TokenExpiredAtException::at($expiredAt);
 
             // Assert
-            expect($exception)->toBeInstanceOf(TokenExpiredException::class);
+            expect($exception)->toBeInstanceOf(AbstractTokenExpiredException::class);
             expect($exception->getMessage())->toBe('Token expired at 2024-01-15 10:30:00');
         });
 
@@ -495,13 +495,13 @@ describe('TokenExpiredException', function (): void {
             $exception = TokenHasExpiredException::expired();
 
             // Assert
-            expect($exception)->toBeInstanceOf(TokenExpiredException::class);
+            expect($exception)->toBeInstanceOf(AbstractTokenExpiredException::class);
             expect($exception->getMessage())->toBe('This token has expired.');
         });
     });
 });
 
-describe('TokenNotFoundException', function (): void {
+describe('AbstractTokenNotFoundException', function (): void {
     describe('Happy Path', function (): void {
         test('creates exception for prefix not found', function (): void {
             // Arrange
@@ -511,7 +511,7 @@ describe('TokenNotFoundException', function (): void {
             $exception = TokenNotFoundByPrefixException::forPrefix($prefix);
 
             // Assert
-            expect($exception)->toBeInstanceOf(TokenNotFoundException::class);
+            expect($exception)->toBeInstanceOf(AbstractTokenNotFoundException::class);
             expect($exception->getMessage())->toBe("Token with prefix 'sk_test_abc123' not found.");
         });
 
@@ -523,7 +523,7 @@ describe('TokenNotFoundException', function (): void {
             $exception = TokenNotFoundByIdException::forId($id);
 
             // Assert
-            expect($exception)->toBeInstanceOf(TokenNotFoundException::class);
+            expect($exception)->toBeInstanceOf(AbstractTokenNotFoundException::class);
             expect($exception->getMessage())->toBe("Token with ID '12345' not found.");
         });
 
@@ -535,13 +535,13 @@ describe('TokenNotFoundException', function (): void {
             $exception = TokenNotFoundByIdException::forId($id);
 
             // Assert
-            expect($exception)->toBeInstanceOf(TokenNotFoundException::class);
+            expect($exception)->toBeInstanceOf(AbstractTokenNotFoundException::class);
             expect($exception->getMessage())->toBe("Token with ID '550e8400-e29b-41d4-a716-446655440000' not found.");
         });
     });
 });
 
-describe('TokenRevokedException', function (): void {
+describe('AbstractTokenRevokedException', function (): void {
     describe('Happy Path', function (): void {
         test('creates exception with revocation timestamp', function (): void {
             // Arrange
@@ -551,7 +551,7 @@ describe('TokenRevokedException', function (): void {
             $exception = TokenRevokedAtException::at($revokedAt);
 
             // Assert
-            expect($exception)->toBeInstanceOf(TokenRevokedException::class);
+            expect($exception)->toBeInstanceOf(AbstractTokenRevokedException::class);
             expect($exception->getMessage())->toBe('Token was revoked at 2024-02-20 15:45:30');
         });
 
@@ -582,13 +582,13 @@ describe('TokenRevokedException', function (): void {
             $exception = TokenHasBeenRevokedException::revoked();
 
             // Assert
-            expect($exception)->toBeInstanceOf(TokenRevokedException::class);
+            expect($exception)->toBeInstanceOf(AbstractTokenRevokedException::class);
             expect($exception->getMessage())->toBe('This token has been revoked.');
         });
     });
 });
 
-describe('TokenGeneratorNotRegisteredException', function (): void {
+describe('AbstractTokenGeneratorNotRegisteredException', function (): void {
     describe('Happy Path', function (): void {
         test('creates exception for generator not found by name', function (): void {
             // Arrange

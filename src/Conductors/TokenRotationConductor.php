@@ -10,7 +10,7 @@
 namespace Cline\Bearer\Conductors;
 
 use Cline\Bearer\BearerManager;
-use Cline\Bearer\Contracts\HasAccessTokens;
+use Cline\Bearer\Contracts\HasAccessTokensInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Enums\AuditEvent;
 use Cline\Bearer\Enums\RotationMode;
@@ -105,7 +105,7 @@ final readonly class TokenRotationConductor
 
         $owner = $this->token->owner;
 
-        if ($owner === null || !$owner instanceof HasAccessTokens) {
+        if ($owner === null || !$owner instanceof HasAccessTokensInterface) {
             throw MissingTokenableForRotationException::forRotation();
         }
 

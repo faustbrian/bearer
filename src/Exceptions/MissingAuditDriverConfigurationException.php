@@ -19,7 +19,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class MissingAuditDriverConfigurationException extends InvalidConfigurationException
+final class MissingAuditDriverConfigurationException extends AbstractInvalidConfigurationException
 {
     /**
      * Create an exception for a missing audit driver configuration.

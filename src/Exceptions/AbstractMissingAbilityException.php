@@ -20,4 +20,4 @@ use RuntimeException;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-abstract class MissingAbilityException extends RuntimeException implements BearerException {}
+abstract class AbstractMissingAbilityException extends RuntimeException implements BearerExceptionInterface {}

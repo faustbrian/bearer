@@ -11,12 +11,12 @@ namespace Cline\Bearer\Facades;
 
 use Cline\Bearer\BearerManager;
 use Cline\Bearer\Conductors\TokenIssuanceConductor;
-use Cline\Bearer\Contracts\AuditDriver;
-use Cline\Bearer\Contracts\RevocationStrategy;
-use Cline\Bearer\Contracts\RotationStrategy;
-use Cline\Bearer\Contracts\TokenGenerator;
-use Cline\Bearer\Contracts\TokenHasher;
-use Cline\Bearer\Contracts\TokenType;
+use Cline\Bearer\Contracts\AuditDriverInterface;
+use Cline\Bearer\Contracts\RevocationStrategyInterface;
+use Cline\Bearer\Contracts\RotationStrategyInterface;
+use Cline\Bearer\Contracts\TokenGeneratorInterface;
+use Cline\Bearer\Contracts\TokenHasherInterface;
+use Cline\Bearer\Contracts\TokenTypeInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\NewAccessToken;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -41,30 +41,30 @@ use Illuminate\Support\Facades\Facade;
  * Bearer::revoke($accessToken);
  * ```
  *
- * @method static string                 accessTokenModel()
- * @method static Authenticatable        actingAs(Authenticatable $user, array<int, string> $abilities = [], ?string $type = null, string $guard = 'bearer')
- * @method static AuditDriver            auditDriver(?string $name = null)
- * @method static void                   authenticateAccessTokensUsing(?\Closure $callback)
- * @method static AccessToken|null       findAccessToken(string $token)
- * @method static AccessToken|null       findByPrefix(string $prefix)
- * @method static TokenIssuanceConductor for(Model $owner)
- * @method static void                   getAccessTokenFromRequestUsing(?\Closure $callback)
- * @method static void                   registerAuditDriver(string $name, AuditDriver $driver)
- * @method static void                   registerRevocationStrategy(string $name, RevocationStrategy $strategy)
- * @method static void                   registerRotationStrategy(string $name, RotationStrategy $strategy)
- * @method static void                   registerTokenGenerator(string $name, TokenGenerator $generator)
- * @method static void                   registerTokenHasher(string $name, TokenHasher $hasher)
- * @method static void                   registerTokenType(string $key, TokenType $type)
- * @method static RevocationStrategy     revocationStrategy(?string $name = null)
- * @method static void                   revoke(AccessToken $token, ?string $strategy = null)
- * @method static NewAccessToken         rotate(AccessToken $token, ?string $strategy = null)
- * @method static RotationStrategy       rotationStrategy(?string $name = null)
- * @method static TokenGenerator         tokenGenerator(?string $name = null)
- * @method static string                 tokenGroupModel()
- * @method static TokenHasher            tokenHasher(?string $name = null)
- * @method static TokenType              tokenType(string $type)
- * @method static void                   useAccessTokenGroupModel(string $model)
- * @method static void                   useAccessTokenModel(string $model)
+ * @method static string                      accessTokenModel()
+ * @method static Authenticatable             actingAs(Authenticatable $user, array<int, string> $abilities = [], ?string $type = null, string $guard = 'bearer')
+ * @method static AuditDriverInterface        auditDriver(?string $name = null)
+ * @method static void                        authenticateAccessTokensUsing(?\Closure $callback)
+ * @method static AccessToken|null            findAccessToken(string $token)
+ * @method static AccessToken|null            findByPrefix(string $prefix)
+ * @method static TokenIssuanceConductor      for(Model $owner)
+ * @method static void                        getAccessTokenFromRequestUsing(?\Closure $callback)
+ * @method static void                        registerAuditDriver(string $name, AuditDriverInterface $driver)
+ * @method static void                        registerRevocationStrategy(string $name, RevocationStrategyInterface $strategy)
+ * @method static void                        registerRotationStrategy(string $name, RotationStrategyInterface $strategy)
+ * @method static void                        registerTokenGenerator(string $name, TokenGeneratorInterface $generator)
+ * @method static void                        registerTokenHasher(string $name, TokenHasherInterface $hasher)
+ * @method static void                        registerTokenType(string $key, TokenTypeInterface $type)
+ * @method static RevocationStrategyInterface revocationStrategy(?string $name = null)
+ * @method static void                        revoke(AccessToken $token, ?string $strategy = null)
+ * @method static NewAccessToken              rotate(AccessToken $token, ?string $strategy = null)
+ * @method static RotationStrategyInterface   rotationStrategy(?string $name = null)
+ * @method static TokenGeneratorInterface     tokenGenerator(?string $name = null)
+ * @method static string                      tokenGroupModel()
+ * @method static TokenHasherInterface        tokenHasher(?string $name = null)
+ * @method static TokenTypeInterface          tokenType(string $type)
+ * @method static void                        useAccessTokenGroupModel(string $model)
+ * @method static void                        useAccessTokenModel(string $model)
  *
  * @author Brian Faust <brian@cline.sh>
  * @see BearerManager

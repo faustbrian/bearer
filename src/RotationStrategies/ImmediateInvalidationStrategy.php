@@ -9,7 +9,7 @@
 
 namespace Cline\Bearer\RotationStrategies;
 
-use Cline\Bearer\Contracts\RotationStrategy;
+use Cline\Bearer\Contracts\RotationStrategyInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 
 use function now;
@@ -34,7 +34,7 @@ use function now;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class ImmediateInvalidationStrategy implements RotationStrategy
+final class ImmediateInvalidationStrategy implements RotationStrategyInterface
 {
     /**
      * Rotate the token and immediately revoke the old token.

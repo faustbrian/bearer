@@ -21,7 +21,7 @@ use RuntimeException;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-abstract class InvalidEnvironmentException extends RuntimeException implements BearerException
+abstract class AbstractInvalidEnvironmentException extends RuntimeException implements BearerExceptionInterface
 {
     // Abstract base class - see concrete implementations
 }

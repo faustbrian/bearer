@@ -31,7 +31,7 @@ use Orchestra\Testbench\TestCase as Orchestra;
  * @author Brian Faust <brian@cline.sh>
  * @internal
  */
-abstract class TestCase extends Orchestra
+abstract class AbstractTestCase extends Orchestra
 {
     use RefreshDatabase;
 

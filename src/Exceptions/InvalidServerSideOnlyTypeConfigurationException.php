@@ -17,7 +17,7 @@ namespace Cline\Bearer\Exceptions;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class InvalidServerSideOnlyTypeConfigurationException extends InvalidConfigurationException
+final class InvalidServerSideOnlyTypeConfigurationException extends AbstractInvalidConfigurationException
 {
     /**
      * Create an exception for invalid server_side_only field type.

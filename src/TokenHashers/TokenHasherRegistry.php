@@ -9,7 +9,7 @@
 
 namespace Cline\Bearer\TokenHashers;
 
-use Cline\Bearer\Contracts\TokenHasher;
+use Cline\Bearer\Contracts\TokenHasherInterface;
 use Cline\Bearer\Exceptions\NoDefaultTokenHasherException;
 use Cline\Bearer\Exceptions\TokenHasherNotFoundException;
 
@@ -28,7 +28,7 @@ final class TokenHasherRegistry
     /**
      * Registered token hashers.
      *
-     * @var array<string, TokenHasher>
+     * @var array<string, TokenHasherInterface>
      */
     private array $hashers = [];
 
@@ -40,10 +40,10 @@ final class TokenHasherRegistry
     /**
      * Register a token hasher with the given name.
      *
-     * @param string      $name   The hasher name
-     * @param TokenHasher $hasher The hasher implementation
+     * @param string               $name   The hasher name
+     * @param TokenHasherInterface $hasher The hasher implementation
      */
-    public function register(string $name, TokenHasher $hasher): void
+    public function register(string $name, TokenHasherInterface $hasher): void
     {
         $this->hashers[$name] = $hasher;
     }
@@ -55,9 +55,9 @@ final class TokenHasherRegistry
      *
      * @throws TokenHasherNotFoundException If the hasher is not registered
      *
-     * @return TokenHasher The hasher implementation
+     * @return TokenHasherInterface The hasher implementation
      */
-    public function get(string $name): TokenHasher
+    public function get(string $name): TokenHasherInterface
     {
         if (!$this->has($name)) {
             throw TokenHasherNotFoundException::forHasher($name);
@@ -82,9 +82,9 @@ final class TokenHasherRegistry
      *
      * @throws NoDefaultTokenHasherException If no default hasher is set or it's not registered
      *
-     * @return TokenHasher The default hasher implementation
+     * @return TokenHasherInterface The default hasher implementation
      */
-    public function default(): TokenHasher
+    public function default(): TokenHasherInterface
     {
         if ($this->defaultHasher === null) {
             throw NoDefaultTokenHasherException::noDefault();
@@ -106,7 +106,7 @@ final class TokenHasherRegistry
     /**
      * Get all registered token hashers.
      *
-     * @return array<string, TokenHasher> The registered hashers
+     * @return array<string, TokenHasherInterface> The registered hashers
      */
     public function all(): array
     {

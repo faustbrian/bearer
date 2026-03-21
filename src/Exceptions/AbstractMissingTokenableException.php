@@ -16,7 +16,7 @@ use RuntimeException;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-abstract class MissingTokenableException extends RuntimeException implements BearerException
+abstract class AbstractMissingTokenableException extends RuntimeException implements BearerExceptionInterface
 {
     // Base exception class - concrete implementations provide specific contexts
 }

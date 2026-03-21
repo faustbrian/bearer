@@ -18,7 +18,7 @@ namespace Cline\Bearer\Exceptions;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class UnknownTokenTypeException extends InvalidTokenTypeException
+final class UnknownTokenTypeException extends AbstractInvalidTokenTypeException
 {
     /**
      * Create an exception for an unknown token type.

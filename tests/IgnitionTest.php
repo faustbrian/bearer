@@ -7,12 +7,12 @@
  * file that was distributed with this source code.
  */
 
-use Cline\Bearer\Exceptions\InvalidConfigurationException;
+use Cline\Bearer\Exceptions\AbstractInvalidConfigurationException;
 use Facade\IgnitionContracts\ProvidesSolution;
 use Facade\IgnitionContracts\Solution;
 
 it('provides an ignition solution', function (): void {
-    $exception = new class() extends InvalidConfigurationException
+    $exception = new class() extends AbstractInvalidConfigurationException
     {
         public function __construct() {}
     };

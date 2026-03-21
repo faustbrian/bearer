@@ -20,7 +20,7 @@ use InvalidArgumentException;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-abstract class RevocationStrategyNotRegisteredException extends InvalidArgumentException implements BearerException
+abstract class AbstractRevocationStrategyNotRegisteredException extends InvalidArgumentException implements BearerExceptionInterface
 {
     // Abstract base class - see concrete implementations
 }

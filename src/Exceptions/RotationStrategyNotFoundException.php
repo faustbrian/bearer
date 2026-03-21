@@ -19,7 +19,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class RotationStrategyNotFoundException extends RotationStrategyNotRegisteredException
+final class RotationStrategyNotFoundException extends AbstractRotationStrategyNotRegisteredException
 {
     /**
      * Create an exception for an unregistered rotation strategy.

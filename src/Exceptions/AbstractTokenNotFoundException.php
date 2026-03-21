@@ -20,7 +20,7 @@ use RuntimeException;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-abstract class TokenNotFoundException extends RuntimeException implements BearerException
+abstract class AbstractTokenNotFoundException extends RuntimeException implements BearerExceptionInterface
 {
     // Base exception - use specific subclasses
 }

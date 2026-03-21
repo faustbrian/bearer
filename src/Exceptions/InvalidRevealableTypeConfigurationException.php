@@ -17,7 +17,7 @@ namespace Cline\Bearer\Exceptions;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class InvalidRevealableTypeConfigurationException extends InvalidConfigurationException
+final class InvalidRevealableTypeConfigurationException extends AbstractInvalidConfigurationException
 {
     /**
      * Create an exception for invalid revealable field type.

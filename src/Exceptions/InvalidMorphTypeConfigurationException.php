@@ -19,7 +19,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class InvalidMorphTypeConfigurationException extends InvalidConfigurationException
+final class InvalidMorphTypeConfigurationException extends AbstractInvalidConfigurationException
 {
     /**
      * Create an exception for an invalid morph type configuration.

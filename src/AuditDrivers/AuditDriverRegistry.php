@@ -9,7 +9,7 @@
 
 namespace Cline\Bearer\AuditDrivers;
 
-use Cline\Bearer\Contracts\AuditDriver;
+use Cline\Bearer\Contracts\AuditDriverInterface;
 use Cline\Bearer\Exceptions\AuditDriverNotFoundException;
 use Cline\Bearer\Exceptions\CannotSetDefaultAuditDriverException;
 use Cline\Bearer\Exceptions\NoDefaultAuditDriverException;
@@ -62,7 +62,7 @@ final class AuditDriverRegistry
     /**
      * Registered audit drivers.
      *
-     * @var array<string, AuditDriver>
+     * @var array<string, AuditDriverInterface>
      */
     private array $drivers = [];
 
@@ -74,10 +74,10 @@ final class AuditDriverRegistry
     /**
      * Register an audit driver with a given name.
      *
-     * @param string      $name   Unique identifier for this driver
-     * @param AuditDriver $driver The driver implementation to register
+     * @param string               $name   Unique identifier for this driver
+     * @param AuditDriverInterface $driver The driver implementation to register
      */
-    public function register(string $name, AuditDriver $driver): void
+    public function register(string $name, AuditDriverInterface $driver): void
     {
         $this->drivers[$name] = $driver;
 
@@ -96,9 +96,9 @@ final class AuditDriverRegistry
      *
      * @throws AuditDriverNotFoundException If the driver is not registered
      *
-     * @return AuditDriver The requested driver instance
+     * @return AuditDriverInterface The requested driver instance
      */
-    public function get(string $name): AuditDriver
+    public function get(string $name): AuditDriverInterface
     {
         if (!$this->has($name)) {
             throw AuditDriverNotFoundException::forName($name);
@@ -123,9 +123,9 @@ final class AuditDriverRegistry
      *
      * @throws NoDefaultAuditDriverException If no drivers are registered
      *
-     * @return AuditDriver The default driver instance
+     * @return AuditDriverInterface The default driver instance
      */
-    public function default(): AuditDriver
+    public function default(): AuditDriverInterface
     {
         if ($this->defaultDriver === null) {
             throw NoDefaultAuditDriverException::noDefault();

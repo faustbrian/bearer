@@ -19,7 +19,7 @@ use Throwable;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-interface BearerException extends Throwable
+interface BearerExceptionInterface extends Throwable
 {
     // Marker interface - no methods required
 }

@@ -17,7 +17,7 @@ namespace Cline\Bearer\Exceptions;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class InvalidEnvironmentsTypeConfigurationException extends InvalidConfigurationException
+final class InvalidEnvironmentsTypeConfigurationException extends AbstractInvalidConfigurationException
 {
     /**
      * Create an exception for invalid environments field type.

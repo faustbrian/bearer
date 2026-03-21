@@ -24,7 +24,7 @@ namespace Cline\Bearer\Contracts;
  * - Admin tokens: Elevated permissions, strict environment controls
  *
  * ```php
- * class ServiceTokenType implements TokenType
+ * class ServiceTokenType implements TokenTypeInterface
  * {
  *     public function name(): string { return 'service'; }
  *     public function prefix(): string { return 'svc'; }
@@ -38,7 +38,7 @@ namespace Cline\Bearer\Contracts;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-interface TokenType
+interface TokenTypeInterface
 {
     /**
      * Get the unique name/identifier for this token type.

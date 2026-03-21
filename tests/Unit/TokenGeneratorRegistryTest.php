@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-use Cline\Bearer\Contracts\TokenGenerator;
+use Cline\Bearer\Contracts\TokenGeneratorInterface;
 use Cline\Bearer\Exceptions\CannotSetDefaultTokenGeneratorException;
 use Cline\Bearer\Exceptions\NoDefaultTokenGeneratorException;
 use Cline\Bearer\Exceptions\TokenGeneratorNotFoundException;
@@ -120,7 +120,7 @@ describe('TokenGeneratorRegistry', function (): void {
             $registry = new TokenGeneratorRegistry();
 
             // Act & Assert
-            expect(fn (): TokenGenerator => $registry->get('nonexistent'))
+            expect(fn (): TokenGeneratorInterface => $registry->get('nonexistent'))
                 ->toThrow(
                     TokenGeneratorNotFoundException::class,
                     'Token generator "nonexistent" is not registered.',
@@ -132,7 +132,7 @@ describe('TokenGeneratorRegistry', function (): void {
             $registry = new TokenGeneratorRegistry();
 
             // Act & Assert
-            expect(fn (): TokenGenerator => $registry->default())
+            expect(fn (): TokenGeneratorInterface => $registry->default())
                 ->toThrow(
                     NoDefaultTokenGeneratorException::class,
                     'No default token generator is registered.',

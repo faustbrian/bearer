@@ -19,7 +19,7 @@ use DateTimeInterface;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class TokenExpiredAtException extends TokenExpiredException
+final class TokenExpiredAtException extends AbstractTokenExpiredException
 {
     /**
      * Create an exception for a token that expired at a specific time.

@@ -21,7 +21,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class TokenTypeNotAllowedException extends InvalidTokenTypeException
+final class TokenTypeNotAllowedException extends AbstractInvalidTokenTypeException
 {
     /**
      * Create an exception when a token type is not allowed for a request.

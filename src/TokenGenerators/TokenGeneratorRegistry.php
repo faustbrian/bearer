@@ -9,7 +9,7 @@
 
 namespace Cline\Bearer\TokenGenerators;
 
-use Cline\Bearer\Contracts\TokenGenerator;
+use Cline\Bearer\Contracts\TokenGeneratorInterface;
 use Cline\Bearer\Exceptions\CannotSetDefaultTokenGeneratorException;
 use Cline\Bearer\Exceptions\NoDefaultTokenGeneratorException;
 use Cline\Bearer\Exceptions\TokenGeneratorNotFoundException;
@@ -52,7 +52,7 @@ final class TokenGeneratorRegistry
     /**
      * Registered token generators.
      *
-     * @var array<string, TokenGenerator>
+     * @var array<string, TokenGeneratorInterface>
      */
     private array $generators = [];
 
@@ -64,10 +64,10 @@ final class TokenGeneratorRegistry
     /**
      * Register a token generator with a given name.
      *
-     * @param string         $name      Unique identifier for this generator
-     * @param TokenGenerator $generator The generator implementation to register
+     * @param string                  $name      Unique identifier for this generator
+     * @param TokenGeneratorInterface $generator The generator implementation to register
      */
-    public function register(string $name, TokenGenerator $generator): void
+    public function register(string $name, TokenGeneratorInterface $generator): void
     {
         $this->generators[$name] = $generator;
 
@@ -86,9 +86,9 @@ final class TokenGeneratorRegistry
      *
      * @throws TokenGeneratorNotFoundException If the generator is not registered
      *
-     * @return TokenGenerator The requested generator instance
+     * @return TokenGeneratorInterface The requested generator instance
      */
-    public function get(string $name): TokenGenerator
+    public function get(string $name): TokenGeneratorInterface
     {
         if (!$this->has($name)) {
             throw TokenGeneratorNotFoundException::forName($name);
@@ -113,9 +113,9 @@ final class TokenGeneratorRegistry
      *
      * @throws NoDefaultTokenGeneratorException If no generators are registered
      *
-     * @return TokenGenerator The default generator instance
+     * @return TokenGeneratorInterface The default generator instance
      */
-    public function default(): TokenGenerator
+    public function default(): TokenGeneratorInterface
     {
         if ($this->defaultGenerator === null) {
             throw NoDefaultTokenGeneratorException::noDefault();

@@ -10,7 +10,7 @@
 namespace Cline\Bearer\RevocationStrategies;
 
 use Cline\Ancestry\Facades\Ancestry;
-use Cline\Bearer\Contracts\RevocationStrategy;
+use Cline\Bearer\Contracts\RevocationStrategyInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
@@ -35,7 +35,7 @@ use function now;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class CascadeDescendantsStrategy implements RevocationStrategy
+final class CascadeDescendantsStrategy implements RevocationStrategyInterface
 {
     /**
      * Revoke the token and all its descendants in the hierarchy.

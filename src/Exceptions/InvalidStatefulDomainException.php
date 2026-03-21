@@ -20,7 +20,7 @@ use InvalidArgumentException;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class InvalidStatefulDomainException extends InvalidArgumentException implements BearerException
+final class InvalidStatefulDomainException extends InvalidArgumentException implements BearerExceptionInterface
 {
     /**
      * Create an exception for a non-string domain value.

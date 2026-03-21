@@ -483,9 +483,9 @@ class ApiController extends Controller
 
 ```php
 use Cline\Bearer\Bearer;
-use Tests\TestCase;
+use Tests\AbstractTestCase;
 
-class ApiTest extends TestCase
+class ApiTest extends AbstractTestCase
 {
     public function test_user_can_access_api(): void
     {
@@ -660,12 +660,12 @@ $this->app->afterResolving(TokenTypeRegistry::class, function (TokenTypeRegistry
 });
 ```
 
-## Implementing the TokenType Interface Directly
+## Implementing the TokenTypeInterface Interface Directly
 
 ```php
-use Cline\Bearer\Contracts\TokenType;
+use Cline\Bearer\Contracts\TokenTypeInterface;
 
-final class ApiKeyTokenType implements TokenType
+final class ApiKeyTokenType implements TokenTypeInterface
 {
     public function name(): string
     {
@@ -1674,18 +1674,18 @@ if ($token->allowed_domains !== null) {
 ## Handling Restriction Errors
 
 ```php
-use Cline\Bearer\Exceptions\IpRestrictionException;
-use Cline\Bearer\Exceptions\DomainRestrictionException;
+use Cline\Bearer\Exceptions\AbstractIpRestrictionException;
+use Cline\Bearer\Exceptions\AbstractDomainRestrictionException;
 
 // In app/Exceptions/Handler.php:
-$this->renderable(function (IpRestrictionException $e) {
+$this->renderable(function (AbstractIpRestrictionException $e) {
     return response()->json([
         'error' => 'ip_restricted',
         'message' => 'This API key is not allowed from your IP address.',
     ], 403);
 });
 
-$this->renderable(function (DomainRestrictionException $e) {
+$this->renderable(function (AbstractDomainRestrictionException $e) {
     return response()->json([
         'error' => 'domain_restricted',
         'message' => 'This API key is not allowed from this domain.',
@@ -2290,12 +2290,12 @@ $activities = Activity::inLog('bearer')
 ## Creating a Custom Audit Driver
 
 ```php
-use Cline\Bearer\Contracts\AuditDriver;
+use Cline\Bearer\Contracts\AuditDriverInterface;
 use Cline\Bearer\Database\Models\PersonalAccessToken;
 use Cline\Bearer\Enums\AuditEvent;
 use Illuminate\Support\Collection;
 
-class CloudWatchAuditDriver implements AuditDriver
+class CloudWatchAuditDriver implements AuditDriverInterface
 {
     public function __construct(
         private readonly CloudWatchClient $client,
@@ -2455,9 +2455,9 @@ return [
 ### Short Token Generator
 
 ```php
-use Cline\Bearer\Contracts\TokenGenerator;
+use Cline\Bearer\Contracts\TokenGeneratorInterface;
 
-final class ShortTokenGenerator implements TokenGenerator
+final class ShortTokenGenerator implements TokenGeneratorInterface
 {
     public function __construct(
         private readonly int $length = 8,
@@ -2490,7 +2490,7 @@ final class ShortTokenGenerator implements TokenGenerator
 ### Hash Token Generator
 
 ```php
-final class HashTokenGenerator implements TokenGenerator
+final class HashTokenGenerator implements TokenGeneratorInterface
 {
     public function generate(string $prefix, string $environment): string
     {
@@ -2523,7 +2523,7 @@ final class HashTokenGenerator implements TokenGenerator
 Shorter tokens with Base62 encoding:
 
 ```php
-final class Base62TokenGenerator implements TokenGenerator
+final class Base62TokenGenerator implements TokenGeneratorInterface
 {
     private const ALPHABET = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 

@@ -17,7 +17,7 @@ namespace Cline\Bearer\Exceptions;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class TokenHasBeenRevokedException extends TokenRevokedException
+final class TokenHasBeenRevokedException extends AbstractTokenRevokedException
 {
     /**
      * Create an exception for a revoked token without timestamp details.

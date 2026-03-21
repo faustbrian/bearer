@@ -19,7 +19,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class CannotSetDefaultAuditDriverException extends AuditDriverNotRegisteredException
+final class CannotSetDefaultAuditDriverException extends AbstractAuditDriverNotRegisteredException
 {
     /**
      * Create an exception when trying to set an unregistered driver as default.

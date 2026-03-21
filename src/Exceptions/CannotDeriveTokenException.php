@@ -22,7 +22,7 @@ use RuntimeException;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class CannotDeriveTokenException extends RuntimeException implements BearerException
+final class CannotDeriveTokenException extends RuntimeException implements BearerExceptionInterface
 {
     /**
      * Create an exception for a parent token that cannot derive children.

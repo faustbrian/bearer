@@ -9,8 +9,8 @@
 
 namespace Tests\Fixtures;
 
-use Cline\Bearer\Concerns\HasAccessTokens;
-use Cline\Bearer\Contracts\HasAccessTokens as HasAccessTokensContract;
+use Cline\Bearer\Concerns\HasAccessTokensTrait;
+use Cline\Bearer\Contracts\HasAccessTokensInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Override;
@@ -19,7 +19,7 @@ use Override;
  * Test fixture user model.
  *
  * Provides a minimal User implementation for testing the Bearer package.
- * Uses the HasAccessTokens trait to enable token-based authentication functionality.
+ * Uses the HasAccessTokensTrait to enable token-based authentication functionality.
  *
  * This fixture model is used throughout the test suite to simulate real-world
  * usage of the package with a typical Eloquent user model.
@@ -27,10 +27,10 @@ use Override;
  * @author Brian Faust <brian@cline.sh>
  * @internal
  */
-final class User extends Authenticatable implements HasAccessTokensContract
+final class User extends Authenticatable implements HasAccessTokensInterface
 {
     use HasFactory;
-    use HasAccessTokens;
+    use HasAccessTokensTrait;
 
     /**
      * The attributes that aren't mass assignable.

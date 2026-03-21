@@ -19,7 +19,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class MissingTokenTypeConfigurationException extends InvalidConfigurationException
+final class MissingTokenTypeConfigurationException extends AbstractInvalidConfigurationException
 {
     /**
      * Create an exception for a missing token type configuration.

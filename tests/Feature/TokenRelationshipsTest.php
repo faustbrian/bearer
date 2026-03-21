@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-use Cline\Bearer\Concerns\HasAccessTokens;
+use Cline\Bearer\Concerns\HasAccessTokensTrait;
 use Cline\Bearer\Facades\Bearer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,7 +23,7 @@ uses(RefreshDatabase::class);
 final class ServiceAccount extends Model
 {
     use HasFactory;
-    use HasAccessTokens;
+    use HasAccessTokensTrait;
 
     #[Override()]
     protected $table = 'service_accounts';
@@ -38,7 +38,7 @@ final class ServiceAccount extends Model
 final class Team extends Model
 {
     use HasFactory;
-    use HasAccessTokens;
+    use HasAccessTokensTrait;
 
     #[Override()]
     protected $table = 'teams';

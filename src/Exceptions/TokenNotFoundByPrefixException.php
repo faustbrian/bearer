@@ -19,7 +19,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class TokenNotFoundByPrefixException extends TokenNotFoundException
+final class TokenNotFoundByPrefixException extends AbstractTokenNotFoundException
 {
     /**
      * Create an exception for a token not found by its prefix.

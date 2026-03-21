@@ -17,7 +17,7 @@ namespace Cline\Bearer\Exceptions;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class InvalidAbilitiesTypeConfigurationException extends InvalidConfigurationException
+final class InvalidAbilitiesTypeConfigurationException extends AbstractInvalidConfigurationException
 {
     /**
      * Create an exception for invalid abilities field type.

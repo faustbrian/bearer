@@ -74,13 +74,13 @@ src/
 │   ├── PruneExpiredCommand.php       # Prune expired tokens
 │   └── PruneAuditLogsCommand.php     # Prune old audit logs
 ├── Contracts/
-│   ├── HasAbilities.php              # Token abilities interface
+│   ├── HasAbilitiesInterface.php              # Token abilities interface
 │   ├── HasApiTokens.php              # Tokenable model interface
-│   ├── TokenType.php                 # Token type interface
-│   ├── TokenGenerator.php            # Token generation strategy interface
-│   ├── AuditDriver.php               # Audit logging driver interface
-│   ├── RevocationStrategy.php        # Revocation strategy interface
-│   └── RotationStrategy.php          # Rotation strategy interface
+│   ├── TokenTypeInterface.php                 # Token type interface
+│   ├── TokenGeneratorInterface.php            # Token generation strategy interface
+│   ├── AuditDriverInterface.php               # Audit logging driver interface
+│   ├── RevocationStrategyInterface.php        # Revocation strategy interface
+│   └── RotationStrategyInterface.php          # Rotation strategy interface
 ├── Database/
 │   ├── Concerns/
 │   │   ├── HasPrimaryKeyType.php     # Primary key type trait
@@ -96,7 +96,7 @@ src/
 │   ├── PrimaryKeyType.php            # id/ulid/uuid
 │   ├── Environment.php               # test/live (configurable)
 │   ├── AuditEvent.php                # created/used/revoked/rotated
-│   └── RevocationStrategy.php        # none/cascade/partial/timed
+│   └── RevocationStrategyInterface.php        # none/cascade/partial/timed
 ├── Events/
 │   ├── TokenAuthenticated.php        # Token used for auth
 │   ├── TokenCreated.php              # Token issued
@@ -104,14 +104,14 @@ src/
 │   ├── TokenRotated.php              # Token rotated
 │   └── TokenGroupCreated.php         # Group created
 ├── Exceptions/
-│   ├── InvalidTokenTypeException.php
-│   ├── InvalidEnvironmentException.php
-│   ├── TokenExpiredException.php
-│   ├── TokenRevokedException.php
-│   ├── DomainRestrictionException.php
-│   ├── IpRestrictionException.php
+│   ├── AbstractInvalidTokenTypeException.php
+│   ├── AbstractInvalidEnvironmentException.php
+│   ├── AbstractTokenExpiredException.php
+│   ├── AbstractTokenRevokedException.php
+│   ├── AbstractDomainRestrictionException.php
+│   ├── AbstractIpRestrictionException.php
 │   ├── RateLimitExceededException.php
-│   └── InvalidConfigurationException.php
+│   └── AbstractInvalidConfigurationException.php
 ├── Facades/
 │   └── Bearer.php
 ├── Guards/
@@ -213,7 +213,7 @@ src/
 
 ### 3.1 Token Type System
 - [ ] `TokenTypeRegistry` - register/resolve token types
-- [ ] `TokenType` interface with:
+- [ ] `TokenTypeInterface` interface with:
   - `prefix()` - e.g., 'sk', 'pk', 'rk'
   - `defaultAbilities()` - default scopes
   - `defaultExpiration()` - default TTL
@@ -222,7 +222,7 @@ src/
   - `isServerSideOnly()` - should never be exposed to client
 
 ### 3.2 Token Generation Strategies
-- [ ] `TokenGenerator` interface with:
+- [ ] `TokenGeneratorInterface` interface with:
   - `generate(string $type, string $environment): string`
   - `parse(string $token): ?TokenComponents` (extract type/env/secret)
   - `hash(string $token): string`
@@ -262,7 +262,7 @@ src/
 ## Phase 6: Audit Logging & Usage Tracking
 
 ### 6.1 Audit Driver System
-- [ ] `AuditDriver` interface
+- [ ] `AuditDriverInterface` interface
 - [ ] `DatabaseAuditDriver` - default, our tables
 - [ ] `SpatieActivityLogDriver` - spatie/laravel-activitylog integration
 - [ ] `NullAuditDriver` - no-op for testing
@@ -283,7 +283,7 @@ src/
 ## Phase 7: Revocation & Rotation
 
 ### 7.1 Revocation Strategies
-- [ ] `RevocationStrategy` interface
+- [ ] `RevocationStrategyInterface` interface
 - [ ] `NoneStrategy` - only specified token
 - [ ] `CascadeStrategy` - entire group
 - [ ] `PartialCascadeStrategy` - specific types (e.g., revoke sk revokes rk but not pk)
@@ -291,7 +291,7 @@ src/
 - [ ] Configurable default per token type
 
 ### 7.2 Rotation Strategies
-- [ ] `RotationStrategy` interface
+- [ ] `RotationStrategyInterface` interface
 - [ ] `ImmediateInvalidationStrategy` - old token invalid immediately
 - [ ] `GracePeriodStrategy` - old token valid for X minutes/hours
 - [ ] `DualValidStrategy` - both valid until explicit revocation
@@ -316,13 +316,13 @@ src/
 - [ ] `allowed_ips` JSON column on token
 - [ ] Support CIDR notation: `192.168.1.0/24`
 - [ ] Validate on authentication
-- [ ] Throw `IpRestrictionException`
+- [ ] Throw `AbstractIpRestrictionException`
 
 ### 9.2 Domain Restrictions (for pk tokens)
 - [ ] `allowed_domains` JSON column
 - [ ] Validate `Origin` or `Referer` header
 - [ ] Wildcard support: `*.example.com`
-- [ ] Throw `DomainRestrictionException`
+- [ ] Throw `AbstractDomainRestrictionException`
 
 ## Phase 10: Configuration
 
@@ -450,7 +450,7 @@ return [
 ### 11.1 Service Provider
 - [ ] Register BearerManager singleton
 - [ ] Register TokenTypeRegistry
-- [ ] Register AuditDriver based on config
+- [ ] Register AuditDriverInterface based on config
 - [ ] Configure auth guard
 - [ ] Publish config, migrations
 - [ ] Register commands

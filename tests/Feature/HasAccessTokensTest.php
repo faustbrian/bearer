@@ -12,7 +12,7 @@ use Cline\Bearer\Database\Models\AccessTokenGroup;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Tests\Fixtures\User;
 
-describe('HasAccessTokens Trait', function (): void {
+describe('HasAccessTokensInterface Trait', function (): void {
     describe('Token Group Creation', function (): void {
         it('creates token group with multiple types', function (): void {
             // Arrange

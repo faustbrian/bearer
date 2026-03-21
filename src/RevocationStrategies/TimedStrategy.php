@@ -9,7 +9,7 @@
 
 namespace Cline\Bearer\RevocationStrategies;
 
-use Cline\Bearer\Contracts\RevocationStrategy;
+use Cline\Bearer\Contracts\RevocationStrategyInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 use Illuminate\Support\Collection;
 
@@ -37,7 +37,7 @@ use function now;
  *
  * @psalm-immutable
  */
-final readonly class TimedStrategy implements RevocationStrategy
+final readonly class TimedStrategy implements RevocationStrategyInterface
 {
     /**
      * Create a new timed strategy instance.

@@ -9,7 +9,7 @@
 
 namespace Cline\Bearer\TokenGenerators;
 
-use Cline\Bearer\Contracts\TokenGenerator;
+use Cline\Bearer\Contracts\TokenGeneratorInterface;
 use Cline\Bearer\Support\TokenComponents;
 use Illuminate\Support\Str;
 
@@ -31,7 +31,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class UuidTokenGenerator implements TokenGenerator
+final class UuidTokenGenerator implements TokenGeneratorInterface
 {
     /**
      * Generate a new token with UUID as the secret component.

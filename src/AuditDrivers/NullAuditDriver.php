@@ -9,7 +9,7 @@
 
 namespace Cline\Bearer\AuditDrivers;
 
-use Cline\Bearer\Contracts\AuditDriver;
+use Cline\Bearer\Contracts\AuditDriverInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Enums\AuditEvent;
 use Illuminate\Support\Collection;
@@ -19,7 +19,7 @@ use function collect;
 /**
  * Null audit driver that performs no logging operations.
  *
- * This driver provides a no-op implementation of the AuditDriver contract,
+ * This driver provides a no-op implementation of the AuditDriverInterface contract,
  * useful for testing, development, or production environments where audit
  * logging is not required or would create unnecessary overhead.
  *
@@ -45,7 +45,7 @@ use function collect;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class NullAuditDriver implements AuditDriver
+final class NullAuditDriver implements AuditDriverInterface
 {
     /**
      * Log an audit event for a token.

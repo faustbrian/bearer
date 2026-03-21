@@ -19,7 +19,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class CannotSetDefaultRotationStrategyException extends RotationStrategyNotRegisteredException
+final class CannotSetDefaultRotationStrategyException extends AbstractRotationStrategyNotRegisteredException
 {
     /**
      * Create an exception when trying to set an unregistered strategy as default.

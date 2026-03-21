@@ -8,7 +8,7 @@
  */
 
 use Cline\Bearer\AuditDrivers\NullAuditDriver;
-use Cline\Bearer\Contracts\AuditDriver;
+use Cline\Bearer\Contracts\AuditDriverInterface;
 use Cline\Bearer\Database\Models\AccessTokenAuditLog;
 use Cline\Bearer\Enums\AuditEvent;
 use Illuminate\Support\Collection;
@@ -20,15 +20,15 @@ describe('NullAuditDriver', function (): void {
         $this->token = createAccessToken($this->user);
     });
 
-    it('implements AuditDriver contract', function (): void {
-        expect($this->driver)->toBeInstanceOf(AuditDriver::class);
+    it('implements AuditDriverInterface contract', function (): void {
+        expect($this->driver)->toBeInstanceOf(AuditDriverInterface::class);
     });
 
     it('can be instantiated without dependencies', function (): void {
         $driver = new NullAuditDriver();
 
         expect($driver)->toBeInstanceOf(NullAuditDriver::class);
-        expect($driver)->toBeInstanceOf(AuditDriver::class);
+        expect($driver)->toBeInstanceOf(AuditDriverInterface::class);
     });
 
     describe('log()', function (): void {
@@ -297,7 +297,7 @@ describe('NullAuditDriver', function (): void {
         });
 
         it('works as mock implementation in unit tests', function (): void {
-            // Arrange - simulate testing code that depends on AuditDriver
+            // Arrange - simulate testing code that depends on AuditDriverInterface
             $mockDriver = new NullAuditDriver();
             $testToken = createAccessToken($this->user, 'sk', ['name' => 'Mock Token']);
 
@@ -307,7 +307,7 @@ describe('NullAuditDriver', function (): void {
 
             // Assert - predictable no-op behavior
             expect($result)->toBeEmpty();
-            expect($mockDriver)->toBeInstanceOf(AuditDriver::class);
+            expect($mockDriver)->toBeInstanceOf(AuditDriverInterface::class);
         });
     });
 });

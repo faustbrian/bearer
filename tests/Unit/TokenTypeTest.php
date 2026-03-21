@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-use Cline\Bearer\Contracts\TokenType;
-use Cline\Bearer\Exceptions\InvalidTokenTypeException;
+use Cline\Bearer\Contracts\TokenTypeInterface;
+use Cline\Bearer\Exceptions\AbstractInvalidTokenTypeException;
 use Cline\Bearer\TokenTypes\ConfigurableTokenType;
 use Cline\Bearer\TokenTypes\TokenTypeRegistry;
 
@@ -581,8 +581,8 @@ describe('TokenTypeRegistry', function (): void {
             $registry = new TokenTypeRegistry();
 
             // Act & Assert
-            expect(fn (): TokenType => $registry->get('nonexistent'))
-                ->toThrow(InvalidTokenTypeException::class, "Token type 'nonexistent' is not registered in the configuration.");
+            expect(fn (): TokenTypeInterface => $registry->get('nonexistent'))
+                ->toThrow(AbstractInvalidTokenTypeException::class, "Token type 'nonexistent' is not registered in the configuration.");
         });
 
         test('throws exception with correct message for unregistered type', function (): void {
@@ -594,8 +594,8 @@ describe('TokenTypeRegistry', function (): void {
             ]));
 
             // Act & Assert
-            expect(fn (): TokenType => $registry->get('custom'))
-                ->toThrow(InvalidTokenTypeException::class, "Token type 'custom' is not registered in the configuration.");
+            expect(fn (): TokenTypeInterface => $registry->get('custom'))
+                ->toThrow(AbstractInvalidTokenTypeException::class, "Token type 'custom' is not registered in the configuration.");
         });
     });
 });

@@ -17,7 +17,7 @@ namespace Cline\Bearer\Exceptions;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class InvalidRateLimitTypeConfigurationException extends InvalidConfigurationException
+final class InvalidRateLimitTypeConfigurationException extends AbstractInvalidConfigurationException
 {
     /**
      * Create an exception for invalid rate limit field type.

@@ -9,7 +9,7 @@
 
 namespace Cline\Bearer\RotationStrategies;
 
-use Cline\Bearer\Contracts\RotationStrategy;
+use Cline\Bearer\Contracts\RotationStrategyInterface;
 use Cline\Bearer\Exceptions\CannotSetDefaultRotationStrategyException;
 use Cline\Bearer\Exceptions\NoDefaultRotationStrategyException;
 use Cline\Bearer\Exceptions\RotationStrategyNotFoundException;
@@ -52,7 +52,7 @@ final class RotationStrategyRegistry
     /**
      * Registered rotation strategies indexed by name.
      *
-     * @var array<string, RotationStrategy>
+     * @var array<string, RotationStrategyInterface>
      */
     private array $strategies = [];
 
@@ -67,10 +67,10 @@ final class RotationStrategyRegistry
      * If this is the first strategy registered and no default has been set,
      * it will automatically become the default strategy.
      *
-     * @param string           $name     Unique identifier for this strategy
-     * @param RotationStrategy $strategy The strategy implementation to register
+     * @param string                    $name     Unique identifier for this strategy
+     * @param RotationStrategyInterface $strategy The strategy implementation to register
      */
-    public function register(string $name, RotationStrategy $strategy): void
+    public function register(string $name, RotationStrategyInterface $strategy): void
     {
         $this->strategies[$name] = $strategy;
 
@@ -89,9 +89,9 @@ final class RotationStrategyRegistry
      *
      * @throws RotationStrategyNotFoundException If the strategy is not registered
      *
-     * @return RotationStrategy The requested strategy instance
+     * @return RotationStrategyInterface The requested strategy instance
      */
-    public function get(string $name): RotationStrategy
+    public function get(string $name): RotationStrategyInterface
     {
         if (!$this->has($name)) {
             throw RotationStrategyNotFoundException::forName($name);
@@ -116,9 +116,9 @@ final class RotationStrategyRegistry
      *
      * @throws NoDefaultRotationStrategyException If no strategies are registered
      *
-     * @return RotationStrategy The default strategy instance
+     * @return RotationStrategyInterface The default strategy instance
      */
-    public function default(): RotationStrategy
+    public function default(): RotationStrategyInterface
     {
         if ($this->defaultStrategy === null) {
             throw NoDefaultRotationStrategyException::noDefault();

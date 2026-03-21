@@ -9,7 +9,7 @@
 
 namespace Cline\Bearer\RevocationStrategies;
 
-use Cline\Bearer\Contracts\RevocationStrategy;
+use Cline\Bearer\Contracts\RevocationStrategyInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 use Illuminate\Support\Collection;
 
@@ -32,7 +32,7 @@ use function now;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class CascadeStrategy implements RevocationStrategy
+final class CascadeStrategy implements RevocationStrategyInterface
 {
     /**
      * Revoke the token and all tokens in its group.

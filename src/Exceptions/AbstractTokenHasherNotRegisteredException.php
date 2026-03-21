@@ -20,7 +20,7 @@ use InvalidArgumentException;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-abstract class TokenHasherNotRegisteredException extends InvalidArgumentException implements BearerException
+abstract class AbstractTokenHasherNotRegisteredException extends InvalidArgumentException implements BearerExceptionInterface
 {
     // Abstract base class - use concrete implementations
 }

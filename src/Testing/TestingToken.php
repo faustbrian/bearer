@@ -9,7 +9,7 @@
 
 namespace Cline\Bearer\Testing;
 
-use Cline\Bearer\Contracts\HasAbilities;
+use Cline\Bearer\Contracts\HasAbilitiesInterface;
 
 use function in_array;
 
@@ -37,7 +37,7 @@ use function in_array;
  *
  * @psalm-immutable
  */
-final readonly class TestingToken implements HasAbilities
+final readonly class TestingToken implements HasAbilitiesInterface
 {
     /**
      * Create a new testing token instance.

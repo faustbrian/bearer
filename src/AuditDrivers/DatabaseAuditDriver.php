@@ -9,7 +9,7 @@
 
 namespace Cline\Bearer\AuditDrivers;
 
-use Cline\Bearer\Contracts\AuditDriver;
+use Cline\Bearer\Contracts\AuditDriverInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Database\Models\AccessTokenAuditLog;
 use Cline\Bearer\Enums\AuditEvent;
@@ -46,7 +46,7 @@ use function request;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class DatabaseAuditDriver implements AuditDriver
+final class DatabaseAuditDriver implements AuditDriverInterface
 {
     /**
      * Log an audit event for a token.

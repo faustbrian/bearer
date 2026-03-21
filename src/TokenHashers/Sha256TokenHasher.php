@@ -9,7 +9,7 @@
 
 namespace Cline\Bearer\TokenHashers;
 
-use Cline\Bearer\Contracts\TokenHasher;
+use Cline\Bearer\Contracts\TokenHasherInterface;
 
 use function hash;
 use function hash_equals;
@@ -22,7 +22,7 @@ use function hash_equals;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class Sha256TokenHasher implements TokenHasher
+final class Sha256TokenHasher implements TokenHasherInterface
 {
     /**
      * {@inheritDoc}

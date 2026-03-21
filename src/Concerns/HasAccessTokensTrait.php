@@ -9,8 +9,8 @@
 
 namespace Cline\Bearer\Concerns;
 
-use Cline\Bearer\Contracts\HasAbilities;
-use Cline\Bearer\Contracts\HasAccessTokens as HasAccessTokensContract;
+use Cline\Bearer\Contracts\HasAbilitiesInterface;
+use Cline\Bearer\Contracts\HasAccessTokensInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Database\Models\AccessTokenGroup;
 use Cline\Bearer\Facades\Bearer;
@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 /**
  * Trait for models that can own and manage access tokens.
  *
- * This trait implements the HasAccessTokens contract, providing comprehensive token
+ * This trait implements the HasAccessTokensInterface contract, providing comprehensive token
  * management capabilities for any Eloquent model (typically User models). It enables
  * models to create, manage, and authenticate via personal access tokens with fine-grained
  * permission control.
@@ -37,12 +37,12 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  *
  * Example usage:
  * ```php
- * use Cline\Bearer\Concerns\HasAccessTokens;
- * use Cline\Bearer\Contracts\HasAccessTokens as HasAccessTokensContract;
+ * use Cline\Bearer\Concerns\HasAccessTokensTrait;
+ * use Cline\Bearer\Contracts\HasAccessTokensInterface;
  *
- * class User extends Model implements HasAccessTokensContract
+ * class User extends Model implements HasAccessTokensInterface
  * {
- *     use HasAccessTokens;
+ *     use HasAccessTokensTrait;
  * }
  *
  * // Create a single token
@@ -108,9 +108,9 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @mixin Model
  *
  * @author Brian Faust <brian@cline.sh>
- * @template TToken of \Cline\Bearer\Contracts\HasAbilities
+ * @template TToken of \Cline\Bearer\Contracts\HasAbilitiesInterface
  */
-trait HasAccessTokens
+trait HasAccessTokensTrait
 {
     /**
      * The access token the user is using for the current request.
@@ -121,7 +121,7 @@ trait HasAccessTokens
      *
      * @var null|TToken
      */
-    protected ?HasAbilities $accessToken = null;
+    protected ?HasAbilitiesInterface $accessToken = null;
 
     /**
      * Get all access tokens owned by this model.
@@ -393,7 +393,7 @@ trait HasAccessTokens
      *
      * @return null|TToken The current token instance, or null if not authenticated via token
      */
-    public function currentAccessToken(): ?HasAbilities
+    public function currentAccessToken(): ?HasAbilitiesInterface
     {
         return $this->accessToken;
     }
@@ -420,7 +420,7 @@ trait HasAccessTokens
      * @param  TToken $accessToken The authenticated token instance
      * @return static Fluent interface for method chaining
      */
-    public function withAccessToken(HasAbilities $accessToken): static
+    public function withAccessToken(HasAbilitiesInterface $accessToken): static
     {
         $this->accessToken = $accessToken;
 
@@ -568,7 +568,7 @@ trait HasAccessTokens
      *
      * // Validation
      * if ($user->tokenEnvironment() !== config('app.env')) {
-     *     throw new InvalidEnvironmentException(
+     *     throw new AbstractInvalidEnvironmentException(
      *         "Token environment mismatch"
      *     );
      * }
@@ -638,7 +638,7 @@ trait HasAccessTokens
     }
 
     /**
-     * Boot the HasAccessTokens trait.
+     * Boot the HasAccessTokensTrait.
      *
      * Registers model event listeners for cascade deletion of tokens
      * when the tokenable model is deleted.
@@ -646,10 +646,10 @@ trait HasAccessTokens
      * Laravel 10 compatibility: Uses boot{TraitName} naming convention
      * instead of #[Boot] attribute (which only works in Laravel 11+).
      */
-    protected static function bootHasAccessTokens(): void
+    protected static function bootHasAccessTokensTrait(): void
     {
         static::deleting(static function (Model $model): void {
-            if (!$model instanceof HasAccessTokensContract) {
+            if (!$model instanceof HasAccessTokensInterface) {
                 return;
             }
 

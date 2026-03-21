@@ -9,8 +9,8 @@
 
 namespace Cline\Bearer\Http\Middleware;
 
-use Cline\Bearer\Contracts\HasAbilities;
-use Cline\Bearer\Contracts\HasAccessTokens;
+use Cline\Bearer\Contracts\HasAbilitiesInterface;
+use Cline\Bearer\Contracts\HasAccessTokensInterface;
 use Cline\Bearer\Exceptions\AuthenticationException;
 use Cline\Bearer\Exceptions\EnvironmentNotAllowedException;
 use Closure;
@@ -67,13 +67,13 @@ final class CheckEnvironment
     {
         $user = $request->user();
 
-        if (!$user instanceof HasAccessTokens) {
+        if (!$user instanceof HasAccessTokensInterface) {
             throw AuthenticationException::unauthenticated();
         }
 
         $currentToken = $user->currentAccessToken();
 
-        if (!$currentToken instanceof HasAbilities) {
+        if (!$currentToken instanceof HasAbilitiesInterface) {
             throw AuthenticationException::unauthenticated();
         }
 

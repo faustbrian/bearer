@@ -9,7 +9,7 @@
 
 namespace Cline\Bearer\RevocationStrategies;
 
-use Cline\Bearer\Contracts\RevocationStrategy;
+use Cline\Bearer\Contracts\RevocationStrategyInterface;
 use Cline\Bearer\Exceptions\CannotSetDefaultRevocationStrategyException;
 use Cline\Bearer\Exceptions\NoDefaultRevocationStrategyException;
 use Cline\Bearer\Exceptions\RevocationStrategyNotFoundException;
@@ -52,7 +52,7 @@ final class RevocationStrategyRegistry
     /**
      * Registered revocation strategies.
      *
-     * @var array<string, RevocationStrategy>
+     * @var array<string, RevocationStrategyInterface>
      */
     private array $strategies = [];
 
@@ -68,10 +68,10 @@ final class RevocationStrategyRegistry
      * if no default has been configured yet. This ensures the registry always has
      * a usable default strategy.
      *
-     * @param string             $name     Unique identifier for this strategy
-     * @param RevocationStrategy $strategy The strategy implementation to register
+     * @param string                      $name     Unique identifier for this strategy
+     * @param RevocationStrategyInterface $strategy The strategy implementation to register
      */
-    public function register(string $name, RevocationStrategy $strategy): void
+    public function register(string $name, RevocationStrategyInterface $strategy): void
     {
         $this->strategies[$name] = $strategy;
 
@@ -90,9 +90,9 @@ final class RevocationStrategyRegistry
      *
      * @throws RevocationStrategyNotFoundException If the strategy is not registered
      *
-     * @return RevocationStrategy The requested strategy instance
+     * @return RevocationStrategyInterface The requested strategy instance
      */
-    public function get(string $name): RevocationStrategy
+    public function get(string $name): RevocationStrategyInterface
     {
         if (!$this->has($name)) {
             throw RevocationStrategyNotFoundException::forName($name);
@@ -117,9 +117,9 @@ final class RevocationStrategyRegistry
      *
      * @throws NoDefaultRevocationStrategyException If no strategies are registered
      *
-     * @return RevocationStrategy The default strategy instance
+     * @return RevocationStrategyInterface The default strategy instance
      */
-    public function default(): RevocationStrategy
+    public function default(): RevocationStrategyInterface
     {
         if ($this->defaultStrategy === null) {
             throw NoDefaultRevocationStrategyException::noDefault();

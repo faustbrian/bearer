@@ -21,7 +21,7 @@ use InvalidArgumentException;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-abstract class InvalidPrimaryKeyValueException extends InvalidArgumentException implements BearerException
+abstract class AbstractInvalidPrimaryKeyValueException extends InvalidArgumentException implements BearerExceptionInterface
 {
     // Base exception class - see concrete implementations for specific factory methods
 }

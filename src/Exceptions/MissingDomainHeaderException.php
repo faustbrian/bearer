@@ -18,7 +18,7 @@ namespace Cline\Bearer\Exceptions;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class MissingDomainHeaderException extends DomainRestrictionException
+final class MissingDomainHeaderException extends AbstractDomainRestrictionException
 {
     /**
      * Create an exception when origin/referer headers are missing.

@@ -293,7 +293,7 @@ describe('BearerGuard', function (): void {
     });
 
     describe('Edge Cases', function (): void {
-        test('returns user without token wrapper when session user lacks HasAccessTokens trait', function (): void {
+        test('returns user without token wrapper when session user lacks HasAccessTokensTrait', function (): void {
             $user = UserWithoutTokens::query()->create([
                 'name' => 'No Token User',
                 'email' => uniqid().'@example.com',

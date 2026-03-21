@@ -29,7 +29,7 @@ namespace Cline\Bearer\Contracts;
  * - Bcrypt/Argon2: Adaptive cost, resistant to brute-force attacks
  *
  * ```php
- * class Sha256TokenHasher implements TokenHasher
+ * class Sha256TokenHasher implements TokenHasherInterface
  * {
  *     public function hash(string $token): string
  *     {
@@ -58,7 +58,7 @@ namespace Cline\Bearer\Contracts;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-interface TokenHasher
+interface TokenHasherInterface
 {
     /**
      * Hash a plain-text token for secure storage.

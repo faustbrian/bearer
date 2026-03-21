@@ -19,7 +19,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class TokenNotFoundByIdException extends TokenNotFoundException
+final class TokenNotFoundByIdException extends AbstractTokenNotFoundException
 {
     /**
      * Create an exception for a token not found by its ID.

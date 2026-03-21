@@ -22,7 +22,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class NonStringUlidException extends InvalidPrimaryKeyValueException
+final class NonStringUlidException extends AbstractInvalidPrimaryKeyValueException
 {
     /**
      * Create exception for non-string value assigned to ULID primary key.

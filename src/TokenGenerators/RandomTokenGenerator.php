@@ -9,7 +9,7 @@
 
 namespace Cline\Bearer\TokenGenerators;
 
-use Cline\Bearer\Contracts\TokenGenerator;
+use Cline\Bearer\Contracts\TokenGeneratorInterface;
 use Cline\Bearer\Support\TokenComponents;
 use Illuminate\Support\Str;
 
@@ -32,7 +32,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class RandomTokenGenerator implements TokenGenerator
+final class RandomTokenGenerator implements TokenGeneratorInterface
 {
     /**
      * Length of the random entropy portion in characters.

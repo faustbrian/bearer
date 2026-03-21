@@ -12,12 +12,12 @@ namespace Cline\Bearer\Contracts;
 /**
  * Contract for token types that support later plaintext retrieval.
  *
- * Implement this alongside TokenType when a token type intentionally opts
+ * Implement this alongside TokenTypeInterface when a token type intentionally opts
  * into storing a recoverable plaintext copy for legacy reveal flows.
  *
  * @author Brian Faust <brian@cline.sh>
  */
-interface RevealableTokenType
+interface RevealableTokenTypeInterface
 {
     /**
      * Determine if tokens of this type may be revealed after creation.

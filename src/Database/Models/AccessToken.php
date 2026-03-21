@@ -10,7 +10,7 @@
 namespace Cline\Bearer\Database\Models;
 
 use Cline\Ancestry\Concerns\HasAncestry;
-use Cline\Bearer\Contracts\HasAbilities;
+use Cline\Bearer\Contracts\HasAbilitiesInterface;
 use Cline\Bearer\Enums\AuditEvent;
 use Cline\Bearer\Facades\Bearer;
 use Cline\VariableKeys\Database\Concerns\HasVariablePrimaryKey;
@@ -86,7 +86,7 @@ use function now;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class AccessToken extends Model implements HasAbilities
+final class AccessToken extends Model implements HasAbilitiesInterface
 {
     /** @use HasFactory<Factory<static>> */
     use HasFactory;

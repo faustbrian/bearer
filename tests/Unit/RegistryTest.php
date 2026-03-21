@@ -9,16 +9,16 @@
 
 use Cline\Bearer\AuditDrivers\AuditDriverRegistry;
 use Cline\Bearer\AuditDrivers\NullAuditDriver;
-use Cline\Bearer\Contracts\AuditDriver;
-use Cline\Bearer\Contracts\RevocationStrategy;
-use Cline\Bearer\Contracts\RotationStrategy;
+use Cline\Bearer\Contracts\AuditDriverInterface;
+use Cline\Bearer\Contracts\RevocationStrategyInterface;
+use Cline\Bearer\Contracts\RotationStrategyInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Enums\AuditEvent;
+use Cline\Bearer\Exceptions\AbstractRevocationStrategyNotRegisteredException;
+use Cline\Bearer\Exceptions\AbstractRotationStrategyNotRegisteredException;
 use Cline\Bearer\Exceptions\AuditDriverNotFoundException;
 use Cline\Bearer\Exceptions\CannotSetDefaultAuditDriverException;
 use Cline\Bearer\Exceptions\NoDefaultAuditDriverException;
-use Cline\Bearer\Exceptions\RevocationStrategyNotRegisteredException;
-use Cline\Bearer\Exceptions\RotationStrategyNotRegisteredException;
 use Cline\Bearer\RevocationStrategies\NoneStrategy;
 use Cline\Bearer\RevocationStrategies\RevocationStrategyRegistry;
 use Cline\Bearer\RotationStrategies\ImmediateInvalidationStrategy;
@@ -74,7 +74,7 @@ describe('RevocationStrategyRegistry', function (): void {
             // Arrange
             $registry = new RevocationStrategyRegistry();
             $strategy1 = new NoneStrategy();
-            $strategy2 = new class() implements RevocationStrategy
+            $strategy2 = new class() implements RevocationStrategyInterface
             {
                 public function revoke(AccessToken $token): void {}
 
@@ -97,7 +97,7 @@ describe('RevocationStrategyRegistry', function (): void {
             // Arrange
             $registry = new RevocationStrategyRegistry();
             $registry->register('none', new NoneStrategy());
-            $registry->register('custom', new class() implements RevocationStrategy
+            $registry->register('custom', new class() implements RevocationStrategyInterface
             {
                 public function revoke(AccessToken $token): void {}
 
@@ -121,8 +121,8 @@ describe('RevocationStrategyRegistry', function (): void {
             $registry = new RevocationStrategyRegistry();
 
             // Act & Assert
-            expect(fn (): RevocationStrategy => $registry->get('nonexistent'))
-                ->toThrow(RevocationStrategyNotRegisteredException::class);
+            expect(fn (): RevocationStrategyInterface => $registry->get('nonexistent'))
+                ->toThrow(AbstractRevocationStrategyNotRegisteredException::class);
         });
 
         test('default() throws exception when no strategies registered', function (): void {
@@ -130,8 +130,8 @@ describe('RevocationStrategyRegistry', function (): void {
             $registry = new RevocationStrategyRegistry();
 
             // Act & Assert
-            expect(fn (): RevocationStrategy => $registry->default())
-                ->toThrow(RevocationStrategyNotRegisteredException::class);
+            expect(fn (): RevocationStrategyInterface => $registry->default())
+                ->toThrow(AbstractRevocationStrategyNotRegisteredException::class);
         });
 
         test('setDefault() throws exception for unregistered strategy', function (): void {
@@ -140,7 +140,7 @@ describe('RevocationStrategyRegistry', function (): void {
 
             // Act & Assert
             expect(fn () => $registry->setDefault('nonexistent'))
-                ->toThrow(RevocationStrategyNotRegisteredException::class);
+                ->toThrow(AbstractRevocationStrategyNotRegisteredException::class);
         });
     });
 
@@ -149,7 +149,7 @@ describe('RevocationStrategyRegistry', function (): void {
             // Arrange
             $registry = new RevocationStrategyRegistry();
             $strategy1 = new NoneStrategy();
-            $strategy2 = new class() implements RevocationStrategy
+            $strategy2 = new class() implements RevocationStrategyInterface
             {
                 public function revoke(AccessToken $token): void {}
 
@@ -218,7 +218,7 @@ describe('RotationStrategyRegistry', function (): void {
             // Arrange
             $registry = new RotationStrategyRegistry();
             $strategy1 = new ImmediateInvalidationStrategy();
-            $strategy2 = new class() implements RotationStrategy
+            $strategy2 = new class() implements RotationStrategyInterface
             {
                 public function rotate(AccessToken $oldToken, AccessToken $newToken): void {}
 
@@ -246,7 +246,7 @@ describe('RotationStrategyRegistry', function (): void {
             // Arrange
             $registry = new RotationStrategyRegistry();
             $registry->register('immediate', new ImmediateInvalidationStrategy());
-            $registry->register('custom', new class() implements RotationStrategy
+            $registry->register('custom', new class() implements RotationStrategyInterface
             {
                 public function rotate(AccessToken $oldToken, AccessToken $newToken): void {}
 
@@ -275,8 +275,8 @@ describe('RotationStrategyRegistry', function (): void {
             $registry = new RotationStrategyRegistry();
 
             // Act & Assert
-            expect(fn (): RotationStrategy => $registry->get('nonexistent'))
-                ->toThrow(RotationStrategyNotRegisteredException::class);
+            expect(fn (): RotationStrategyInterface => $registry->get('nonexistent'))
+                ->toThrow(AbstractRotationStrategyNotRegisteredException::class);
         });
 
         test('default() throws exception when no strategies registered', function (): void {
@@ -284,8 +284,8 @@ describe('RotationStrategyRegistry', function (): void {
             $registry = new RotationStrategyRegistry();
 
             // Act & Assert
-            expect(fn (): RotationStrategy => $registry->default())
-                ->toThrow(RotationStrategyNotRegisteredException::class);
+            expect(fn (): RotationStrategyInterface => $registry->default())
+                ->toThrow(AbstractRotationStrategyNotRegisteredException::class);
         });
 
         test('setDefault() throws exception for unregistered strategy', function (): void {
@@ -294,7 +294,7 @@ describe('RotationStrategyRegistry', function (): void {
 
             // Act & Assert
             expect(fn () => $registry->setDefault('nonexistent'))
-                ->toThrow(RotationStrategyNotRegisteredException::class);
+                ->toThrow(AbstractRotationStrategyNotRegisteredException::class);
         });
     });
 
@@ -303,7 +303,7 @@ describe('RotationStrategyRegistry', function (): void {
             // Arrange
             $registry = new RotationStrategyRegistry();
             $strategy1 = new ImmediateInvalidationStrategy();
-            $strategy2 = new class() implements RotationStrategy
+            $strategy2 = new class() implements RotationStrategyInterface
             {
                 public function rotate(AccessToken $oldToken, AccessToken $newToken): void {}
 
@@ -377,7 +377,7 @@ describe('AuditDriverRegistry', function (): void {
             // Arrange
             $registry = new AuditDriverRegistry();
             $driver1 = new NullAuditDriver();
-            $driver2 = new class() implements AuditDriver
+            $driver2 = new class() implements AuditDriverInterface
             {
                 public function log(AccessToken $token, AuditEvent $event, array $metadata = []): void {}
 
@@ -400,7 +400,7 @@ describe('AuditDriverRegistry', function (): void {
             // Arrange
             $registry = new AuditDriverRegistry();
             $registry->register('null', new NullAuditDriver());
-            $registry->register('custom', new class() implements AuditDriver
+            $registry->register('custom', new class() implements AuditDriverInterface
             {
                 public function log(AccessToken $token, AuditEvent $event, array $metadata = []): void {}
 
@@ -424,7 +424,7 @@ describe('AuditDriverRegistry', function (): void {
             $registry = new AuditDriverRegistry();
 
             // Act & Assert
-            expect(fn (): AuditDriver => $registry->get('nonexistent'))
+            expect(fn (): AuditDriverInterface => $registry->get('nonexistent'))
                 ->toThrow(AuditDriverNotFoundException::class);
         });
 
@@ -433,7 +433,7 @@ describe('AuditDriverRegistry', function (): void {
             $registry = new AuditDriverRegistry();
 
             // Act & Assert
-            expect(fn (): AuditDriver => $registry->default())
+            expect(fn (): AuditDriverInterface => $registry->default())
                 ->toThrow(NoDefaultAuditDriverException::class);
         });
 
@@ -452,7 +452,7 @@ describe('AuditDriverRegistry', function (): void {
             // Arrange
             $registry = new AuditDriverRegistry();
             $driver1 = new NullAuditDriver();
-            $driver2 = new class() implements AuditDriver
+            $driver2 = new class() implements AuditDriverInterface
             {
                 public function log(AccessToken $token, AuditEvent $event, array $metadata = []): void {}
 

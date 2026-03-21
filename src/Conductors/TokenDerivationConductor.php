@@ -11,7 +11,7 @@ namespace Cline\Bearer\Conductors;
 
 use Cline\Ancestry\Facades\Ancestry;
 use Cline\Bearer\BearerManager;
-use Cline\Bearer\Contracts\HasAccessTokens;
+use Cline\Bearer\Contracts\HasAccessTokensInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Enums\AuditEvent;
 use Cline\Bearer\Exceptions\CannotDeriveTokenException;
@@ -190,7 +190,7 @@ final readonly class TokenDerivationConductor
 
         throw_if($owner === null, MissingTokenableForParentException::forParentToken());
 
-        throw_unless($owner instanceof HasAccessTokens, InvalidTokenableException::mustImplementHasAccessTokens());
+        throw_unless($owner instanceof HasAccessTokensInterface, InvalidTokenableException::mustImplementHasAccessTokens());
 
         $tokenData = [
             'type' => $this->parentToken->type,

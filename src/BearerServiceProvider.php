@@ -15,12 +15,12 @@ use Cline\Bearer\AuditDrivers\NullAuditDriver;
 use Cline\Bearer\AuditDrivers\SpatieActivityLogDriver;
 use Cline\Bearer\Console\Commands\PruneAuditLogsCommand;
 use Cline\Bearer\Console\Commands\PruneExpiredCommand;
-use Cline\Bearer\Contracts\AuditDriver;
-use Cline\Bearer\Contracts\RevocationStrategy;
-use Cline\Bearer\Contracts\RotationStrategy;
-use Cline\Bearer\Contracts\TokenGenerator;
-use Cline\Bearer\Contracts\TokenHasher;
-use Cline\Bearer\Contracts\TokenType;
+use Cline\Bearer\Contracts\AuditDriverInterface;
+use Cline\Bearer\Contracts\RevocationStrategyInterface;
+use Cline\Bearer\Contracts\RotationStrategyInterface;
+use Cline\Bearer\Contracts\TokenGeneratorInterface;
+use Cline\Bearer\Contracts\TokenHasherInterface;
+use Cline\Bearer\Contracts\TokenTypeInterface;
 use Cline\Bearer\Database\ModelRegistry;
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Database\Models\AccessTokenAuditLog;
@@ -174,7 +174,7 @@ final class BearerServiceProvider extends PackageServiceProvider
                 }
 
                 if (array_key_exists('class', $config) && is_string($config['class']) && class_exists($config['class'])) {
-                    /** @var TokenType $tokenType */
+                    /** @var TokenTypeInterface $tokenType */
                     $tokenType = $app->make($config['class']);
                     $registry->register($key, $tokenType);
                 } else {
@@ -208,7 +208,7 @@ final class BearerServiceProvider extends PackageServiceProvider
             ];
 
             foreach ($builtInGenerators as $name => $class) {
-                /** @var TokenGenerator $generator */
+                /** @var TokenGeneratorInterface $generator */
                 $generator = $app->make($class);
                 $registry->register($name, $generator);
             }
@@ -234,7 +234,7 @@ final class BearerServiceProvider extends PackageServiceProvider
                     continue;
                 }
 
-                /** @var TokenGenerator $generator */
+                /** @var TokenGeneratorInterface $generator */
                 $generator = $app->make($class);
                 $registry->register($name, $generator);
             }
@@ -271,7 +271,7 @@ final class BearerServiceProvider extends PackageServiceProvider
             ];
 
             foreach ($builtInHashers as $name => $class) {
-                /** @var TokenHasher $hasher */
+                /** @var TokenHasherInterface $hasher */
                 $hasher = $app->make($class);
                 $registry->register($name, $hasher);
             }
@@ -297,7 +297,7 @@ final class BearerServiceProvider extends PackageServiceProvider
                     continue;
                 }
 
-                /** @var TokenHasher $hasher */
+                /** @var TokenHasherInterface $hasher */
                 $hasher = $app->make($class);
                 $registry->register($name, $hasher);
             }
@@ -335,7 +335,7 @@ final class BearerServiceProvider extends PackageServiceProvider
             ];
 
             foreach ($builtInDrivers as $name => $class) {
-                /** @var AuditDriver $driver */
+                /** @var AuditDriverInterface $driver */
                 $driver = $app->make($class);
                 $registry->register($name, $driver);
             }
@@ -369,7 +369,7 @@ final class BearerServiceProvider extends PackageServiceProvider
                     continue;
                 }
 
-                /** @var AuditDriver $driver */
+                /** @var AuditDriverInterface $driver */
                 $driver = $app->make($config['class']);
                 $registry->register($name, $driver);
             }
@@ -442,7 +442,7 @@ final class BearerServiceProvider extends PackageServiceProvider
                     continue;
                 }
 
-                /** @var RevocationStrategy $strategy */
+                /** @var RevocationStrategyInterface $strategy */
                 $strategy = $app->make($config['class']);
                 $registry->register($name, $strategy);
             }
@@ -510,7 +510,7 @@ final class BearerServiceProvider extends PackageServiceProvider
                     continue;
                 }
 
-                /** @var RotationStrategy $strategy */
+                /** @var RotationStrategyInterface $strategy */
                 $strategy = $app->make($config['class']);
                 $registry->register($name, $strategy);
             }

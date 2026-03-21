@@ -17,7 +17,7 @@ namespace Cline\Bearer\Exceptions;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class NoDefaultAuditDriverException extends AuditDriverNotRegisteredException
+final class NoDefaultAuditDriverException extends AbstractAuditDriverNotRegisteredException
 {
     /**
      * Create an exception when no default driver is registered.

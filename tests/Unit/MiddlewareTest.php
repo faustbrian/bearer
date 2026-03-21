@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-use Cline\Bearer\Contracts\HasAbilities;
+use Cline\Bearer\Contracts\HasAbilitiesInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Exceptions\AnyAbilityMissingException;
 use Cline\Bearer\Exceptions\AuthenticationException;
@@ -428,7 +428,7 @@ describe('CheckEnvironment', function (): void {
             $user = createUser();
 
             // Create a custom token-like object with non-string environment
-            $mockToken = new class() implements HasAbilities
+            $mockToken = new class() implements HasAbilitiesInterface
             {
                 public mixed $environment = 123; // Non-string environment
 

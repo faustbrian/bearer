@@ -20,7 +20,7 @@ use RuntimeException;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-abstract class InvalidTokenTypeException extends RuntimeException implements BearerException
+abstract class AbstractInvalidTokenTypeException extends RuntimeException implements BearerExceptionInterface
 {
     // Abstract base class - no methods required
 }

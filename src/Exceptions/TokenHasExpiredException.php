@@ -17,7 +17,7 @@ namespace Cline\Bearer\Exceptions;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class TokenHasExpiredException extends TokenExpiredException
+final class TokenHasExpiredException extends AbstractTokenExpiredException
 {
     /**
      * Create an exception for an expired token without timestamp details.

@@ -21,7 +21,7 @@ use RuntimeException;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class InvalidDerivedExpirationException extends RuntimeException implements BearerException
+final class InvalidDerivedExpirationException extends RuntimeException implements BearerExceptionInterface
 {
     /**
      * Create an exception for an expiration that exceeds the parent's expiration.

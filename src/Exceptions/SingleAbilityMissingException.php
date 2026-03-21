@@ -17,7 +17,7 @@ namespace Cline\Bearer\Exceptions;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class SingleAbilityMissingException extends MissingAbilityException
+final class SingleAbilityMissingException extends AbstractMissingAbilityException
 {
     /**
      * Create an exception for a single missing ability.

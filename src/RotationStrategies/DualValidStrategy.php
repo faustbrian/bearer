@@ -9,7 +9,7 @@
 
 namespace Cline\Bearer\RotationStrategies;
 
-use Cline\Bearer\Contracts\RotationStrategy;
+use Cline\Bearer\Contracts\RotationStrategyInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 
 /**
@@ -37,7 +37,7 @@ use Cline\Bearer\Database\Models\AccessToken;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class DualValidStrategy implements RotationStrategy
+final class DualValidStrategy implements RotationStrategyInterface
 {
     /**
      * Rotate the token while keeping both old and new tokens valid.

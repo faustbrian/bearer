@@ -55,7 +55,7 @@ use Cline\Bearer\Support\TokenComponents;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-interface TokenGenerator
+interface TokenGeneratorInterface
 {
     /**
      * Generate a new token with the given prefix and environment.

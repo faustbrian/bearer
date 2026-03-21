@@ -20,7 +20,7 @@ use DateTimeInterface;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class TokenRevokedAtException extends TokenRevokedException
+final class TokenRevokedAtException extends AbstractTokenRevokedException
 {
     /**
      * Create an exception for a token that was revoked at a specific time.

@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Renamed package interfaces to `*Interface`, traits to `*Trait`, and
+  abstract classes to `Abstract*` for consistency.
+
+### Breaking
+- Renamed public contracts and abstract exception base classes, including
+  `TokenType` to `TokenTypeInterface`, `HasAccessTokens` to
+  `HasAccessTokensInterface`, `HasAccessTokens` trait to
+  `HasAccessTokensTrait`, and `BearerException` to
+  `BearerExceptionInterface`. Update imports, implementations, and
+  extends clauses accordingly.
+
 ### Added
 - Added repository-level maintainer guidance in `AGENTS.md`.
 - Added optional recoverable legacy token support via per-type `revealable`

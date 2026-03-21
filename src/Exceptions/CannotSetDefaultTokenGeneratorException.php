@@ -19,7 +19,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class CannotSetDefaultTokenGeneratorException extends TokenGeneratorNotRegisteredException
+final class CannotSetDefaultTokenGeneratorException extends AbstractTokenGeneratorNotRegisteredException
 {
     /**
      * Create an exception when trying to set an unregistered generator as default.
