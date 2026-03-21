@@ -9,10 +9,12 @@
 
 use Cline\Bearer\BearerManager;
 use Cline\Bearer\Contracts\AuditDriver;
+use Cline\Bearer\Contracts\RevealableTokenType;
 use Cline\Bearer\Contracts\RevocationStrategy;
 use Cline\Bearer\Contracts\RotationStrategy;
 use Cline\Bearer\Contracts\TokenGenerator;
 use Cline\Bearer\Contracts\TokenHasher;
+use Cline\Bearer\Contracts\TokenType;
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Enums\AuditEvent;
 use Cline\Bearer\Facades\Bearer;
@@ -158,6 +160,97 @@ describe('BearerManager - Revocation with Audit Failures', function (): void {
 });
 
 describe('BearerManager - Registration Methods', function (): void {
+    it('defaults direct TokenType implementations to non-recoverable', function (): void {
+        $customType = new class() implements TokenType
+        {
+            public function name(): string
+            {
+                return 'Direct';
+            }
+
+            public function prefix(): string
+            {
+                return 'dt';
+            }
+
+            public function defaultAbilities(): array
+            {
+                return [];
+            }
+
+            public function defaultExpiration(): ?int
+            {
+                return null;
+            }
+
+            public function defaultRateLimit(): ?int
+            {
+                return null;
+            }
+
+            public function allowedEnvironments(): array
+            {
+                return ['test'];
+            }
+
+            public function isServerSideOnly(): bool
+            {
+                return true;
+            }
+        };
+
+        expect(resolve(BearerManager::class)->shouldStoreRecoverablePlainText($customType))
+            ->toBeFalse();
+    });
+
+    it('uses the revealable interface for recoverable token types', function (): void {
+        $customType = new class() implements RevealableTokenType, TokenType
+        {
+            public function name(): string
+            {
+                return 'Revealable';
+            }
+
+            public function prefix(): string
+            {
+                return 'rv';
+            }
+
+            public function defaultAbilities(): array
+            {
+                return [];
+            }
+
+            public function defaultExpiration(): ?int
+            {
+                return null;
+            }
+
+            public function defaultRateLimit(): ?int
+            {
+                return null;
+            }
+
+            public function allowedEnvironments(): array
+            {
+                return ['test'];
+            }
+
+            public function isServerSideOnly(): bool
+            {
+                return true;
+            }
+
+            public function isRevealable(): bool
+            {
+                return true;
+            }
+        };
+
+        expect(resolve(BearerManager::class)->shouldStoreRecoverablePlainText($customType))
+            ->toBeTrue();
+    });
+
     it('registers custom token type', function (): void {
         $customType = new class('custom', 'ct') extends AbstractTokenType
         {

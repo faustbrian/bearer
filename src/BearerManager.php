@@ -15,6 +15,7 @@ use Cline\Bearer\Conductors\TokenIssuanceConductor;
 use Cline\Bearer\Conductors\TokenRevocationConductor;
 use Cline\Bearer\Contracts\AuditDriver;
 use Cline\Bearer\Contracts\HasAccessTokens;
+use Cline\Bearer\Contracts\RevealableTokenType;
 use Cline\Bearer\Contracts\RevocationStrategy;
 use Cline\Bearer\Contracts\RotationStrategy;
 use Cline\Bearer\Contracts\TokenGenerator;
@@ -37,7 +38,6 @@ use Throwable;
 
 use function config;
 use function explode;
-use function method_exists;
 use function property_exists;
 use function str_contains;
 
@@ -181,11 +181,10 @@ final readonly class BearerManager
      */
     public function shouldStoreRecoverablePlainText(TokenType $tokenType): bool
     {
-        if (!method_exists($tokenType, 'isRevealable')) {
+        if (!$tokenType instanceof RevealableTokenType) {
             return false;
         }
 
-        /** @var bool */
         return $tokenType->isRevealable();
     }
 

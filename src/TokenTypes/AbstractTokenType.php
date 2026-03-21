@@ -9,6 +9,7 @@
 
 namespace Cline\Bearer\TokenTypes;
 
+use Cline\Bearer\Contracts\RevealableTokenType;
 use Cline\Bearer\Contracts\TokenType;
 
 /**
@@ -21,7 +22,7 @@ use Cline\Bearer\Contracts\TokenType;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-abstract class AbstractTokenType implements TokenType
+abstract class AbstractTokenType implements RevealableTokenType, TokenType
 {
     /**
      * Create a new token type instance.
