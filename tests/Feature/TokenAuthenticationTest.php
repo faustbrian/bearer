@@ -11,6 +11,37 @@ use Cline\Bearer\Facades\Bearer;
 use Cline\Bearer\TransientToken;
 
 describe('Token Authentication', function (): void {
+    it('requires both token abilities and warden permission when the warden provider is active', function (): void {
+        config(['bearer.authorization.default' => 'warden']);
+
+        $user = createUser();
+        $user->allow('users:read');
+
+        $token = Bearer::for($user)
+            ->abilities(['users:read'])
+            ->issue('sk', 'Scoped Key')
+            ->accessToken;
+
+        expect($token->can('users:read'))->toBeTrue();
+        expect($user->withAccessToken($token)->accessTokenCan('users:read'))->toBeTrue();
+        expect($user->accessTokenCan('users:write'))->toBeFalse();
+    });
+
+    it('denies access when warden allows but the token scope does not', function (): void {
+        config(['bearer.authorization.default' => 'warden']);
+
+        $user = createUser();
+        $user->allow('users:read');
+
+        $token = Bearer::for($user)
+            ->abilities(['posts:read'])
+            ->issue('sk', 'Scoped Key')
+            ->accessToken;
+
+        expect($token->can('users:read'))->toBeFalse();
+        expect($user->withAccessToken($token)->accessTokenCan('users:read'))->toBeFalse();
+    });
+
     it('authenticates user with valid token', function (): void {
         $user = createUser();
         $newToken = Bearer::for($user)->issue('sk', 'API Key');

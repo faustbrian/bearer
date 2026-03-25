@@ -11,6 +11,7 @@ namespace Cline\Bearer\Database\Models;
 
 use Cline\Ancestry\Concerns\HasAncestry;
 use Cline\Bearer\Contracts\HasAbilitiesInterface;
+use Cline\Bearer\Contracts\HasAbilityClaimsInterface;
 use Cline\Bearer\Enums\AuditEvent;
 use Cline\Bearer\Facades\Bearer;
 use Cline\VariableKeys\Database\Concerns\HasVariablePrimaryKey;
@@ -27,8 +28,6 @@ use Override;
 use Throwable;
 
 use function array_diff;
-use function array_flip;
-use function array_key_exists;
 use function in_array;
 use function now;
 
@@ -86,7 +85,7 @@ use function now;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class AccessToken extends Model implements HasAbilitiesInterface
+final class AccessToken extends Model implements HasAbilitiesInterface, HasAbilityClaimsInterface
 {
     /** @use HasFactory<Factory<static>> */
     use HasFactory;
@@ -298,8 +297,7 @@ final class AccessToken extends Model implements HasAbilitiesInterface
     #[Override()]
     public function can(string $ability): bool
     {
-        return in_array('*', $this->abilities, true)
-               || array_key_exists($ability, array_flip($this->abilities));
+        return Bearer::abilityProvider()->can($this, $ability, $this->owner);
     }
 
     /**
@@ -315,6 +313,16 @@ final class AccessToken extends Model implements HasAbilitiesInterface
     public function cant(string $ability): bool
     {
         return !$this->can($ability);
+    }
+
+    /**
+     * Return the token's stored ability claims.
+     *
+     * @return array<int, string>
+     */
+    public function abilityClaims(): array
+    {
+        return $this->abilities;
     }
 
     /**

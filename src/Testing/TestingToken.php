@@ -10,7 +10,9 @@
 namespace Cline\Bearer\Testing;
 
 use Cline\Bearer\Contracts\HasAbilitiesInterface;
+use Cline\Bearer\Contracts\HasAbilityClaimsInterface;
 
+use function array_values;
 use function in_array;
 
 /**
@@ -37,7 +39,7 @@ use function in_array;
  *
  * @psalm-immutable
  */
-final readonly class TestingToken implements HasAbilitiesInterface
+final readonly class TestingToken implements HasAbilitiesInterface, HasAbilityClaimsInterface
 {
     /**
      * Create a new testing token instance.
@@ -103,5 +105,15 @@ final readonly class TestingToken implements HasAbilitiesInterface
     public function cant(string $ability): bool
     {
         return !$this->can($ability);
+    }
+
+    /**
+     * Return the token's stored ability claims.
+     *
+     * @return array<int, string>
+     */
+    public function abilityClaims(): array
+    {
+        return array_values($this->abilities);
     }
 }

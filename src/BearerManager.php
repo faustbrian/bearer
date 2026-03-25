@@ -9,10 +9,12 @@
 
 namespace Cline\Bearer;
 
+use Cline\Bearer\AbilityProviders\AbilityProviderRegistry;
 use Cline\Bearer\AuditDrivers\AuditDriverRegistry;
 use Cline\Bearer\Conductors\TokenDerivationConductor;
 use Cline\Bearer\Conductors\TokenIssuanceConductor;
 use Cline\Bearer\Conductors\TokenRevocationConductor;
+use Cline\Bearer\Contracts\AbilityProviderInterface;
 use Cline\Bearer\Contracts\AuditDriverInterface;
 use Cline\Bearer\Contracts\HasAccessTokensInterface;
 use Cline\Bearer\Contracts\RevealableTokenTypeInterface;
@@ -68,6 +70,7 @@ final readonly class BearerManager
         private TokenTypeRegistry $tokenTypes,
         private TokenGeneratorRegistry $tokenGenerators,
         private TokenHasherRegistry $tokenHashers,
+        private AbilityProviderRegistry $abilityProviders,
         private AuditDriverRegistry $auditDrivers,
         private RevocationStrategyRegistry $revocationStrategies,
         private RotationStrategyRegistry $rotationStrategies,
@@ -339,6 +342,20 @@ final readonly class BearerManager
     }
 
     /**
+     * Retrieve an ability provider instance by name.
+     *
+     * @param  null|string              $name The provider name or null to use the default from config
+     * @return AbilityProviderInterface The ability provider implementation
+     */
+    public function abilityProvider(?string $name = null): AbilityProviderInterface
+    {
+        /** @var string $providerName */
+        $providerName = $name ?? config('bearer.authorization.default', 'array');
+
+        return $this->abilityProviders->get($providerName);
+    }
+
+    /**
      * Register a custom token type implementation.
      *
      * @param string             $key  Unique identifier for the token type
@@ -380,6 +397,17 @@ final readonly class BearerManager
     public function registerAuditDriver(string $name, AuditDriverInterface $driver): void
     {
         $this->auditDrivers->register($name, $driver);
+    }
+
+    /**
+     * Register a custom ability provider implementation.
+     *
+     * @param string                   $name     Unique identifier for the provider
+     * @param AbilityProviderInterface $provider The provider implementation to register
+     */
+    public function registerAbilityProvider(string $name, AbilityProviderInterface $provider): void
+    {
+        $this->abilityProviders->register($name, $provider);
     }
 
     /**

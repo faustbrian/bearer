@@ -9,13 +9,18 @@
 
 namespace Cline\Bearer\Conductors;
 
+use Cline\Bearer\BearerManager;
 use Cline\Bearer\Contracts\HasAccessTokensInterface;
+use Cline\Bearer\Contracts\QueriesAbilitiesInterface;
 use Cline\Bearer\Database\Models\AccessToken;
+use Cline\Bearer\Exceptions\AbilityQueryNotSupportedException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Model;
 
+use function config;
 use function now;
+use function resolve;
 
 /**
  * Fluent conductor for querying tokens with chainable filters.
@@ -180,10 +185,16 @@ final readonly class TokenQueryConductor
      */
     public function withAbility(string $ability): self
     {
-        $this->query->where(function ($query) use ($ability): void {
-            $query->whereJsonContains('abilities', '*')
-                ->orWhereJsonContains('abilities', $ability);
-        });
+        $provider = resolve(BearerManager::class)->abilityProvider();
+
+        if (!$provider instanceof QueriesAbilitiesInterface) {
+            /** @var string $providerName */
+            $providerName = config('bearer.authorization.default', 'array');
+
+            throw AbilityQueryNotSupportedException::forProvider($providerName);
+        }
+
+        $provider->applyAbilityConstraint($this->query, $ability);
 
         return $this;
     }

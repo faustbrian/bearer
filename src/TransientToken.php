@@ -10,6 +10,7 @@
 namespace Cline\Bearer;
 
 use Cline\Bearer\Contracts\HasAbilitiesInterface;
+use Cline\Bearer\Contracts\HasAbilityClaimsInterface;
 
 /**
  * An in-memory token that grants all abilities without database persistence.
@@ -40,7 +41,7 @@ use Cline\Bearer\Contracts\HasAbilitiesInterface;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class TransientToken implements HasAbilitiesInterface
+final class TransientToken implements HasAbilitiesInterface, HasAbilityClaimsInterface
 {
     /**
      * Determine if the token has a given ability.
@@ -69,5 +70,15 @@ final class TransientToken implements HasAbilitiesInterface
     public function cant(string $ability): bool
     {
         return false;
+    }
+
+    /**
+     * Return wildcard claims for transient session tokens.
+     *
+     * @return array<int, string>
+     */
+    public function abilityClaims(): array
+    {
+        return ['*'];
     }
 }

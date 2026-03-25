@@ -11,6 +11,8 @@ namespace Tests\Fixtures;
 
 use Cline\Bearer\Concerns\HasAccessTokensTrait;
 use Cline\Bearer\Contracts\HasAccessTokensInterface;
+use Cline\Warden\Database\Concerns\HasAbilities;
+use Cline\Warden\Database\Concerns\HasRoles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Override;
@@ -31,6 +33,8 @@ final class User extends Authenticatable implements HasAccessTokensInterface
 {
     use HasFactory;
     use HasAccessTokensTrait;
+    use HasAbilities;
+    use HasRoles;
 
     /**
      * The attributes that aren't mass assignable.

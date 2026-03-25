@@ -9,12 +9,16 @@
 
 namespace Cline\Bearer;
 
+use Cline\Bearer\AbilityProviders\AbilityProviderRegistry;
+use Cline\Bearer\AbilityProviders\ArrayAbilityProvider;
+use Cline\Bearer\AbilityProviders\WardenAbilityProvider;
 use Cline\Bearer\AuditDrivers\AuditDriverRegistry;
 use Cline\Bearer\AuditDrivers\DatabaseAuditDriver;
 use Cline\Bearer\AuditDrivers\NullAuditDriver;
 use Cline\Bearer\AuditDrivers\SpatieActivityLogDriver;
 use Cline\Bearer\Console\Commands\PruneAuditLogsCommand;
 use Cline\Bearer\Console\Commands\PruneExpiredCommand;
+use Cline\Bearer\Contracts\AbilityProviderInterface;
 use Cline\Bearer\Contracts\AuditDriverInterface;
 use Cline\Bearer\Contracts\RevocationStrategyInterface;
 use Cline\Bearer\Contracts\RotationStrategyInterface;
@@ -121,6 +125,7 @@ final class BearerServiceProvider extends PackageServiceProvider
         $this->registerTokenTypeRegistry();
         $this->registerTokenGeneratorRegistry();
         $this->registerTokenHasherRegistry();
+        $this->registerAbilityProviderRegistry();
         $this->registerAuditDriverRegistry();
         $this->registerRevocationStrategyRegistry();
         $this->registerRotationStrategyRegistry();
@@ -387,6 +392,68 @@ final class BearerServiceProvider extends PackageServiceProvider
     }
 
     /**
+     * Register the ability provider registry singleton.
+     *
+     * Loads authorization providers from configuration and sets the default
+     * provider. Built-in support includes array-backed token checks and
+     * Warden-backed owner checks.
+     */
+    private function registerAbilityProviderRegistry(): void
+    {
+        $this->app->singleton(ArrayAbilityProvider::class, fn (): ArrayAbilityProvider => new ArrayAbilityProvider());
+
+        $this->app->singleton(AbilityProviderRegistry::class, function ($app): AbilityProviderRegistry {
+            assert($app instanceof Application);
+            $registry = new AbilityProviderRegistry();
+
+            $builtInProviders = [
+                'array' => ArrayAbilityProvider::class,
+                'warden' => WardenAbilityProvider::class,
+            ];
+
+            foreach ($builtInProviders as $name => $class) {
+                /** @var AbilityProviderInterface $provider */
+                $provider = $app->make($class);
+                $registry->register($name, $provider);
+            }
+
+            /** @var array<string, class-string> $drivers */
+            $drivers = Config::get('bearer.authorization.drivers', []);
+
+            foreach ($drivers as $name => $class) {
+                if (!is_string($name)) {
+                    continue;
+                }
+
+                if (!is_string($class)) {
+                    continue;
+                }
+
+                if (!class_exists($class)) {
+                    continue;
+                }
+
+                if (array_key_exists($name, $builtInProviders)) {
+                    continue;
+                }
+
+                /** @var AbilityProviderInterface $provider */
+                $provider = $app->make($class);
+                $registry->register($name, $provider);
+            }
+
+            /** @var string $default */
+            $default = Config::get('bearer.authorization.default', 'array');
+
+            if (is_string($default) && $registry->has($default)) {
+                $registry->setDefault($default);
+            }
+
+            return $registry;
+        });
+    }
+
+    /**
      * Register the revocation strategy registry singleton.
      *
      * Loads revocation strategies from configuration and sets the default strategy.
@@ -542,6 +609,7 @@ final class BearerServiceProvider extends PackageServiceProvider
                 $app->make(TokenTypeRegistry::class),
                 $app->make(TokenGeneratorRegistry::class),
                 $app->make(TokenHasherRegistry::class),
+                $app->make(AbilityProviderRegistry::class),
                 $app->make(AuditDriverRegistry::class),
                 $app->make(RevocationStrategyRegistry::class),
                 $app->make(RotationStrategyRegistry::class),

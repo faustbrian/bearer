@@ -26,10 +26,14 @@
     },
     "require-dev": {
         "cline/coding-standard": "^2.0.1",
+        "cline/warden": "^5.0",
         "mockery/mockery": "^1.6.12",
         "orchestra/testbench": "^8.0 || ^9.0 || ^10.9",
         "spatie/laravel-activitylog": "^4.12.1",
         "symfony/var-dumper": "^6.0 || ^7.4.6 || ^8.0"
+    },
+    "suggest": {
+        "cline/warden": "Use the Warden ability provider for owner-based authorization checks."
     },
     "minimum-stability": "stable",
     "prefer-stable": true,

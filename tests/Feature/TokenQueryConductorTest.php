@@ -9,6 +9,7 @@
 
 use Cline\Bearer\Conductors\TokenQueryConductor;
 use Cline\Bearer\Database\Models\AccessToken;
+use Cline\Bearer\Exceptions\AbilityQueryNotSupportedException;
 use Cline\Bearer\Facades\Bearer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -412,6 +413,15 @@ describe('TokenQueryConductor', function (): void {
 
             // Assert
             expect($result)->toHaveCount(0);
+        });
+
+        it('throws when the configured ability provider does not support query constraints', function (): void {
+            config(['bearer.authorization.default' => 'warden']);
+
+            $user = createUser();
+
+            expect(fn (): Collection => new TokenQueryConductor($user)->withAbility('users:read')->get())
+                ->toThrow(AbilityQueryNotSupportedException::class);
         });
     });
 

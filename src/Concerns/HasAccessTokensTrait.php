@@ -9,6 +9,7 @@
 
 namespace Cline\Bearer\Concerns;
 
+use Cline\Bearer\BearerManager;
 use Cline\Bearer\Contracts\HasAbilitiesInterface;
 use Cline\Bearer\Contracts\HasAccessTokensInterface;
 use Cline\Bearer\Database\Models\AccessToken;
@@ -18,6 +19,8 @@ use Cline\Bearer\NewAccessToken;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+
+use function resolve;
 
 /**
  * Trait for models that can own and manage access tokens.
@@ -460,7 +463,11 @@ trait HasAccessTokensTrait
      */
     public function accessTokenCan(string $ability): bool
     {
-        return $this->accessToken?->can($ability) ?? false;
+        if ($this->accessToken === null) {
+            return false;
+        }
+
+        return resolve(BearerManager::class)->abilityProvider()->can($this->accessToken, $ability, $this);
     }
 
     /**

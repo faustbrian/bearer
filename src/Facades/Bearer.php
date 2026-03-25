@@ -11,6 +11,7 @@ namespace Cline\Bearer\Facades;
 
 use Cline\Bearer\BearerManager;
 use Cline\Bearer\Conductors\TokenIssuanceConductor;
+use Cline\Bearer\Contracts\AbilityProviderInterface;
 use Cline\Bearer\Contracts\AuditDriverInterface;
 use Cline\Bearer\Contracts\RevocationStrategyInterface;
 use Cline\Bearer\Contracts\RotationStrategyInterface;
@@ -41,6 +42,7 @@ use Illuminate\Support\Facades\Facade;
  * Bearer::revoke($accessToken);
  * ```
  *
+ * @method static AbilityProviderInterface    abilityProvider(?string $name = null)
  * @method static string                      accessTokenModel()
  * @method static Authenticatable             actingAs(Authenticatable $user, array<int, string> $abilities = [], ?string $type = null, string $guard = 'bearer')
  * @method static AuditDriverInterface        auditDriver(?string $name = null)
@@ -49,6 +51,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static AccessToken|null            findByPrefix(string $prefix)
  * @method static TokenIssuanceConductor      for(Model $owner)
  * @method static void                        getAccessTokenFromRequestUsing(?\Closure $callback)
+ * @method static void                        registerAbilityProvider(string $name, AbilityProviderInterface $provider)
  * @method static void                        registerAuditDriver(string $name, AuditDriverInterface $driver)
  * @method static void                        registerRevocationStrategy(string $name, RevocationStrategyInterface $strategy)
  * @method static void                        registerRotationStrategy(string $name, RotationStrategyInterface $strategy)

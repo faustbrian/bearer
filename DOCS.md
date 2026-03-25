@@ -27,6 +27,13 @@ Install Bearer with composer:
 composer require cline/bearer
 ```
 
+If you want Bearer to validate abilities through Warden, install it
+alongside Bearer:
+
+```bash
+composer require cline/warden
+```
+
 ## Add the Trait
 
 Add Bearer's trait to your user model:
@@ -69,6 +76,10 @@ Bearer supports different polymorphic relationship types. Configure this **befor
 ```php
 // config/bearer.php
 return [
+    'authorization' => [
+        'default' => env('BEARER_AUTHORIZATION_DRIVER', 'array'),
+    ],
+
     'database' => [
         // Primary key type: 'numeric' (bigint), 'uuid', 'ulid'
         'primary_key' => env('BEARER_PRIMARY_KEY', 'numeric'),
@@ -88,6 +99,26 @@ return [
     ],
 ];
 ```
+
+### Authorization Providers
+
+Bearer ships with two runtime ability providers:
+
+| Provider | Behavior |
+|----------|----------|
+| `array` | Checks the token's stored `abilities` array only |
+| `warden` | Requires the token scope and the token owner's Warden permission |
+
+The `warden` provider keeps Bearer's token abilities as a narrowing scope.
+This means Bearer only authorizes an ability when:
+
+1. the token contains the ability or `*`
+2. the token owner is allowed the same ability in Warden
+
+`TokenQueryConductor::withAbility()` is only available when the active
+provider can express ability checks directly in the token query. With the
+`warden` provider, Bearer throws an explicit exception instead of applying
+an incomplete SQL filter.
 
 ### Morph Type Options
 

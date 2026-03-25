@@ -23,6 +23,8 @@
 use Cline\Bearer\AuditDrivers\DatabaseAuditDriver;
 use Cline\Bearer\AuditDrivers\NullAuditDriver;
 use Cline\Bearer\AuditDrivers\SpatieActivityLogDriver;
+use Cline\Bearer\AbilityProviders\ArrayAbilityProvider;
+use Cline\Bearer\AbilityProviders\WardenAbilityProvider;
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Database\Models\AccessTokenAuditLog;
 use Cline\Bearer\Database\Models\AccessTokenGroup;
@@ -211,6 +213,24 @@ return [
         'drivers' => [
             'sha256' => Sha256TokenHasher::class,
             'sha512' => Sha512TokenHasher::class,
+        ],
+    ],
+    /*
+    |--------------------------------------------------------------------------
+    | Authorization
+    |--------------------------------------------------------------------------
+    |
+    | Bearer supports pluggable ability providers. The default array provider
+    | evaluates the token's stored abilities directly. The warden provider
+    | narrows access by the token claims and the owner's Warden permissions.
+    |
+    */
+
+    'authorization' => [
+        'default' => env('BEARER_AUTHORIZATION_DRIVER', 'array'),
+        'drivers' => [
+            'array' => ArrayAbilityProvider::class,
+            'warden' => WardenAbilityProvider::class,
         ],
     ],
     /*

@@ -12,6 +12,8 @@ namespace Tests;
 use Cline\Ancestry\AncestryServiceProvider;
 use Cline\Bearer\BearerServiceProvider;
 use Cline\VariableKeys\VariableKeysServiceProvider;
+use Cline\Warden\WardenServiceProvider;
+use Fixtures\User;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -46,6 +48,7 @@ abstract class AbstractTestCase extends Orchestra
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadMigrationsFrom(__DIR__.'/Fixtures/migrations');
         $this->loadMigrationsFrom(__DIR__.'/../vendor/cline/ancestry/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../vendor/cline/warden/migrations');
     }
 
     /**
@@ -60,6 +63,7 @@ abstract class AbstractTestCase extends Orchestra
             VariableKeysServiceProvider::class,
             BearerServiceProvider::class,
             AncestryServiceProvider::class,
+            WardenServiceProvider::class,
         ];
     }
 
@@ -84,6 +88,19 @@ abstract class AbstractTestCase extends Orchestra
         // Load bearer configuration
         $config = require __DIR__.'/../config/bearer.php';
         $app->make(Repository::class)->set('bearer', $config);
+        $app->make(Repository::class)->set('auth.defaults.guard', 'web');
+        $app->make(Repository::class)->set('auth.guards.web', [
+            'driver' => 'session',
+            'provider' => 'users',
+        ]);
+        $app->make(Repository::class)->set('auth.providers.users', [
+            'driver' => 'eloquent',
+            'model' => User::class,
+        ]);
+
+        $wardenConfig = require __DIR__.'/../vendor/cline/warden/config/warden.php';
+        $wardenConfig['user_model'] = User::class;
+        $app->make(Repository::class)->set('warden', $wardenConfig);
     }
 
     /**

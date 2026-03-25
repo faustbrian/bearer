@@ -24,4 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added optional recoverable legacy token support via per-type `revealable`
   configuration, encrypted `plain_text_token` storage, explicit
   `revealPlainTextToken()` access, and `revealed` audit events.
+- Added pluggable Bearer ability providers with built-in `array` and
+  `warden` implementations, including owner-aware Warden checks and
+  explicit query support errors for non-queryable providers.
 - Initial release

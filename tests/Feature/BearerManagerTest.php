@@ -8,7 +8,9 @@
  */
 
 use Cline\Bearer\BearerManager;
+use Cline\Bearer\Contracts\AbilityProviderInterface;
 use Cline\Bearer\Contracts\AuditDriverInterface;
+use Cline\Bearer\Contracts\HasAbilitiesInterface;
 use Cline\Bearer\Contracts\RevealableTokenTypeInterface;
 use Cline\Bearer\Contracts\RevocationStrategyInterface;
 use Cline\Bearer\Contracts\RotationStrategyInterface;
@@ -21,6 +23,7 @@ use Cline\Bearer\Facades\Bearer;
 use Cline\Bearer\Support\TokenComponents;
 use Cline\Bearer\TokenGenerators\RandomTokenGenerator;
 use Cline\Bearer\TokenTypes\AbstractTokenType;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;
 use Tests\Exceptions\AuditSystemException;
@@ -160,6 +163,31 @@ describe('BearerManager - Revocation with Audit Failures', function (): void {
 });
 
 describe('BearerManager - Registration Methods', function (): void {
+    it('returns the configured default ability provider', function (): void {
+        config(['bearer.authorization.default' => 'array']);
+
+        $provider = resolve(BearerManager::class)->abilityProvider();
+
+        expect($provider)->toBeInstanceOf(AbilityProviderInterface::class);
+    });
+
+    it('registers custom ability provider', function (): void {
+        $provider = new class() implements AbilityProviderInterface
+        {
+            public function can(
+                HasAbilitiesInterface $token,
+                string $ability,
+                ?Model $authority = null,
+            ): bool {
+                return $ability === 'custom:allowed';
+            }
+        };
+
+        resolve(BearerManager::class)->registerAbilityProvider('custom', $provider);
+
+        expect(resolve(BearerManager::class)->abilityProvider('custom'))->toBe($provider);
+    });
+
     it('defaults direct TokenTypeInterface implementations to non-recoverable', function (): void {
         $customType = new class() implements TokenTypeInterface
         {

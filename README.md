@@ -17,6 +17,23 @@ Stripe-style typed API tokens with groups, environments, and audit logging for L
 composer require cline/bearer
 ```
 
+If you want Bearer to delegate runtime ability checks to Warden, install
+Warden in your application and switch the authorization driver:
+
+```bash
+composer require cline/warden
+```
+
+```php
+// config/bearer.php
+'authorization' => [
+    'default' => env('BEARER_AUTHORIZATION_DRIVER', 'array'),
+],
+```
+
+`array` remains the default provider. `warden` requires both the token's
+stored ability scope and the token owner's Warden permission to pass.
+
 ## Documentation
 
 - **[Getting Started](DOCS.md#doc-docs-readme)** - Installation, configuration, and first steps
