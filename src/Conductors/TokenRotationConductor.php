@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Conductors;
 
 use Cline\Bearer\BearerManager;
@@ -24,26 +17,20 @@ use function now;
  * Fluent conductor for token rotation with chainable configuration.
  *
  * Provides a builder pattern for rotating personal access tokens with optional
- * rotation modes and grace periods. Supports immediate invalidation, grace period
- * rotation, and dual-valid rotation strategies.
+ * rotation modes and grace periods. Supports immediate invalidation, grace
+ * period rotation, and dual-valid rotation strategies.
  *
- * Example usage:
- * ```php
- * // Simple rotation (immediate invalidation)
- * $newToken = Bearer::rotate($token)->immediate()->rotate();
+ * Example usage: ```php // Simple rotation (immediate invalidation) $newToken =
+ * Bearer::rotate($token)->immediate()->rotate();
  *
- * // Rotation with grace period
- * $newToken = Bearer::rotate($token)
+ * // Rotation with grace period $newToken = Bearer::rotate($token)
  *     ->withGracePeriod(60)
  *     ->rotate();
  *
- * // With specific mode
- * $newToken = Bearer::rotate($token)
+ * // With specific mode $newToken = Bearer::rotate($token)
  *     ->using(RotationMode::GracePeriod)
  *     ->rotate();
  * ```
- *
- * @author Brian Faust <brian@cline.sh>
  *
  * @psalm-immutable
  */
@@ -76,18 +63,16 @@ final readonly class TokenRotationConductor
     /**
      * Rotate the token with configured settings.
      *
-     * Creates a new token with the same configuration as the old token,
-     * then handles the old token based on the rotation mode:
-     * - Immediate: Old token is invalid immediately
-     * - GracePeriod: Old token remains valid for the grace period
-     * - DualValid: Both tokens remain valid until explicit revocation
+     * Creates a new token with the same configuration as the old token, then
+     * handles the old token based on the rotation mode: - Immediate: Old token
+     * is invalid immediately - GracePeriod: Old token remains valid for the
+     * grace period - DualValid: Both tokens remain valid until explicit
+     * revocation
      *
-     * ```php
-     * // Immediate rotation
-     * $newToken = Bearer::rotate($token)->immediate()->rotate();
+     * ```php // Immediate rotation $newToken =
+     * Bearer::rotate($token)->immediate()->rotate();
      *
-     * // Grace period rotation
-     * $newToken = Bearer::rotate($token)
+     * // Grace period rotation $newToken = Bearer::rotate($token)
      *     ->withGracePeriod(30)
      *     ->rotate();
      * ```
@@ -201,8 +186,8 @@ final readonly class TokenRotationConductor
     /**
      * Use immediate rotation mode.
      *
-     * Shorthand for using(RotationMode::Immediate). The old token
-     * becomes invalid immediately when the new token is created.
+     * Shorthand for using(RotationMode::Immediate). The old token becomes
+     * invalid immediately when the new token is created.
      *
      * @return self New conductor instance with immediate mode configured
      */
@@ -244,8 +229,8 @@ final readonly class TokenRotationConductor
     /**
      * Handle dual-valid rotation mode.
      *
-     * Both tokens remain valid until explicitly revoked.
-     * No changes to the old token.
+     * Both tokens remain valid until explicitly revoked. No changes to the old
+     * token.
      */
     private function handleDualValid(): void
     {

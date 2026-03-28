@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Conductors;
 
 use Cline\Bearer\BearerManager;
@@ -28,31 +21,28 @@ use function now;
  * Fluent conductor for token issuance with chainable configuration.
  *
  * Provides a builder pattern for creating personal access tokens with optional
- * configuration before final issuance. Supports setting abilities, environments,
- * IP restrictions, domain restrictions, rate limits, expiration, context, and boundary.
+ * configuration before final issuance. Supports setting abilities,
+ * environments, IP restrictions, domain restrictions, rate limits, expiration,
+ * context, and boundary.
  *
- * Bearer uses a three-tier relationship model:
- * - Owner: The entity that created/owns the token (required, set via for())
- * - Context: The entity the token acts on behalf of (optional)
- * - Boundary: The tenant/workspace isolation scope (optional)
+ * Bearer uses a three-tier relationship model: - Owner: The entity that
+ * created/owns the token (required, set via for()) - Context: The entity the
+ * token acts on behalf of (optional) - Boundary: The tenant/workspace isolation
+ * scope (optional)
  *
- * Example usage:
- * ```php
- * // Simple token issuance (owner only)
- * $token = Bearer::for($user)->issue('sk', 'My Secret Key');
+ * Example usage: ```php // Simple token issuance (owner only) $token =
+ * Bearer::for($user)->issue('sk', 'My Secret Key');
  *
- * // Token with context (acting on behalf of a service account)
- * $token = Bearer::for($user)
+ * // Token with context (acting on behalf of a service account) $token =
+ * Bearer::for($user)
  *     ->context($serviceAccount)
  *     ->issue('sk', 'Service Account Key');
  *
- * // Token with boundary (scoped to a team)
- * $token = Bearer::for($user)
+ * // Token with boundary (scoped to a team) $token = Bearer::for($user)
  *     ->boundary($team)
  *     ->issue('sk', 'Team API Key');
  *
- * // Token with full configuration
- * $token = Bearer::for($user)
+ * // Token with full configuration $token = Bearer::for($user)
  *     ->context($serviceAccount)
  *     ->boundary($team)
  *     ->abilities(['users:read', 'posts:write'])
@@ -62,14 +52,10 @@ use function now;
  *     ->expiresIn(60)
  *     ->issue('sk', 'API Key');
  *
- * // Issue a group of related tokens
- * $group = Bearer::for($user)->issueGroup(
+ * // Issue a group of related tokens $group = Bearer::for($user)->issueGroup(
  *     ['sk', 'pk', 'rk'],
  *     'Payment Keys'
- * );
- * ```
- *
- * @author Brian Faust <brian@cline.sh>
+ * ); ```
  *
  * @psalm-immutable
  */
@@ -131,19 +117,16 @@ final readonly class TokenIssuanceConductor
      * Issue a single token.
      *
      * Creates and persists a new personal access token with the configured
-     * settings. Returns a NewAccessToken containing both the database model
-     * and the plain-text token (only available once).
+     * settings. Returns a NewAccessToken containing both the database model and
+     * the plain-text token (only available once).
      *
-     * ```php
-     * $token = Bearer::for($user)->issue('sk', 'My Secret Key');
+     * ```php $token = Bearer::for($user)->issue('sk', 'My Secret Key');
      *
-     * // With overrides
-     * $token = Bearer::for($user)
+     * // With overrides $token = Bearer::for($user)
      *     ->abilities(['users:read'])
      *     ->issue('sk', 'Read Only Key', ['posts:read']);
      *
-     * // With context and boundary
-     * $token = Bearer::for($user)
+     * // With context and boundary $token = Bearer::for($user)
      *     ->context($serviceAccount)
      *     ->boundary($team)
      *     ->issue('sk', 'Team Service Key');
@@ -219,21 +202,19 @@ final readonly class TokenIssuanceConductor
     /**
      * Issue a group of related tokens.
      *
-     * Creates a token group containing multiple tokens of different types,
-     * all sharing the same name, abilities, and configuration. Useful for
-     * creating coordinated token sets like secret/publishable key pairs.
+     * Creates a token group containing multiple tokens of different types, all
+     * sharing the same name, abilities, and configuration. Useful for creating
+     * coordinated token sets like secret/publishable key pairs.
      *
-     * ```php
-     * $group = Bearer::for($user)->issueGroup(
+     * ```php $group = Bearer::for($user)->issueGroup(
      *     ['sk', 'pk', 'rk'],
      *     'API Keys'
      * );
      *
-     * $secretKey = $group->secretKey();
-     * $publishableKey = $group->publishableKey();
+     * $secretKey = $group->secretKey(); $publishableKey =
+     * $group->publishableKey();
      *
-     * // With context and boundary
-     * $group = Bearer::for($user)
+     * // With context and boundary $group = Bearer::for($user)
      *     ->context($serviceAccount)
      *     ->boundary($team)
      *     ->issueGroup(['sk', 'pk'], 'Team Keys');
@@ -317,8 +298,8 @@ final readonly class TokenIssuanceConductor
     /**
      * Set the context entity for issued tokens.
      *
-     * The context is the entity the token acts on behalf of. For example,
-     * a ServiceAccount or Application that the token impersonates.
+     * The context is the entity the token acts on behalf of. For example, a
+     * ServiceAccount or Application that the token impersonates.
      *
      * @param  Model $context The context entity
      * @return self  New conductor instance with context configured

@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Console\Commands;
 
 use Cline\Bearer\Database\Models\AccessToken;
@@ -26,8 +19,6 @@ use function sprintf;
  * This command removes personal access tokens that have been expired or revoked
  * for longer than a specified time period. Regular pruning helps maintain
  * database performance and removes unnecessary token records.
- *
- * @author Brian Faust <brian@cline.sh>
  */
 final class PruneExpiredCommand extends Command
 {

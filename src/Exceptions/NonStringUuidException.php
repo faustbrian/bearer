@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Exceptions;
 
 use function gettype;
@@ -16,10 +9,8 @@ use function sprintf;
  * Exception thrown when a non-string value is assigned to a UUID primary key.
  *
  * UUID primary keys require string values in the canonical 8-4-4-4-12
- * hexadecimal format (e.g., "550e8400-e29b-41d4-a716-446655440000").
- * Non-string types cannot be properly validated or stored as UUIDs.
- *
- * @author Brian Faust <brian@cline.sh>
+ * hexadecimal format (e.g., "550e8400-e29b-41d4-a716-446655440000"). Non-string
+ * types cannot be properly validated or stored as UUIDs.
  */
 final class NonStringUuidException extends AbstractInvalidPrimaryKeyValueException
 {

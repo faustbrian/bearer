@@ -1,27 +1,20 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Exceptions;
 
 /**
- * Exception thrown when a token lacks an associated owner model during rotation.
+ * Exception thrown when a token lacks an associated owner model during
+ * rotation.
  *
- * During token rotation, the token must have a valid owner relationship
- * that implements the HasAccessTokensInterface contract. This exception occurs when the
- * owner is null or does not implement the required interface.
- *
- * @author Brian Faust <brian@cline.sh>
+ * During token rotation, the token must have a valid owner relationship that
+ * implements the HasAccessTokensInterface contract. This exception occurs when
+ * the owner is null or does not implement the required interface.
  */
 final class MissingTokenableForRotationException extends AbstractMissingTokenableException
 {
     /**
-     * Create an exception for a token without a valid owner model during rotation.
+     * Create an exception for a token without a valid owner model during
+     * rotation.
      *
      * This occurs when attempting to rotate a token that has no associated
      * owner model, which is required to perform the rotation operation.

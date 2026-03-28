@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Database;
 
 use Cline\Morphism\MorphKeyRegistry;
@@ -18,17 +11,15 @@ use Illuminate\Database\Eloquent\Model;
  *
  * This registry allows you to configure which primary key column should be used
  * for each model type in polymorphic relationships. This is particularly useful
- * when different models use different key types (e.g., User with 'uuid', Team with 'id').
+ * when different models use different key types (e.g., User with 'uuid', Team
+ * with 'id').
  *
- * Morph key functionality is delegated to the Morphism MorphKeyRegistry package,
- * providing a facade for Bearer-specific polymorphic key management.
+ * Morph key functionality is delegated to the Morphism MorphKeyRegistry
+ * package, providing a facade for Bearer-specific polymorphic key management.
  *
- * Example usage:
- * ```php
- * $registry = app(ModelRegistry::class);
+ * Example usage: ```php $registry = app(ModelRegistry::class);
  *
- * // Map models to their primary key columns
- * $registry->morphKeyMap([
+ * // Map models to their primary key columns $registry->morphKeyMap([
  *     User::class => 'uuid',
  *     Team::class => 'id',
  *     Organization::class => 'ulid',
@@ -37,10 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  * // Or enforce mappings (throws if model not mapped)
  * $registry->enforceMorphKeyMap([
  *     User::class => 'uuid',
- * ]);
- * ```
- *
- * @author Brian Faust <brian@cline.sh>
+ * ]); ```
  *
  * @psalm-immutable
  */
@@ -60,9 +48,9 @@ final readonly class ModelRegistry
     /**
      * Register polymorphic key mappings.
      *
-     * Establishes which primary key column should be used for each model
-     * class in polymorphic relationships. This is a soft mapping that
-     * doesn't throw exceptions for unmapped models.
+     * Establishes which primary key column should be used for each model class
+     * in polymorphic relationships. This is a soft mapping that doesn't throw
+     * exceptions for unmapped models.
      *
      * @param array<class-string, string> $map Model class => column name mappings
      *                                         (e.g., [User::class => 'uuid', Team::class => 'id'])
@@ -90,9 +78,9 @@ final readonly class ModelRegistry
     /**
      * Enable strict enforcement of key mappings.
      *
-     * After calling this method, all polymorphic key lookups will require
-     * an explicit mapping. Useful for ensuring all models are properly
-     * configured before being used in production.
+     * After calling this method, all polymorphic key lookups will require an
+     * explicit mapping. Useful for ensuring all models are properly configured
+     * before being used in production.
      */
     public function requireKeyMap(): void
     {
@@ -102,8 +90,8 @@ final readonly class ModelRegistry
     /**
      * Get the polymorphic key column name for a model instance.
      *
-     * Retrieves the configured primary key column for the given model.
-     * Falls back to the model's getKeyName() if no mapping exists.
+     * Retrieves the configured primary key column for the given model. Falls
+     * back to the model's getKeyName() if no mapping exists.
      *
      * @param  Model  $model The model instance to get the key for
      * @return string The primary key column name (e.g., 'id', 'uuid', 'ulid')
@@ -130,8 +118,8 @@ final readonly class ModelRegistry
     /**
      * Reset all registry state.
      *
-     * Clears all registered mappings and enforcement settings. Primarily
-     * useful for testing to ensure a clean state between test runs.
+     * Clears all registered mappings and enforcement settings. Primarily useful
+     * for testing to ensure a clean state between test runs.
      */
     public function reset(): void
     {

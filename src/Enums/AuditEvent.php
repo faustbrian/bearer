@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Enums;
 
 /**
@@ -15,8 +8,6 @@ namespace Cline\Bearer\Enums;
  * This enum represents all significant events in a token's lifecycle that
  * should be recorded in audit logs for security, compliance, and debugging
  * purposes.
- *
- * @author Brian Faust <brian@cline.sh>
  */
 enum AuditEvent: string
 {
@@ -30,8 +21,8 @@ enum AuditEvent: string
     /**
      * Token was successfully authenticated.
      *
-     * Logged when a token passes authentication and is used to access
-     * protected resources.
+     * Logged when a token passes authentication and is used to access protected
+     * resources.
      */
     case Authenticated = 'authenticated';
 
@@ -96,8 +87,8 @@ enum AuditEvent: string
     /**
      * Token plaintext was explicitly revealed.
      *
-     * Logged when a recoverable token is decrypted and returned after
-     * the original creation flow has completed.
+     * Logged when a recoverable token is decrypted and returned after the
+     * original creation flow has completed.
      */
     case Revealed = 'revealed';
 }

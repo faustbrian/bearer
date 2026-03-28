@@ -1,29 +1,20 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Exceptions;
 
 /**
  * Exception thrown when a token has expired.
  *
- * This occurs when a token has expired but the exact expiration
- * time is not needed in the error message.
- *
- * @author Brian Faust <brian@cline.sh>
+ * This occurs when a token has expired but the exact expiration time is not
+ * needed in the error message.
  */
 final class TokenHasExpiredException extends AbstractTokenExpiredException
 {
     /**
      * Create an exception for an expired token without timestamp details.
      *
-     * This occurs when a token has expired but the exact expiration
-     * time is not needed in the error message.
+     * This occurs when a token has expired but the exact expiration time is not
+     * needed in the error message.
      *
      * @return self Exception instance with descriptive error message
      */

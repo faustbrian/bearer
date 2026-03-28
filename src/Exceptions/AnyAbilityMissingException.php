@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Exceptions;
 
 use function implode;
@@ -14,10 +7,8 @@ use function implode;
 /**
  * Exception thrown when any of several required token abilities is missing.
  *
- * This occurs when an action requires at least one of several abilities,
- * but the token does not have any of them in its abilities list.
- *
- * @author Brian Faust <brian@cline.sh>
+ * This occurs when an action requires at least one of several abilities, but
+ * the token does not have any of them in its abilities list.
  */
 final class AnyAbilityMissingException extends AbstractMissingAbilityException
 {

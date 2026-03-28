@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Exceptions;
 
 use function sprintf;
@@ -14,18 +7,16 @@ use function sprintf;
 /**
  * Exception thrown when a token cannot be found by its ID.
  *
- * This occurs when searching for a token using its database ID but
- * no token with that ID exists in the system.
- *
- * @author Brian Faust <brian@cline.sh>
+ * This occurs when searching for a token using its database ID but no token
+ * with that ID exists in the system.
  */
 final class TokenNotFoundByIdException extends AbstractTokenNotFoundException
 {
     /**
      * Create an exception for a token not found by its ID.
      *
-     * This occurs when searching for a token using its database ID but
-     * no token with that ID exists in the system.
+     * This occurs when searching for a token using its database ID but no token
+     * with that ID exists in the system.
      *
      * @param  int|string $id The token ID that was not found
      * @return self       Exception instance with descriptive error message

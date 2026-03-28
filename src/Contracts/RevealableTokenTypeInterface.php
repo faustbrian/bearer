@@ -1,21 +1,12 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Contracts;
 
 /**
  * Contract for token types that support later plaintext retrieval.
  *
- * Implement this alongside TokenTypeInterface when a token type intentionally opts
- * into storing a recoverable plaintext copy for legacy reveal flows.
- *
- * @author Brian Faust <brian@cline.sh>
+ * Implement this alongside TokenTypeInterface when a token type intentionally
+ * opts into storing a recoverable plaintext copy for legacy reveal flows.
  */
 interface RevealableTokenTypeInterface
 {

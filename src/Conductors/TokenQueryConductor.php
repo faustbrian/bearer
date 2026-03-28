@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Conductors;
 
 use Cline\Bearer\BearerManager;
@@ -29,30 +22,24 @@ use function resolve;
  * chainable filter methods. Supports filtering by type, environment, validity
  * status, expiration, and revocation status.
  *
- * Example usage:
- * ```php
- * // Get all valid production secret keys
- * $tokens = Bearer::for($user)
+ * Example usage: ```php // Get all valid production secret keys $tokens =
+ * Bearer::for($user)
  *     ->query()
  *     ->type('secret_key')
  *     ->environment('production')
  *     ->valid()
  *     ->get();
  *
- * // Count expired tokens
- * $count = Bearer::for($user)
+ * // Count expired tokens $count = Bearer::for($user)
  *     ->query()
  *     ->expired()
  *     ->count();
  *
- * // Get first revoked token
- * $token = Bearer::for($user)
+ * // Get first revoked token $token = Bearer::for($user)
  *     ->query()
  *     ->revoked()
  *     ->first();
  * ```
- *
- * @author Brian Faust <brian@cline.sh>
  *
  * @psalm-immutable
  */

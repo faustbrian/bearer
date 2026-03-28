@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Exceptions;
 
 use function sprintf;
@@ -14,10 +7,8 @@ use function sprintf;
 /**
  * Exception thrown when a token type is not configured.
  *
- * This occurs when a token type is referenced but does not have a
- * corresponding entry in the token types configuration array.
- *
- * @author Brian Faust <brian@cline.sh>
+ * This occurs when a token type is referenced but does not have a corresponding
+ * entry in the token types configuration array.
  */
 final class MissingTokenTypeConfigurationException extends AbstractInvalidConfigurationException
 {

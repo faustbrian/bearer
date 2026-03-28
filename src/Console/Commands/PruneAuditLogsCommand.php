@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -27,8 +20,6 @@ use function sprintf;
  * This command removes token audit log entries that are older than a specified
  * retention period. Regular pruning helps control database growth while
  * maintaining compliance with audit retention policies.
- *
- * @author Brian Faust <brian@cline.sh>
  */
 final class PruneAuditLogsCommand extends Command
 {
@@ -53,8 +44,8 @@ final class PruneAuditLogsCommand extends Command
      * Execute the console command.
      *
      * Removes audit log entries older than the configured retention period,
-     * helping control database growth while maintaining audit compliance.
-     * The retention period can be overridden via the --days option.
+     * helping control database growth while maintaining audit compliance. The
+     * retention period can be overridden via the --days option.
      *
      * @return int Command exit code (0 for success)
      */

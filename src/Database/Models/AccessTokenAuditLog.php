@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Database\Models;
 
 use Cline\Bearer\Database\Factories\AccessTokenAuditLogFactory;
@@ -39,8 +32,6 @@ use function now;
  * @property null|AccessToken          $token      The token this log entry belongs to
  * @property int|string                $token_id   Foreign key to the access_tokens table
  * @property null|string               $user_agent User agent string from the request
- *
- * @author Brian Faust <brian@cline.sh>
  */
 #[UseFactory(AccessTokenAuditLogFactory::class)]
 final class AccessTokenAuditLog extends Model
@@ -89,8 +80,8 @@ final class AccessTokenAuditLog extends Model
     /**
      * Get the table name from configuration.
      *
-     * Retrieves the access_token_audit_logs table name from the Bearer configuration,
-     * defaulting to 'access_token_audit_logs' if not configured.
+     * Retrieves the access_token_audit_logs table name from the Bearer
+     * configuration, defaulting to 'access_token_audit_logs' if not configured.
      *
      * @return string The table name for audit log storage
      */

@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\TokenTypes;
 
 use Cline\Bearer\Exceptions\InvalidAbilitiesTypeConfigurationException;
@@ -30,12 +23,11 @@ use function is_string;
  * Configurable token type for user-defined types.
  *
  * Enables applications to define custom token types through configuration
- * without creating dedicated PHP classes. This is useful for application-specific
- * token types that don't warrant a full class implementation.
+ * without creating dedicated PHP classes. This is useful for
+ * application-specific token types that don't warrant a full class
+ * implementation.
  *
- * Configuration structure:
- * ```php
- * [
+ * Configuration structure: ```php [
  *     'name' => 'integration',           // Required: Token type name
  *     'prefix' => 'int',                 // Required: Token prefix
  *     'abilities' => ['api:read'],       // Optional: Default abilities (default: ['*'])
@@ -43,13 +35,9 @@ use function is_string;
  *     'rate_limit' => 500,               // Optional: Requests per minute (default: null)
  *     'environments' => ['production'],  // Optional: Allowed environments (default: ['test', 'live'])
  *     'server_side_only' => true,        // Optional: Server-side restriction (default: false)
- * ]
- * ```
+ * ] ```
  *
- * Example usage:
- * ```php
- * // Define in config/bearer.php
- * 'token_types' => [
+ * Example usage: ```php // Define in config/bearer.php 'token_types' => [
  *     'integration' => [
  *         'name' => 'Integration',
  *         'prefix' => 'int',
@@ -68,34 +56,26 @@ use function is_string;
  *     ],
  * ],
  *
- * // Create from config
- * $type = ConfigurableTokenType::fromConfig(config('bearer.token_types.integration'));
+ * // Create from config $type =
+ * ConfigurableTokenType::fromConfig(config('bearer.token_types.integration'));
  * ```
  *
- * Common use cases:
- * - Integration partner tokens
- * - Temporary access tokens
- * - Testing tokens with specific constraints
- * - Partner/vendor-specific token types
- * - Trial/demo account tokens
- * - Webhook receiver tokens
+ * Common use cases: - Integration partner tokens - Temporary access tokens -
+ * Testing tokens with specific constraints - Partner/vendor-specific token
+ * types - Trial/demo account tokens - Webhook receiver tokens
  *
- * Best practices:
- * - Use descriptive names that indicate purpose
- * - Choose unique prefixes to avoid conflicts
- * - Document custom types in your application
- * - Start with restrictive settings and expand as needed
- * - Consider creating a dedicated class for frequently-used types
- *
- * @author Brian Faust <brian@cline.sh>
+ * Best practices: - Use descriptive names that indicate purpose - Choose unique
+ * prefixes to avoid conflicts - Document custom types in your application -
+ * Start with restrictive settings and expand as needed - Consider creating a
+ * dedicated class for frequently-used types
  */
 final class ConfigurableTokenType extends AbstractTokenType
 {
     /**
      * Create a configurable token type from configuration array.
      *
-     * Validates the configuration and creates a new token type instance
-     * with the specified characteristics.
+     * Validates the configuration and creates a new token type instance with
+     * the specified characteristics.
      *
      * @param array<string, mixed> $config Configuration array
      *

@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Exceptions;
 
 use function implode;
@@ -17,17 +10,16 @@ use function sprintf;
  *
  * This exception occurs when the request's origin domain does not match any of
  * the domains explicitly permitted by the token's configuration. The exception
- * message includes both the attempted domain and the full list of allowed domains.
- *
- * @author Brian Faust <brian@cline.sh>
+ * message includes both the attempted domain and the full list of allowed
+ * domains.
  */
 final class DomainNotAllowedException extends AbstractDomainRestrictionException
 {
     /**
      * Create an exception for a disallowed domain.
      *
-     * This occurs when the request's origin domain does not match any of
-     * the domains explicitly permitted by the token's configuration.
+     * This occurs when the request's origin domain does not match any of the
+     * domains explicitly permitted by the token's configuration.
      *
      * @param  string        $domain         The domain that attempted to use the token
      * @param  array<string> $allowedDomains List of permitted domains for this token

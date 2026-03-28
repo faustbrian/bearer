@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\AbilityProviders;
 
 use Cline\Bearer\Contracts\AbilityProviderInterface;
@@ -17,9 +10,6 @@ use Cline\Bearer\Exceptions\NoDefaultAbilityProviderException;
 use function array_key_exists;
 use function array_keys;
 
-/**
- * @author Brian Faust <brian@cline.sh>
- */
 final class AbilityProviderRegistry
 {
     /** @var array<string, AbilityProviderInterface> */

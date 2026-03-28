@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Http\Middleware;
 
 use Cline\Bearer\Contracts\HasAbilitiesInterface;
@@ -21,28 +14,24 @@ use Illuminate\Http\Request;
  *
  * This middleware validates that the authenticated user's current access token
  * possesses at least one of the abilities listed in the middleware parameters.
- * If none of the abilities are present, a AbstractMissingAbilityException is thrown.
+ * If none of the abilities are present, a AbstractMissingAbilityException is
+ * thrown.
  *
- * Use this when an endpoint can be accessed with any one of several permissions.
+ * Use this when an endpoint can be accessed with any one of several
+ * permissions.
  *
- * Usage in routes:
- * ```php
- * Route::get('/posts', function () {
+ * Usage in routes: ```php Route::get('/posts', function () {
  *     // Tokens with 'posts:read' OR 'admin:access' can access
- * })->middleware('ability:posts:read,admin:access');
- * ```
- *
- * @author Brian Faust <brian@cline.sh>
+ * })->middleware('ability:posts:read,admin:access'); ```
  */
 final class CheckForAnyAbility
 {
     /**
      * Handle the incoming request.
      *
-     * Verifies that:
-     * 1. A user is authenticated
-     * 2. The user has a current access token (not session-based auth)
-     * 3. The token has AT LEAST ONE of the specified abilities
+     * Verifies that: 1. A user is authenticated 2. The user has a current
+     * access token (not session-based auth) 3. The token has AT LEAST ONE of
+     * the specified abilities
      *
      * @param Request                 $request      The incoming HTTP request
      * @param Closure(Request): mixed $next         The next middleware handler

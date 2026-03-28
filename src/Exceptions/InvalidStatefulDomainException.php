@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Exceptions;
 
 use InvalidArgumentException;
@@ -15,10 +8,8 @@ use InvalidArgumentException;
  * Exception thrown when a stateful domain configuration is invalid.
  *
  * The stateful domain configuration must contain string values to properly
- * match frontend request origins. Non-string values cannot be used for
- * domain pattern matching.
- *
- * @author Brian Faust <brian@cline.sh>
+ * match frontend request origins. Non-string values cannot be used for domain
+ * pattern matching.
  */
 final class InvalidStatefulDomainException extends InvalidArgumentException implements BearerExceptionInterface
 {

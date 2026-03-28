@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\TokenHashers;
 
 use Cline\Bearer\Contracts\TokenHasherInterface;
@@ -17,10 +10,8 @@ use function hash_equals;
 /**
  * SHA-512 token hasher implementation.
  *
- * Uses SHA-512 hashing algorithm for token storage. Provides stronger
- * security than SHA-256 at the cost of slightly longer hash values.
- *
- * @author Brian Faust <brian@cline.sh>
+ * Uses SHA-512 hashing algorithm for token storage. Provides stronger security
+ * than SHA-256 at the cost of slightly longer hash values.
  */
 final class Sha512TokenHasher implements TokenHasherInterface
 {

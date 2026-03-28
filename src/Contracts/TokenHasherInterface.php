@@ -1,36 +1,25 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Contracts;
 
 /**
  * Contract for token hashing implementations.
  *
- * Token hashers provide cryptographically secure one-way hashing of access tokens
- * for safe database storage. Since tokens are essentially passwords, they must
- * never be stored in plain text. This contract enables pluggable hash algorithms
- * while maintaining a consistent interface for token security.
+ * Token hashers provide cryptographically secure one-way hashing of access
+ * tokens for safe database storage. Since tokens are essentially passwords,
+ * they must never be stored in plain text. This contract enables pluggable hash
+ * algorithms while maintaining a consistent interface for token security.
  *
- * Critical security requirements:
- * - Hash algorithms must be cryptographically secure (SHA-256+ or bcrypt family)
- * - Verification must use timing-safe comparison to prevent timing attacks
- * - Hash output must be deterministic for the same input
- * - No hash collisions for practical token lengths
+ * Critical security requirements: - Hash algorithms must be cryptographically
+ * secure (SHA-256+ or bcrypt family) - Verification must use timing-safe
+ * comparison to prevent timing attacks - Hash output must be deterministic for
+ * the same input - No hash collisions for practical token lengths
  *
- * Common implementations:
- * - SHA-256: Fast, deterministic, suitable for high-throughput APIs
- * - SHA-512: Higher security margin, minimal performance cost
- * - Bcrypt/Argon2: Adaptive cost, resistant to brute-force attacks
+ * Common implementations: - SHA-256: Fast, deterministic, suitable for
+ * high-throughput APIs - SHA-512: Higher security margin, minimal performance
+ * cost - Bcrypt/Argon2: Adaptive cost, resistant to brute-force attacks
  *
- * ```php
- * class Sha256TokenHasher implements TokenHasherInterface
- * {
+ * ```php class Sha256TokenHasher implements TokenHasherInterface {
  *     public function hash(string $token): string
  *     {
  *         return hash('sha256', $token);
@@ -42,21 +31,15 @@ namespace Cline\Bearer\Contracts;
  *     }
  * }
  *
- * // Usage
- * $hasher = new Sha256TokenHasher();
+ * // Usage $hasher = new Sha256TokenHasher();
  *
- * // At token creation
- * $plainToken = 'usr_prod_abc123...';
- * $hashedToken = $hasher->hash($plainToken);
- * // Store $hashedToken in database, show $plainToken once to user
+ * // At token creation $plainToken = 'usr_prod_abc123...'; $hashedToken =
+ * $hasher->hash($plainToken); // Store $hashedToken in database, show
+ * $plainToken once to user
  *
- * // During authentication
- * if ($hasher->verify($providedToken, $storedHash)) {
+ * // During authentication if ($hasher->verify($providedToken, $storedHash)) {
  *     // Token is valid, authenticate user
- * }
- * ```
- *
- * @author Brian Faust <brian@cline.sh>
+ * } ```
  */
 interface TokenHasherInterface
 {
@@ -64,14 +47,13 @@ interface TokenHasherInterface
      * Hash a plain-text token for secure storage.
      *
      * Generates a cryptographically secure one-way hash of the token that can
-     * be safely stored in the database. The same token input must always produce
-     * the same hash output for verification to work correctly.
+     * be safely stored in the database. The same token input must always
+     * produce the same hash output for verification to work correctly.
      *
-     * Security considerations:
-     * - Never store the plain-text token; only store the hash
-     * - Hash should be irreversible (one-way function)
-     * - Must use cryptographically secure algorithms
-     * - Should be fast enough for high-throughput authentication
+     * Security considerations: - Never store the plain-text token; only store
+     * the hash - Hash should be irreversible (one-way function) - Must use
+     * cryptographically secure algorithms - Should be fast enough for
+     * high-throughput authentication
      *
      * The plain-text token should only be shown to the user once at creation
      * time and never logged or persisted.
@@ -88,15 +70,14 @@ interface TokenHasherInterface
      * determine if they match. This is the core of token authentication, called
      * on every API request to validate the presented credentials.
      *
-     * CRITICAL: Implementations MUST use timing-safe comparison (e.g., hash_equals()
-     * in PHP) to prevent timing attacks that could leak information about the hash
-     * or enable brute-force optimization.
+     * CRITICAL: Implementations MUST use timing-safe comparison (e.g.,
+     * hash_equals() in PHP) to prevent timing attacks that could leak
+     * information about the hash or enable brute-force optimization.
      *
-     * The method should:
-     * - Hash the plain-text token using the same algorithm
-     * - Compare with the stored hash using constant-time comparison
-     * - Return false for any errors or mismatches
-     * - Not throw exceptions (return false instead)
+     * The method should: - Hash the plain-text token using the same algorithm -
+     * Compare with the stored hash using constant-time comparison - Return
+     * false for any errors or mismatches - Not throw exceptions (return false
+     * instead)
      *
      * @param  string $token The plain-text token to verify
      * @param  string $hash  The stored hash to verify against

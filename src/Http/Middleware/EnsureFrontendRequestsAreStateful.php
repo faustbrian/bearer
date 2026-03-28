@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Http\Middleware;
 
 use Cline\Bearer\Exceptions\InvalidStatefulDomainException;
@@ -36,26 +29,20 @@ use function mb_trim;
  * trusted frontend applications (SPAs, mobile apps, etc.), while maintaining
  * token-based authentication for third-party API consumers.
  *
- * When a request originates from a configured stateful domain:
- * - Session cookies are encrypted and HTTP-only
- * - CSRF protection is enabled
- * - Standard Laravel session middleware is applied
- * - The request is marked as coming from a trusted frontend
+ * When a request originates from a configured stateful domain: - Session
+ * cookies are encrypted and HTTP-only - CSRF protection is enabled - Standard
+ * Laravel session middleware is applied - The request is marked as coming from
+ * a trusted frontend
  *
  * This provides the security benefits of session authentication for your own
- * applications while still supporting token authentication for external API access.
+ * applications while still supporting token authentication for external API
+ * access.
  *
- * Configuration:
- * ```php
- * // config/bearer.php
- * 'stateful' => [
+ * Configuration: ```php // config/bearer.php 'stateful' => [
  *     'localhost',
  *     'localhost:3000',
  *     'app.example.com',
- * ],
- * ```
- *
- * @author Brian Faust <brian@cline.sh>
+ * ], ```
  */
 final class EnsureFrontendRequestsAreStateful
 {
@@ -121,8 +108,8 @@ final class EnsureFrontendRequestsAreStateful
     /**
      * Configure secure cookie sessions.
      *
-     * Ensures session cookies are HTTP-only and use SameSite for
-     * CSRF protection. Values are configurable via bearer.session config.
+     * Ensures session cookies are HTTP-only and use SameSite for CSRF
+     * protection. Values are configurable via bearer.session config.
      */
     private function configureSecureCookieSessions(): void
     {

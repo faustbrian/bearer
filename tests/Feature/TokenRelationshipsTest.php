@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 use Cline\Bearer\Concerns\HasAccessTokensTrait;
 use Cline\Bearer\Facades\Bearer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,9 +10,6 @@ use Tests\Fixtures\User;
 uses(RefreshDatabase::class);
 
 // Create a simple mock model for context/boundary testing
-/**
- * @author Brian Faust <brian@cline.sh>
- */
 final class ServiceAccount extends Model
 {
     use HasFactory;
@@ -32,9 +22,6 @@ final class ServiceAccount extends Model
     protected $guarded = [];
 }
 
-/**
- * @author Brian Faust <brian@cline.sh>
- */
 final class Team extends Model
 {
     use HasFactory;

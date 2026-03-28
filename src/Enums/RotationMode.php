@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Enums;
 
 /**
@@ -14,8 +7,6 @@ namespace Cline\Bearer\Enums;
  *
  * This enum controls how old tokens are handled when a token is rotated
  * (replaced with a new one), balancing security with operational flexibility.
- *
- * @author Brian Faust <brian@cline.sh>
  */
 enum RotationMode: string
 {
@@ -39,8 +30,8 @@ enum RotationMode: string
     /**
      * Both tokens valid until explicit revoke.
      *
-     * Both the old and new tokens remain valid until one is explicitly
-     * revoked. Provides maximum flexibility but requires manual cleanup.
+     * Both the old and new tokens remain valid until one is explicitly revoked.
+     * Provides maximum flexibility but requires manual cleanup.
      */
     case DualValid = 'dual';
 }

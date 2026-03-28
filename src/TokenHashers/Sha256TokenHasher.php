@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\TokenHashers;
 
 use Cline\Bearer\Contracts\TokenHasherInterface;
@@ -17,10 +10,8 @@ use function hash_equals;
 /**
  * SHA-256 token hasher implementation.
  *
- * Uses SHA-256 hashing algorithm for token storage. This is the default
- * hasher providing a good balance of speed and security for access tokens.
- *
- * @author Brian Faust <brian@cline.sh>
+ * Uses SHA-256 hashing algorithm for token storage. This is the default hasher
+ * providing a good balance of speed and security for access tokens.
  */
 final class Sha256TokenHasher implements TokenHasherInterface
 {

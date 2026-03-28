@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Contracts;
 
 /**
@@ -16,16 +9,13 @@ namespace Cline\Bearer\Contracts;
  * distinct properties, permissions, and constraints. This enables sophisticated
  * token management strategies that go beyond simple authentication.
  *
- * Common token type use cases:
- * - User tokens: Full access, long-lived, rotatable
- * - Service tokens: Specific abilities, server-side only, no expiration
- * - Temporary tokens: Limited scope, short expiration, one-time use
- * - Read-only tokens: Safe for client-side, limited abilities
- * - Admin tokens: Elevated permissions, strict environment controls
+ * Common token type use cases: - User tokens: Full access, long-lived,
+ * rotatable - Service tokens: Specific abilities, server-side only, no
+ * expiration - Temporary tokens: Limited scope, short expiration, one-time use
+ * - Read-only tokens: Safe for client-side, limited abilities - Admin tokens:
+ * Elevated permissions, strict environment controls
  *
- * ```php
- * class ServiceTokenType implements TokenTypeInterface
- * {
+ * ```php class ServiceTokenType implements TokenTypeInterface {
  *     public function name(): string { return 'service'; }
  *     public function prefix(): string { return 'svc'; }
  *     public function defaultAbilities(): array { return ['api:read', 'webhooks:write']; }
@@ -33,10 +23,7 @@ namespace Cline\Bearer\Contracts;
  *     public function defaultRateLimit(): ?int { return 1000; }
  *     public function allowedEnvironments(): array { return ['production']; }
  *     public function isServerSideOnly(): bool { return true; }
- * }
- * ```
- *
- * @author Brian Faust <brian@cline.sh>
+ * } ```
  */
 interface TokenTypeInterface
 {
@@ -44,7 +31,8 @@ interface TokenTypeInterface
      * Get the unique name/identifier for this token type.
      *
      * The name is used to identify the type when creating tokens and in
-     * configuration. Should be lowercase, alphanumeric with hyphens/underscores.
+     * configuration. Should be lowercase, alphanumeric with
+     * hyphens/underscores.
      *
      * @return string Token type name (e.g., 'user', 'service', 'temporary', 'read-only')
      */
@@ -54,13 +42,11 @@ interface TokenTypeInterface
      * Get the prefix used in generated tokens.
      *
      * Token prefixes enable quick visual identification and programmatic type
-     * detection. Prefixes appear at the start of the token string, separated
-     * by an underscore (e.g., 'usr_abc123', 'svc_xyz789').
+     * detection. Prefixes appear at the start of the token string, separated by
+     * an underscore (e.g., 'usr_abc123', 'svc_xyz789').
      *
-     * Best practices:
-     * - Keep prefixes short (2-4 characters)
-     * - Use only lowercase letters
-     * - Make them distinct and memorable
+     * Best practices: - Keep prefixes short (2-4 characters) - Use only
+     * lowercase letters - Make them distinct and memorable
      *
      * @return string Token prefix (e.g., 'usr', 'svc', 'tmp', 'api')
      */
@@ -69,9 +55,9 @@ interface TokenTypeInterface
     /**
      * Get the default abilities/permissions for this token type.
      *
-     * When creating tokens of this type without explicitly specifying abilities,
-     * these default abilities are assigned. This ensures consistent permission
-     * baselines for each token type.
+     * When creating tokens of this type without explicitly specifying
+     * abilities, these default abilities are assigned. This ensures consistent
+     * permission baselines for each token type.
      *
      * Return an empty array to require explicit ability assignment, or use
      * ['*'] to grant all abilities by default.
@@ -86,8 +72,8 @@ interface TokenTypeInterface
      * Specifies how many minutes from creation until tokens of this type
      * automatically expire. Return null for tokens that never expire.
      *
-     * Short-lived tokens (e.g., temporary access) might use 60 (1 hour),
-     * while long-lived tokens might use 525600 (1 year) or null.
+     * Short-lived tokens (e.g., temporary access) might use 60 (1 hour), while
+     * long-lived tokens might use 525600 (1 year) or null.
      *
      * @return null|int Expiration in minutes from creation, or null for no expiration
      */
@@ -96,8 +82,8 @@ interface TokenTypeInterface
     /**
      * Get the default rate limit for this token type.
      *
-     * Specifies the maximum number of requests per minute allowed for tokens
-     * of this type. Return null to disable rate limiting for this token type.
+     * Specifies the maximum number of requests per minute allowed for tokens of
+     * this type. Return null to disable rate limiting for this token type.
      *
      * Rate limits help prevent abuse and manage resource consumption. Service
      * tokens might have high limits (1000+), while public tokens might be
@@ -110,12 +96,12 @@ interface TokenTypeInterface
     /**
      * Get the environments where this token type can be used.
      *
-     * Restricts token usage to specific environments, preventing accidental
-     * use of production tokens in development or vice versa. Return an empty
-     * array to allow usage in all environments.
+     * Restricts token usage to specific environments, preventing accidental use
+     * of production tokens in development or vice versa. Return an empty array
+     * to allow usage in all environments.
      *
-     * Environment names should match your application's environment configuration
-     * (e.g., APP_ENV values).
+     * Environment names should match your application's environment
+     * configuration (e.g., APP_ENV values).
      *
      * @return array<int, string> Allowed environment names (e.g., ['production'], ['local', 'staging'], [])
      */

@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer;
 
 use Cline\Bearer\Database\Models\AccessToken;
@@ -17,20 +10,18 @@ use Illuminate\Http\Request;
 /**
  * Static configuration for Bearer package.
  *
- * Provides centralized configuration for model class names and callback customization.
- * Allows applications to use custom model implementations and authentication logic
- * through a static API that can be modified at runtime.
- *
- * @author Brian Faust <brian@cline.sh>
+ * Provides centralized configuration for model class names and callback
+ * customization. Allows applications to use custom model implementations and
+ * authentication logic through a static API that can be modified at runtime.
  */
 final class BearerConfig
 {
     /**
      * The personal access token model class name.
      *
-     * Defines which Eloquent model class should be used for personal access tokens.
-     * Applications can override this to use custom model implementations with
-     * additional fields, relationships, or business logic.
+     * Defines which Eloquent model class should be used for personal access
+     * tokens. Applications can override this to use custom model
+     * implementations with additional fields, relationships, or business logic.
      *
      * @var class-string<AccessToken>
      */
@@ -50,9 +41,9 @@ final class BearerConfig
     /**
      * Custom callback for retrieving access tokens from requests.
      *
-     * Allows applications to implement custom token extraction logic from incoming
-     * HTTP requests. When set, this callback is invoked instead of the default
-     * bearer token extraction mechanism.
+     * Allows applications to implement custom token extraction logic from
+     * incoming HTTP requests. When set, this callback is invoked instead of the
+     * default bearer token extraction mechanism.
      *
      * @var null|(Closure(Request): (null|string))
      */
@@ -63,7 +54,8 @@ final class BearerConfig
      *
      * Allows applications to implement custom authentication logic beyond the
      * default token verification. This callback can enforce additional security
-     * constraints like IP whitelisting, rate limiting, or context-based validation.
+     * constraints like IP whitelisting, rate limiting, or context-based
+     * validation.
      *
      * @var null|Closure(AccessToken, Request): bool
      */
@@ -112,9 +104,10 @@ final class BearerConfig
     /**
      * Set the callback for custom token retrieval from requests.
      *
-     * Registers a custom callback that will be used to extract access tokens from
-     * incoming HTTP requests. This allows applications to implement non-standard
-     * token extraction logic (e.g., from custom headers, cookies, or query parameters).
+     * Registers a custom callback that will be used to extract access tokens
+     * from incoming HTTP requests. This allows applications to implement
+     * non-standard token extraction logic (e.g., from custom headers, cookies,
+     * or query parameters).
      *
      * @param null|(Closure(Request): (null|string)) $callback The token retrieval callback or null to reset
      */
@@ -126,10 +119,10 @@ final class BearerConfig
     /**
      * Set the callback for custom token authentication.
      *
-     * Registers a custom callback that will be invoked during token authentication
-     * to perform additional validation beyond the standard token verification. This
-     * enables custom security policies like IP restrictions, environment checks,
-     * or contextual authorization.
+     * Registers a custom callback that will be invoked during token
+     * authentication to perform additional validation beyond the standard token
+     * verification. This enables custom security policies like IP restrictions,
+     * environment checks, or contextual authorization.
      *
      * @param null|Closure(AccessToken, Request): bool $callback The authentication callback or null to reset
      */

@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\RotationStrategies;
 
 use Cline\Bearer\Contracts\RotationStrategyInterface;
@@ -24,28 +17,20 @@ use function array_keys;
  * different token rotation strategies. Allows applications to configure which
  * strategy to use as the default and switch between implementations as needed.
  *
- * Example usage:
- * ```php
- * $registry = new RotationStrategyRegistry();
+ * Example usage: ```php $registry = new RotationStrategyRegistry();
  *
- * // Register strategies
- * $registry->register('immediate', new ImmediateStrategy());
- * $registry->register('grace_period', new GracePeriodStrategy(60));
- * $registry->register('dual_valid', new DualValidStrategy());
+ * // Register strategies $registry->register('immediate', new
+ * ImmediateStrategy()); $registry->register('grace_period', new
+ * GracePeriodStrategy(60)); $registry->register('dual_valid', new
+ * DualValidStrategy());
  *
- * // Retrieve a specific strategy
- * $strategy = $registry->get('grace_period');
+ * // Retrieve a specific strategy $strategy = $registry->get('grace_period');
  *
- * // Check if a strategy exists
- * if ($registry->has('immediate')) {
+ * // Check if a strategy exists if ($registry->has('immediate')) {
  *     // ...
  * }
  *
- * // Get the default strategy
- * $default = $registry->default();
- * ```
- *
- * @author Brian Faust <brian@cline.sh>
+ * // Get the default strategy $default = $registry->default(); ```
  */
 final class RotationStrategyRegistry
 {
@@ -64,8 +49,8 @@ final class RotationStrategyRegistry
     /**
      * Register a rotation strategy with a given name.
      *
-     * If this is the first strategy registered and no default has been set,
-     * it will automatically become the default strategy.
+     * If this is the first strategy registered and no default has been set, it
+     * will automatically become the default strategy.
      *
      * @param string                    $name     Unique identifier for this strategy
      * @param RotationStrategyInterface $strategy The strategy implementation to register

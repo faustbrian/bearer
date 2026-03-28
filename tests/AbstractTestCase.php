@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Tests;
 
 use Cline\Ancestry\AncestryServiceProvider;
@@ -22,15 +15,12 @@ use Orchestra\Testbench\TestCase as Orchestra;
 /**
  * Base test case for Bearer package tests.
  *
- * Provides test infrastructure including:
- * - Orchestra Testbench setup for package testing
- * - RefreshDatabase trait for clean database state per test
- * - Automatic loading of package migrations
- * - SQLite in-memory database configuration
- * - Bearer service provider registration
- * - Package configuration defaults
+ * Provides test infrastructure including: - Orchestra Testbench setup for
+ * package testing - RefreshDatabase trait for clean database state per test -
+ * Automatic loading of package migrations - SQLite in-memory database
+ * configuration - Bearer service provider registration - Package configuration
+ * defaults
  *
- * @author Brian Faust <brian@cline.sh>
  * @internal
  */
 abstract class AbstractTestCase extends Orchestra
@@ -70,9 +60,8 @@ abstract class AbstractTestCase extends Orchestra
     /**
      * Define environment setup.
      *
-     * Configures the test environment with:
-     * - SQLite in-memory database for speed and isolation
-     * - Bearer default configuration for testing
+     * Configures the test environment with: - SQLite in-memory database for
+     * speed and isolation - Bearer default configuration for testing
      *
      * @param Application $app
      */

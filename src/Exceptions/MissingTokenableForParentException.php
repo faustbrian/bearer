@@ -1,22 +1,14 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Exceptions;
 
 /**
  * Exception thrown when a parent token lacks an associated owner model.
  *
- * During token derivation, the parent token must have a valid owner relationship
- * that implements the HasAccessTokensInterface contract. This exception occurs when the
- * parent token's owner is null or does not implement the required interface.
- *
- * @author Brian Faust <brian@cline.sh>
+ * During token derivation, the parent token must have a valid owner
+ * relationship that implements the HasAccessTokensInterface contract. This
+ * exception occurs when the parent token's owner is null or does not implement
+ * the required interface.
  */
 final class MissingTokenableForParentException extends AbstractMissingTokenableException
 {

@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\RevocationStrategies;
 
 use Cline\Ancestry\Facades\Ancestry;
@@ -24,16 +17,13 @@ use function now;
  * Cascade descendants revocation strategy for hierarchical tokens.
  *
  * Revokes the specified token and all of its descendant tokens in the
- * derivation hierarchy. This ensures that when a parent token is revoked,
- * all derived child tokens are automatically invalidated as well.
+ * derivation hierarchy. This ensures that when a parent token is revoked, all
+ * derived child tokens are automatically invalidated as well.
  *
- * Use this strategy when:
- * - Tokens are organized in a hierarchical derivation structure
- * - You want to revoke a master token and all derived customer tokens
- * - Security incidents affect a parent token and all its derivatives
- * - Resellers need to invalidate all customer tokens at once
- *
- * @author Brian Faust <brian@cline.sh>
+ * Use this strategy when: - Tokens are organized in a hierarchical derivation
+ * structure - You want to revoke a master token and all derived customer tokens
+ * - Security incidents affect a parent token and all its derivatives -
+ * Resellers need to invalidate all customer tokens at once
  */
 final class CascadeDescendantsStrategy implements RevocationStrategyInterface
 {

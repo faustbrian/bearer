@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\RevocationStrategies;
 
 use Cline\Bearer\Contracts\RevocationStrategyInterface;
@@ -24,28 +17,19 @@ use function array_keys;
  * different token revocation strategies. Allows applications to configure which
  * strategy to use as the default and switch between implementations as needed.
  *
- * Example usage:
- * ```php
- * $registry = new RevocationStrategyRegistry();
+ * Example usage: ```php $registry = new RevocationStrategyRegistry();
  *
- * // Register strategies
- * $registry->register('none', new NoneStrategy());
+ * // Register strategies $registry->register('none', new NoneStrategy());
  * $registry->register('cascade', new CascadeStrategy());
  * $registry->register('partial', new PartialCascadeStrategy(['sk', 'rk']));
  *
- * // Retrieve a specific strategy
- * $strategy = $registry->get('cascade');
+ * // Retrieve a specific strategy $strategy = $registry->get('cascade');
  *
- * // Check if a strategy exists
- * if ($registry->has('timed')) {
+ * // Check if a strategy exists if ($registry->has('timed')) {
  *     // ...
  * }
  *
- * // Get the default strategy
- * $default = $registry->default();
- * ```
- *
- * @author Brian Faust <brian@cline.sh>
+ * // Get the default strategy $default = $registry->default(); ```
  */
 final class RevocationStrategyRegistry
 {
@@ -64,9 +48,9 @@ final class RevocationStrategyRegistry
     /**
      * Register a revocation strategy with a given name.
      *
-     * Stores the strategy in the registry and automatically sets it as the default
-     * if no default has been configured yet. This ensures the registry always has
-     * a usable default strategy.
+     * Stores the strategy in the registry and automatically sets it as the
+     * default if no default has been configured yet. This ensures the registry
+     * always has a usable default strategy.
      *
      * @param string                      $name     Unique identifier for this strategy
      * @param RevocationStrategyInterface $strategy The strategy implementation to register
@@ -131,8 +115,9 @@ final class RevocationStrategyRegistry
     /**
      * Set the default revocation strategy by name.
      *
-     * Changes which strategy will be used when no specific strategy is requested.
-     * The strategy must already be registered before it can be set as default.
+     * Changes which strategy will be used when no specific strategy is
+     * requested. The strategy must already be registered before it can be set
+     * as default.
      *
      * @param string $name The name of the strategy to set as default
      *

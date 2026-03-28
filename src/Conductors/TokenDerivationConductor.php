@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Conductors;
 
 use Cline\Ancestry\Facades\Ancestry;
@@ -35,20 +28,16 @@ use function throw_unless;
  * This is useful for reseller scenarios where master tokens can issue customer
  * tokens without those customers needing full accounts.
  *
- * Example usage:
- * ```php
- * // Reseller creates master token
- * $resellerMaster = Bearer::for($reseller)->issue('sk', 'Reseller Master');
+ * Example usage: ```php // Reseller creates master token $resellerMaster =
+ * Bearer::for($reseller)->issue('sk', 'Reseller Master');
  *
- * // Derive customer token
- * $customerToken = Bearer::derive($resellerMaster->accessToken)
+ * // Derive customer token $customerToken =
+ * Bearer::derive($resellerMaster->accessToken)
  *     ->abilities(['invoices:read', 'webhooks:receive'])
  *     ->metadata(['reseller_customer_id' => 'cust_xyz'])
  *     ->expiresAt(now()->addYear())
  *     ->as('Customer XYZ Key');
  * ```
- *
- * @author Brian Faust <brian@cline.sh>
  *
  * @psalm-immutable
  */
@@ -99,7 +88,8 @@ final readonly class TokenDerivationConductor
     }
 
     /**
-     * Set expiration timestamp for the derived token (must be <= parent expiration).
+     * Set expiration timestamp for the derived token (must be <= parent
+     * expiration).
      *
      * @param  null|DateTimeInterface $expiresAt Expiration timestamp
      * @return self                   New conductor instance with expiration configured
@@ -146,9 +136,9 @@ final readonly class TokenDerivationConductor
     /**
      * Create the derived child token with the specified name.
      *
-     * Creates a new token that inherits restrictions from the parent but can have
-     * more limited abilities and shorter expiration. The child token is linked to
-     * the parent via the Ancestry hierarchy system.
+     * Creates a new token that inherits restrictions from the parent but can
+     * have more limited abilities and shorter expiration. The child token is
+     * linked to the parent via the Ancestry hierarchy system.
      *
      * @param string $name Human-readable token name
      *

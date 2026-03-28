@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\TokenHashers;
 
 use Cline\Bearer\Contracts\TokenHasherInterface;
@@ -18,10 +11,8 @@ use function array_key_exists;
 /**
  * Registry for managing token hasher implementations.
  *
- * Maintains a collection of token hashers keyed by name, allowing
- * runtime registration and retrieval of hasher implementations.
- *
- * @author Brian Faust <brian@cline.sh>
+ * Maintains a collection of token hashers keyed by name, allowing runtime
+ * registration and retrieval of hasher implementations.
  */
 final class TokenHasherRegistry
 {

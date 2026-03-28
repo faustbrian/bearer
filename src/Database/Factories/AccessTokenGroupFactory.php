@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Database\Factories;
 
 use Cline\Bearer\Database\Models\AccessTokenGroup;
@@ -19,7 +12,6 @@ use Override;
  * Creates token groups with randomized names for testing grouped token
  * management, batch operations, and sibling token relationships.
  *
- * @author Brian Faust <brian@cline.sh>
  * @extends Factory<AccessTokenGroup>
  */
 final class AccessTokenGroupFactory extends Factory

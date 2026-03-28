@@ -1,29 +1,20 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Exceptions;
 
 /**
  * Exception thrown when no default token hasher is registered.
  *
- * This occurs when attempting to use the default hasher but no default
- * has been configured in the bearer configuration.
- *
- * @author Brian Faust <brian@cline.sh>
+ * This occurs when attempting to use the default hasher but no default has been
+ * configured in the bearer configuration.
  */
 final class NoDefaultTokenHasherException extends AbstractTokenHasherNotRegisteredException
 {
     /**
      * Create an exception for when no default hasher is set.
      *
-     * This occurs when attempting to use the default hasher but no default
-     * has been configured in the bearer configuration.
+     * This occurs when attempting to use the default hasher but no default has
+     * been configured in the bearer configuration.
      *
      * @return self Exception instance with descriptive error message
      */

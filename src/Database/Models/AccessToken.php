@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Database\Models;
 
 use Cline\Ancestry\Concerns\HasAncestry;
@@ -36,25 +29,22 @@ use function now;
 /**
  * Eloquent model representing API access tokens.
  *
- * This is the core model for token storage and management. Each token represents
- * a unique API credential with configurable permissions (abilities), restrictions
- * (IP/domain whitelisting), lifecycle management (expiration, revocation), and
- * hierarchical relationships (token derivation).
+ * This is the core model for token storage and management. Each token
+ * represents a unique API credential with configurable permissions (abilities),
+ * restrictions (IP/domain whitelisting), lifecycle management (expiration,
+ * revocation), and hierarchical relationships (token derivation).
  *
- * Key features:
- * - Ability-based authorization with wildcard support
- * - Token grouping for related tokens (e.g., secret/publishable key pairs)
- * - Hierarchical token derivation for delegated access
- * - IP and domain whitelisting for security
- * - Rate limiting per token
- * - Environment scoping (test/live separation)
- * - Comprehensive audit logging integration
- * - Three-tier relationship model: owner, context, and boundary
+ * Key features: - Ability-based authorization with wildcard support - Token
+ * grouping for related tokens (e.g., secret/publishable key pairs) -
+ * Hierarchical token derivation for delegated access - IP and domain
+ * whitelisting for security - Rate limiting per token - Environment scoping
+ * (test/live separation) - Comprehensive audit logging integration - Three-tier
+ * relationship model: owner, context, and boundary
  *
- * Relationship model:
- * - Owner: The entity that created/owns the token (e.g., User who generated it)
- * - Context: The entity the token acts on behalf of (e.g., ServiceAccount, Application)
- * - Boundary: The tenant/workspace isolation scope (e.g., Team, Organization)
+ * Relationship model: - Owner: The entity that created/owns the token (e.g.,
+ * User who generated it) - Context: The entity the token acts on behalf of
+ * (e.g., ServiceAccount, Application) - Boundary: The tenant/workspace
+ * isolation scope (e.g., Team, Organization)
  *
  * @property array<int, string>        $abilities             Token abilities/permissions (e.g., ['api:read', 'api:write'])
  * @property null|array<int, string>   $allowed_domains       Domain whitelist for CORS-like restrictions
@@ -84,8 +74,6 @@ use function now;
  * @property string                    $token                 Hashed token value (never exposed in responses)
  * @property string                    $type                  Token type identifier (e.g., 'secret_key', 'publishable_key')
  * @property Carbon                    $updated_at            Record last modification timestamp
- *
- * @author Brian Faust <brian@cline.sh>
  */
 final class AccessToken extends Model implements HasAbilitiesInterface, HasAbilityClaimsInterface
 {
@@ -191,8 +179,8 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     /**
      * Get the owner model that created/owns this access token.
      *
-     * The owner is the entity that generated this token, typically a User.
-     * This represents who has administrative control over the token.
+     * The owner is the entity that generated this token, typically a User. This
+     * represents who has administrative control over the token.
      *
      * @return MorphTo<Model, $this> The polymorphic relationship to the owning entity
      */
@@ -211,9 +199,9 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     /**
      * Get the context model that this token acts on behalf of.
      *
-     * The context is the entity the token operates within or for.
-     * For example, a ServiceAccount, Application, or another User.
-     * This is optional - if null, the token acts on behalf of the owner.
+     * The context is the entity the token operates within or for. For example,
+     * a ServiceAccount, Application, or another User. This is optional - if
+     * null, the token acts on behalf of the owner.
      *
      * @return MorphTo<Model, $this> The polymorphic relationship to the context entity
      */
@@ -232,9 +220,9 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     /**
      * Get the boundary model that scopes this token.
      *
-     * The boundary provides tenant/workspace isolation, ensuring the token
-     * can only operate within a specific Team, Organization, or other
-     * multi-tenancy boundary. This is optional for single-tenant applications.
+     * The boundary provides tenant/workspace isolation, ensuring the token can
+     * only operate within a specific Team, Organization, or other multi-tenancy
+     * boundary. This is optional for single-tenant applications.
      *
      * @return MorphTo<Model, $this> The polymorphic relationship to the boundary entity
      */
@@ -253,7 +241,8 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     /**
      * Get the token group this token belongs to.
      *
-     * Defines the relationship to the AccessTokenGroup that links related tokens together.
+     * Defines the relationship to the AccessTokenGroup that links related
+     * tokens together.
      *
      * @return BelongsTo<AccessTokenGroup, $this> The relationship to the token group
      */
@@ -265,8 +254,8 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     /**
      * Get all audit logs for this token.
      *
-     * Defines the relationship to AccessTokenAuditLog entries that track this token's
-     * activity history, security events, and usage patterns.
+     * Defines the relationship to AccessTokenAuditLog entries that track this
+     * token's activity history, security events, and usage patterns.
      *
      * @return HasMany<AccessTokenAuditLog, $this> The relationship to audit log entries
      */
@@ -288,8 +277,8 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     /**
      * Reveal the token plaintext when a recoverable copy exists.
      *
-     * Emits an audit log entry for explicit reveal operations and returns
-     * null for tokens that do not store a recoverable copy.
+     * Emits an audit log entry for explicit reveal operations and returns null
+     * for tokens that do not store a recoverable copy.
      *
      * @return null|string The revealed plaintext token or null when unavailable
      */
@@ -311,8 +300,8 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     /**
      * Determine if the token has a given ability.
      *
-     * Checks whether the token possesses the specified ability/permission.
-     * The wildcard ability '*' grants all permissions.
+     * Checks whether the token possesses the specified ability/permission. The
+     * wildcard ability '*' grants all permissions.
      *
      * @param  string $ability The ability to check (e.g., 'users:read', 'posts:write')
      * @return bool   True if the token has this ability, false otherwise
@@ -351,8 +340,8 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     /**
      * Check if the token is expired.
      *
-     * Tokens with no expiration date (expires_at is null) never expire.
-     * Tokens with a future expiration are still valid.
+     * Tokens with no expiration date (expires_at is null) never expire. Tokens
+     * with a future expiration are still valid.
      *
      * @return bool True if the token has an expiration date and it has passed
      */
@@ -391,10 +380,10 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     /**
      * Get a sibling token of a specific type from the same group.
      *
-     * Retrieves another token from the same group with a different type.
-     * Common use case is finding the secret_key when you have the publishable_key
-     * in a Stripe-like token pairing scenario. Returns null if this token
-     * doesn't belong to a group.
+     * Retrieves another token from the same group with a different type. Common
+     * use case is finding the secret_key when you have the publishable_key in a
+     * Stripe-like token pairing scenario. Returns null if this token doesn't
+     * belong to a group.
      *
      * @param  string    $type The type of sibling token to retrieve (e.g., 'secret_key')
      * @return null|self The sibling token if found, null otherwise
@@ -415,8 +404,8 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
      * Revoke this token.
      *
      * Sets the revoked_at timestamp to mark the token as invalid and persists
-     * the change to the database. Revoked tokens cannot be used for authentication
-     * and the operation is permanent.
+     * the change to the database. Revoked tokens cannot be used for
+     * authentication and the operation is permanent.
      *
      * @return bool True if the revocation was successfully saved to the database
      */
@@ -506,7 +495,8 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
      * Get all descendant tokens (children, grandchildren, etc.).
      *
      * Returns the complete tree of all tokens derived from this token at any
-     * depth level. Useful for cascading revocation or analyzing delegation chains.
+     * depth level. Useful for cascading revocation or analyzing delegation
+     * chains.
      *
      * @return Collection<int, self> Collection of all descendant tokens
      */

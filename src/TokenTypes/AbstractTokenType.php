@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\TokenTypes;
 
 use Cline\Bearer\Contracts\RevealableTokenTypeInterface;
@@ -19,8 +12,6 @@ use Cline\Bearer\Contracts\TokenTypeInterface;
  * different characteristics. Subclasses can configure all aspects of token
  * behavior through constructor parameters or override specific methods for
  * custom logic.
- *
- * @author Brian Faust <brian@cline.sh>
  */
 abstract class AbstractTokenType implements RevealableTokenTypeInterface, TokenTypeInterface
 {

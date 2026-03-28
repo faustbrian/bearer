@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Exceptions;
 
 use function sprintf;
@@ -14,11 +7,9 @@ use function sprintf;
 /**
  * Exception thrown when a token type has not been registered.
  *
- * This occurs when a token type exists conceptually but has not been
- * properly configured in the token types configuration array. The registry
- * does not contain an entry for the requested token type identifier.
- *
- * @author Brian Faust <brian@cline.sh>
+ * This occurs when a token type exists conceptually but has not been properly
+ * configured in the token types configuration array. The registry does not
+ * contain an entry for the requested token type identifier.
  */
 final class TokenTypeNotRegisteredException extends AbstractInvalidTokenTypeException
 {

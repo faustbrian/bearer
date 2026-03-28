@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Database;
 
 use Illuminate\Support\Facades\Facade;
@@ -25,7 +18,6 @@ use Override;
  * @method static void   requireKeyMap()
  * @method static void   reset()
  *
- * @author Brian Faust <brian@cline.sh>
  * @see ModelRegistry
  */
 final class Models extends Facade

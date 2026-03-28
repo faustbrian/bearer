@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Exceptions;
 
 use function gettype;
@@ -15,12 +8,10 @@ use function sprintf;
 /**
  * Exception thrown when a non-string value is assigned to a ULID primary key.
  *
- * ULID primary keys require string values in the 26-character Crockford
- * base32 format (e.g., "01ARZ3NDEKTSV4RRFFQ69G5FAV"). Non-string types
- * cannot maintain the lexicographic sorting and time-ordering properties
- * that make ULIDs useful for distributed systems.
- *
- * @author Brian Faust <brian@cline.sh>
+ * ULID primary keys require string values in the 26-character Crockford base32
+ * format (e.g., "01ARZ3NDEKTSV4RRFFQ69G5FAV"). Non-string types cannot maintain
+ * the lexicographic sorting and time-ordering properties that make ULIDs useful
+ * for distributed systems.
  */
 final class NonStringUlidException extends AbstractInvalidPrimaryKeyValueException
 {

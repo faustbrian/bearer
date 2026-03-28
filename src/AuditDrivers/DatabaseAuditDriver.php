@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\AuditDrivers;
 
 use Cline\Bearer\Contracts\AuditDriverInterface;
@@ -20,39 +13,31 @@ use function request;
 /**
  * Database-backed audit driver using the access_token_audit_logs table.
  *
- * This is the default audit driver that stores token activity logs directly
- * in the application database using the AccessTokenAuditLog model. It provides
+ * This is the default audit driver that stores token activity logs directly in
+ * the application database using the AccessTokenAuditLog model. It provides
  * efficient querying and strong consistency guarantees.
  *
- * Use cases:
- * - Standard applications needing basic audit logging
- * - Compliance requirements that mandate database storage
- * - Fast local queries and reporting
+ * Use cases: - Standard applications needing basic audit logging - Compliance
+ * requirements that mandate database storage - Fast local queries and reporting
  * - Integration with existing database backup strategies
  *
- * Example usage:
- * ```php
- * $driver = new DatabaseAuditDriver();
+ * Example usage: ```php $driver = new DatabaseAuditDriver();
  *
- * // Log an event
- * $driver->log($token, AuditEvent::Authenticated, [
+ * // Log an event $driver->log($token, AuditEvent::Authenticated, [
  *     'endpoint' => '/api/users',
  *     'method' => 'GET',
  * ]);
  *
- * // Retrieve logs
- * $logs = $driver->getLogsForToken($token);
- * ```
- *
- * @author Brian Faust <brian@cline.sh>
+ * // Retrieve logs $logs = $driver->getLogsForToken($token); ```
  */
 final class DatabaseAuditDriver implements AuditDriverInterface
 {
     /**
      * Log an audit event for a token.
      *
-     * Creates a new AccessTokenAuditLog entry with the event details, automatically
-     * capturing IP address and user agent from the current request context.
+     * Creates a new AccessTokenAuditLog entry with the event details,
+     * automatically capturing IP address and user agent from the current
+     * request context.
      *
      * @param AccessToken          $token   The token this event relates to
      * @param AuditEvent           $event   The event being logged

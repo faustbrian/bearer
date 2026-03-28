@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Testing;
 
 use Cline\Bearer\Contracts\HasAbilitiesInterface;
@@ -23,19 +16,14 @@ use function in_array;
  * testing of authorization logic without requiring database interaction.
  *
  * This is particularly useful for unit tests where you need to verify that
- * ability checks work correctly for different permission combinations and
- * token types.
+ * ability checks work correctly for different permission combinations and token
+ * types.
  *
- * ```php
- * // Create a token with specific abilities
- * $token = new TestingToken(['read:users', 'write:posts'], 'sk');
+ * ```php // Create a token with specific abilities $token = new
+ * TestingToken(['read:users', 'write:posts'], 'sk');
  *
- * // Test ability checks
- * $token->can('read:users');  // true
- * $token->cant('delete:all'); // true
- * ```
- *
- * @author Brian Faust <brian@cline.sh>
+ * // Test ability checks $token->can('read:users');  // true
+ * $token->cant('delete:all'); // true ```
  *
  * @psalm-immutable
  */

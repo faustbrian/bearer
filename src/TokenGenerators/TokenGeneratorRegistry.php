@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\TokenGenerators;
 
 use Cline\Bearer\Contracts\TokenGeneratorInterface;
@@ -24,28 +17,19 @@ use function array_keys;
  * different token generator strategies. Allows applications to configure which
  * generator to use as the default and switch between implementations as needed.
  *
- * Example usage:
- * ```php
- * $registry = new TokenGeneratorRegistry();
+ * Example usage: ```php $registry = new TokenGeneratorRegistry();
  *
- * // Register generators
- * $registry->register('seam', new SeamTokenGenerator());
+ * // Register generators $registry->register('seam', new SeamTokenGenerator());
  * $registry->register('uuid', new UuidTokenGenerator());
  * $registry->register('random', new RandomTokenGenerator());
  *
- * // Retrieve a specific generator
- * $generator = $registry->get('uuid');
+ * // Retrieve a specific generator $generator = $registry->get('uuid');
  *
- * // Check if a generator exists
- * if ($registry->has('seam')) {
+ * // Check if a generator exists if ($registry->has('seam')) {
  *     // ...
  * }
  *
- * // Get the default generator
- * $default = $registry->default();
- * ```
- *
- * @author Brian Faust <brian@cline.sh>
+ * // Get the default generator $default = $registry->default(); ```
  */
 final class TokenGeneratorRegistry
 {

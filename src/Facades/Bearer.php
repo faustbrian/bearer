@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Facades;
 
 use Cline\Bearer\BearerManager;
@@ -27,20 +20,16 @@ use Illuminate\Support\Facades\Facade;
 /**
  * Laravel facade for Bearer token authentication manager.
  *
- * Provides static access to the BearerManager for managing personal access tokens,
- * token types, hashers, rotation strategies, and audit logging. This facade simplifies
- * token operations throughout your application.
+ * Provides static access to the BearerManager for managing personal access
+ * tokens, token types, hashers, rotation strategies, and audit logging. This
+ * facade simplifies token operations throughout your application.
  *
- * ```php
- * // Issue a new token
- * $token = Bearer::for($user)->create('Mobile App', ['posts:read']);
+ * ```php // Issue a new token $token = Bearer::for($user)->create('Mobile App',
+ * ['posts:read']);
  *
- * // Find and validate tokens
- * $accessToken = Bearer::findAccessToken($token);
+ * // Find and validate tokens $accessToken = Bearer::findAccessToken($token);
  *
- * // Revoke tokens
- * Bearer::revoke($accessToken);
- * ```
+ * // Revoke tokens Bearer::revoke($accessToken); ```
  *
  * @method static AbilityProviderInterface    abilityProvider(?string $name = null)
  * @method static string                      accessTokenModel()
@@ -69,7 +58,6 @@ use Illuminate\Support\Facades\Facade;
  * @method static void                        useAccessTokenGroupModel(string $model)
  * @method static void                        useAccessTokenModel(string $model)
  *
- * @author Brian Faust <brian@cline.sh>
  * @see BearerManager
  */
 final class Bearer extends Facade
@@ -77,8 +65,8 @@ final class Bearer extends Facade
     /**
      * Get the registered name of the component.
      *
-     * Returns the service container binding for the BearerManager instance
-     * that this facade proxies to.
+     * Returns the service container binding for the BearerManager instance that
+     * this facade proxies to.
      *
      * @return string The fully qualified class name of BearerManager
      */

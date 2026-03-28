@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Http\Middleware;
 
 use Cline\Bearer\Contracts\HasAbilitiesInterface;
@@ -25,24 +18,18 @@ use Illuminate\Http\Request;
  *
  * Use this when an endpoint requires multiple permissions simultaneously.
  *
- * Usage in routes:
- * ```php
- * Route::post('/admin/users', function () {
+ * Usage in routes: ```php Route::post('/admin/users', function () {
  *     // Only tokens with both 'users:write' AND 'admin:access'
- * })->middleware('abilities:users:write,admin:access');
- * ```
- *
- * @author Brian Faust <brian@cline.sh>
+ * })->middleware('abilities:users:write,admin:access'); ```
  */
 final class CheckAbilities
 {
     /**
      * Handle the incoming request.
      *
-     * Verifies that:
-     * 1. A user is authenticated
-     * 2. The user has a current access token (not session-based auth)
-     * 3. The token has ALL specified abilities
+     * Verifies that: 1. A user is authenticated 2. The user has a current
+     * access token (not session-based auth) 3. The token has ALL specified
+     * abilities
      *
      * @param Request                 $request      The incoming HTTP request
      * @param Closure(Request): mixed $next         The next middleware handler

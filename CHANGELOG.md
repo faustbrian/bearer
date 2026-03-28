@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- Updated package dependency constraints and refreshed docblocks to match
+  the current codebase.
 - Renamed package interfaces to `*Interface`, traits to `*Trait`, and
   abstract classes to `Abstract*` for consistency.
 - Polymorphic `owner`, `context`, and `boundary` relations now resolve

@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer;
 
 use Cline\Bearer\Database\Models\AccessToken;
@@ -16,11 +9,10 @@ use JsonSerializable;
 /**
  * Data transfer object for newly created access tokens.
  *
- * Encapsulates a newly created personal access token along with its
- * plain-text representation. The plain-text token is only available
- * at creation time and cannot be retrieved later.
+ * Encapsulates a newly created personal access token along with its plain-text
+ * representation. The plain-text token is only available at creation time and
+ * cannot be retrieved later.
  *
- * @author Brian Faust <brian@cline.sh>
  * @implements Arrayable<string, mixed>
  *
  * @psalm-immutable

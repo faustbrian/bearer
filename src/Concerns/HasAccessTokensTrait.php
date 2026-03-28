@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Concerns;
 
 use Cline\Bearer\BearerManager;
@@ -25,31 +18,26 @@ use function resolve;
 /**
  * Trait for models that can own and manage access tokens.
  *
- * This trait implements the HasAccessTokensInterface contract, providing comprehensive token
- * management capabilities for any Eloquent model (typically User models). It enables
- * models to create, manage, and authenticate via personal access tokens with fine-grained
- * permission control.
+ * This trait implements the HasAccessTokensInterface contract, providing
+ * comprehensive token management capabilities for any Eloquent model (typically
+ * User models). It enables models to create, manage, and authenticate via
+ * personal access tokens with fine-grained permission control.
  *
- * Key features:
- * - Create individual tokens or token groups with specific abilities
- * - Support for multiple token types (secret, publishable, restricted)
- * - Environment-based token separation (production, development, staging)
- * - Track the currently active token during authenticated requests
- * - Check token abilities and characteristics during runtime
- * - Organize related tokens into logical groups
+ * Key features: - Create individual tokens or token groups with specific
+ * abilities - Support for multiple token types (secret, publishable,
+ * restricted) - Environment-based token separation (production, development,
+ * staging) - Track the currently active token during authenticated requests -
+ * Check token abilities and characteristics during runtime - Organize related
+ * tokens into logical groups
  *
- * Example usage:
- * ```php
- * use Cline\Bearer\Concerns\HasAccessTokensTrait;
- * use Cline\Bearer\Contracts\HasAccessTokensInterface;
+ * Example usage: ```php use Cline\Bearer\Concerns\HasAccessTokensTrait; use
+ * Cline\Bearer\Contracts\HasAccessTokensInterface;
  *
- * class User extends Model implements HasAccessTokensInterface
- * {
+ * class User extends Model implements HasAccessTokensInterface {
  *     use HasAccessTokensTrait;
  * }
  *
- * // Create a single token
- * $token = $user->createAccessToken(
+ * // Create a single token $token = $user->createAccessToken(
  *     type: 'secret_key',
  *     name: 'API Access',
  *     abilities: ['users:read', 'posts:write'],
@@ -58,8 +46,8 @@ use function resolve;
  *     metadata: ['client_id' => 'app-123']
  * );
  *
- * // Create a token group with multiple related tokens
- * $group = $user->createAccessTokenGroup(
+ * // Create a token group with multiple related tokens $group =
+ * $user->createAccessTokenGroup(
  *     types: ['secret_key', 'publishable_key'],
  *     name: 'Payment Processing',
  *     abilities: ['payments:process', 'webhooks:receive'],
@@ -67,25 +55,20 @@ use function resolve;
  *     metadata: ['integration' => 'stripe']
  * );
  *
- * // Check token abilities during request
- * if ($user->accessTokenCan('users:write')) {
+ * // Check token abilities during request if
+ * ($user->accessTokenCan('users:write')) {
  *     // User's current token has write permission
  * }
  *
- * // Check token type
- * if ($user->tokenIs('secret_key')) {
+ * // Check token type if ($user->tokenIs('secret_key')) {
  *     // User authenticated with a secret key
  * }
  *
- * // Get token environment
- * if ($user->tokenEnvironment() === 'production') {
+ * // Get token environment if ($user->tokenEnvironment() === 'production') {
  *     // Token is for production use
- * }
- * ```
+ * } ```
  *
- * Common patterns:
- * ```php
- * // Creating scoped tokens for different purposes
+ * Common patterns: ```php // Creating scoped tokens for different purposes
  * $readToken = $user->createAccessToken(
  *     type: 'restricted_key',
  *     name: 'Read Only',
@@ -102,15 +85,12 @@ use function resolve;
  * $user->accessTokens()->where('environment', 'production')->get();
  * $user->accessTokens()->where('type', 'secret_key')->delete();
  *
- * // Working with token groups
- * $group = $user->accessTokenGroups()->create(['name' => 'Mobile App']);
- * $secretKey = $group->secretKey();
- * $publishableKey = $group->publishableKey();
- * ```
+ * // Working with token groups $group =
+ * $user->accessTokenGroups()->create(['name' => 'Mobile App']); $secretKey =
+ * $group->secretKey(); $publishableKey = $group->publishableKey(); ```
  *
  * @mixin Model
  *
- * @author Brian Faust <brian@cline.sh>
  * @template TToken of \Cline\Bearer\Contracts\HasAbilitiesInterface
  */
 trait HasAccessTokensTrait
@@ -118,9 +98,9 @@ trait HasAccessTokensTrait
     /**
      * The access token the user is using for the current request.
      *
-     * Set by the authentication guard when a request is successfully authenticated
-     * via a token. Used to check permissions and characteristics of the token
-     * being used for the current operation.
+     * Set by the authentication guard when a request is successfully
+     * authenticated via a token. Used to check permissions and characteristics
+     * of the token being used for the current operation.
      *
      * @var null|TToken
      */
@@ -129,29 +109,25 @@ trait HasAccessTokensTrait
     /**
      * Get all access tokens owned by this model.
      *
-     * Returns a polymorphic relationship to AccessToken models where this
-     * model is the owner. The owner is the entity that created/owns the token,
+     * Returns a polymorphic relationship to AccessToken models where this model
+     * is the owner. The owner is the entity that created/owns the token,
      * typically a User who generated it via the dashboard or API.
      *
-     * Example usage:
-     * ```php
-     * // Get all active tokens owned by this user
+     * Example usage: ```php // Get all active tokens owned by this user
      * $activeTokens = $user->accessTokens()
      *     ->whereNull('revoked_at')
      *     ->where('expires_at', '>', now())
      *     ->get();
      *
-     * // Get tokens by type
-     * $secretKeys = $user->accessTokens()->where('type', 'secret_key')->get();
+     * // Get tokens by type $secretKeys = $user->accessTokens()->where('type',
+     * 'secret_key')->get();
      *
-     * // Create a new token directly
-     * $token = $user->accessTokens()->create([
+     * // Create a new token directly $token = $user->accessTokens()->create([
      *     'type' => 'secret_key',
      *     'name' => 'Direct Creation',
      *     'token' => hash('sha256', $plaintext),
      *     'abilities' => ['*'],
-     * ]);
-     * ```
+     * ]); ```
      *
      * @return MorphMany<AccessToken, $this> Relationship to AccessToken models
      */
@@ -167,16 +143,14 @@ trait HasAccessTokensTrait
      * Get all access tokens where this model is the context.
      *
      * Returns tokens that act on behalf of this model. The context represents
-     * what entity the token operates within or for. For example, a ServiceAccount
-     * or Application that the token impersonates.
+     * what entity the token operates within or for. For example, a
+     * ServiceAccount or Application that the token impersonates.
      *
-     * Example usage:
-     * ```php
-     * // Get all tokens acting on behalf of this service account
-     * $tokens = $serviceAccount->contextTokens()->get();
+     * Example usage: ```php // Get all tokens acting on behalf of this service
+     * account $tokens = $serviceAccount->contextTokens()->get();
      *
-     * // Get active tokens for this context
-     * $activeTokens = $serviceAccount->contextTokens()
+     * // Get active tokens for this context $activeTokens =
+     * $serviceAccount->contextTokens()
      *     ->whereNull('revoked_at')
      *     ->get();
      * ```
@@ -194,17 +168,15 @@ trait HasAccessTokensTrait
     /**
      * Get all access tokens scoped to this model as a boundary.
      *
-     * Returns tokens that are isolated within this model's tenant scope.
-     * The boundary provides multi-tenancy isolation, ensuring tokens can
-     * only operate within a specific Team, Organization, or workspace.
+     * Returns tokens that are isolated within this model's tenant scope. The
+     * boundary provides multi-tenancy isolation, ensuring tokens can only
+     * operate within a specific Team, Organization, or workspace.
      *
-     * Example usage:
-     * ```php
-     * // Get all tokens within this team's boundary
+     * Example usage: ```php // Get all tokens within this team's boundary
      * $tokens = $team->boundaryTokens()->get();
      *
-     * // Get all active tokens in this organization
-     * $activeTokens = $organization->boundaryTokens()
+     * // Get all active tokens in this organization $activeTokens =
+     * $organization->boundaryTokens()
      *     ->whereNull('revoked_at')
      *     ->get();
      * ```
@@ -222,26 +194,22 @@ trait HasAccessTokensTrait
     /**
      * Get all token groups that belong to this model.
      *
-     * Returns a polymorphic relationship to AccessTokenGroup models, enabling logical
-     * organization of related tokens. Token groups are useful for managing sets
-     * of tokens that work together, such as secret/publishable key pairs.
+     * Returns a polymorphic relationship to AccessTokenGroup models, enabling
+     * logical organization of related tokens. Token groups are useful for
+     * managing sets of tokens that work together, such as secret/publishable
+     * key pairs.
      *
-     * Example usage:
-     * ```php
-     * // Get all token groups
-     * $groups = $user->accessTokenGroups()->get();
+     * Example usage: ```php // Get all token groups $groups =
+     * $user->accessTokenGroups()->get();
      *
-     * // Find a specific group
-     * $mobileGroup = $user->accessTokenGroups()
+     * // Find a specific group $mobileGroup = $user->accessTokenGroups()
      *     ->where('name', 'Mobile App')
      *     ->first();
      *
-     * // Get tokens from a group
-     * foreach ($user->accessTokenGroups as $group) {
+     * // Get tokens from a group foreach ($user->accessTokenGroups as $group) {
      *     $secretKey = $group->secretKey();
      *     $publishableKey = $group->publishableKey();
-     * }
-     * ```
+     * } ```
      *
      * @return MorphMany<AccessTokenGroup, $this> Relationship to AccessTokenGroup models
      */
@@ -257,18 +225,15 @@ trait HasAccessTokensTrait
      * Create a new personal access token for this model.
      *
      * Generates and persists a new token with the specified characteristics.
-     * Returns a NewAccessToken instance containing both the database model
-     * and the plain-text token value (which is only available once).
+     * Returns a NewAccessToken instance containing both the database model and
+     * the plain-text token value (which is only available once).
      *
-     * The token type determines its purpose and restrictions:
-     * - 'secret_key': Full access, server-side only
-     * - 'publishable_key': Limited access, client-side safe
-     * - 'restricted_key': Custom restricted access
+     * The token type determines its purpose and restrictions: - 'secret_key':
+     * Full access, server-side only - 'publishable_key': Limited access,
+     * client-side safe - 'restricted_key': Custom restricted access
      *
-     * Example usage:
-     * ```php
-     * // Create a standard access token
-     * $token = $user->createAccessToken(
+     * Example usage: ```php // Create a standard access token $token =
+     * $user->createAccessToken(
      *     type: 'secret_key',
      *     name: 'Production API',
      *     abilities: ['users:read', 'posts:write'],
@@ -278,12 +243,11 @@ trait HasAccessTokensTrait
      * );
      *
      * // The plain text token is only available in the response
-     * $plainTextAccessToken = $token->plainTextAccessToken;
-     * // Store this securely - it won't be accessible again!
+     * $plainTextAccessToken = $token->plainTextAccessToken; // Store this
+     * securely - it won't be accessible again!
      *
-     * // The persisted token model is also available
-     * $tokenModel = $token->accessToken;
-     * ```
+     * // The persisted token model is also available $tokenModel =
+     * $token->accessToken; ```
      *
      * @param  string                 $type        Token type (e.g., 'secret_key', 'publishable_key')
      * @param  string                 $name        Human-readable token name for identification
@@ -318,15 +282,12 @@ trait HasAccessTokensTrait
      * that share the same name, abilities, and metadata. This is useful for
      * creating coordinated token sets for integrations or applications.
      *
-     * All tokens in the group will:
-     * - Share the same group_id for relationship queries
-     * - Have identical abilities and environment settings
-     * - Be revocable together via the group
+     * All tokens in the group will: - Share the same group_id for relationship
+     * queries - Have identical abilities and environment settings - Be
+     * revocable together via the group
      *
-     * Example usage:
-     * ```php
-     * // Create a payment processing token group
-     * $group = $user->createAccessTokenGroup(
+     * Example usage: ```php // Create a payment processing token group $group =
+     * $user->createAccessTokenGroup(
      *     types: ['secret_key', 'publishable_key'],
      *     name: 'Stripe Integration',
      *     abilities: ['payments:process', 'webhooks:receive'],
@@ -334,13 +295,10 @@ trait HasAccessTokensTrait
      *     metadata: ['integration_id' => 'stripe_123']
      * );
      *
-     * // Access individual tokens from the group
-     * $secretKey = $group->secretKey();
-     * $publishableKey = $group->publishableKey();
+     * // Access individual tokens from the group $secretKey =
+     * $group->secretKey(); $publishableKey = $group->publishableKey();
      *
-     * // Revoke all tokens in the group
-     * $group->revokeAll();
-     * ```
+     * // Revoke all tokens in the group $group->revokeAll(); ```
      *
      * @param  array<int, string>   $types       Array of token types to create in the group
      * @param  string               $name        Human-readable group name shared by all tokens
@@ -372,14 +330,10 @@ trait HasAccessTokensTrait
      * to authenticate. This is set by the authentication guard after successful
      * token validation and can be used to check the token's characteristics.
      *
-     * Returns null when:
-     * - The user is authenticated via session (not token)
-     * - No authentication has occurred
-     * - Called outside of a request context
+     * Returns null when: - The user is authenticated via session (not token) -
+     * No authentication has occurred - Called outside of a request context
      *
-     * Example usage:
-     * ```php
-     * $currentToken = $user->currentAccessToken();
+     * Example usage: ```php $currentToken = $user->currentAccessToken();
      *
      * if ($currentToken) {
      *     // Check token properties
@@ -391,8 +345,7 @@ trait HasAccessTokensTrait
      *         $tokenType = $currentToken->type;
      *         $environment = $currentToken->environment;
      *     }
-     * }
-     * ```
+     * } ```
      *
      * @return null|TToken The current token instance, or null if not authenticated via token
      */
@@ -404,21 +357,18 @@ trait HasAccessTokensTrait
     /**
      * Set the current access token for this model.
      *
-     * Associates a token instance with this model for the duration of the request.
-     * This is typically called by authentication guards during the authentication
-     * process and should rarely need to be called manually.
+     * Associates a token instance with this model for the duration of the
+     * request. This is typically called by authentication guards during the
+     * authentication process and should rarely need to be called manually.
      *
      * The token is stored as an instance property and is not persisted to the
      * database. It exists only for the current request lifecycle.
      *
-     * Example usage:
-     * ```php
-     * // Typically called by guards, not manually
+     * Example usage: ```php // Typically called by guards, not manually
      * $user->withAccessToken($authenticatedToken);
      *
-     * // Now token methods work
-     * $user->accessTokenCan('users:read'); // Uses the set token
-     * ```
+     * // Now token methods work $user->accessTokenCan('users:read'); // Uses
+     * the set token ```
      *
      * @param  TToken $accessToken The authenticated token instance
      * @return static Fluent interface for method chaining
@@ -434,29 +384,24 @@ trait HasAccessTokensTrait
      * Determine if the current token has a given ability.
      *
      * Convenience method that checks if the currently associated token (if any)
-     * has the specified ability. Returns false if no token is currently associated,
-     * making it safe to call without null checks.
+     * has the specified ability. Returns false if no token is currently
+     * associated, making it safe to call without null checks.
      *
      * This is particularly useful in authorization logic and middleware where
      * you need to verify token-specific permissions.
      *
-     * Example usage:
-     * ```php
-     * // In a controller
-     * if (!$user->accessTokenCan('posts:write')) {
+     * Example usage: ```php // In a controller if
+     * (!$user->accessTokenCan('posts:write')) {
      *     abort(403, 'This token lacks write permissions');
      * }
      *
-     * // In authorization logic
-     * Gate::define('edit-post', function ($user) {
+     * // In authorization logic Gate::define('edit-post', function ($user) {
      *     return $user->accessTokenCan('posts:write');
      * });
      *
-     * // In middleware
-     * if ($request->user()->accessTokenCan('admin:access')) {
+     * // In middleware if ($request->user()->accessTokenCan('admin:access')) {
      *     // Proceed with admin operation
-     * }
-     * ```
+     * } ```
      *
      * @param  string $ability The ability to check (e.g., 'users:read', 'posts:write')
      * @return bool   True if current token has this ability, false otherwise
@@ -480,20 +425,16 @@ trait HasAccessTokensTrait
      * This makes authorization logic more readable by expressing restrictions
      * in a positive way.
      *
-     * Example usage:
-     * ```php
-     * // More expressive than !accessTokenCan()
-     * if ($user->accessTokenCant('admin:delete')) {
+     * Example usage: ```php // More expressive than !accessTokenCan() if
+     * ($user->accessTokenCant('admin:delete')) {
      *     throw new UnauthorizedException('Admin deletion not permitted');
      * }
      *
-     * // In validation logic
-     * if ($user->accessTokenCant('payments:process')) {
+     * // In validation logic if ($user->accessTokenCant('payments:process')) {
      *     return response()->json([
      *         'error' => 'Token lacks payment processing permissions'
      *     ], 403);
-     * }
-     * ```
+     * } ```
      *
      * @param  string $ability The ability to check for absence
      * @return bool   True if the token lacks this ability, false if it has it
@@ -510,34 +451,29 @@ trait HasAccessTokensTrait
      * Returns false if no token is associated or if the token is not a
      * AccessToken instance.
      *
-     * Common token types:
-     * - 'secret_key': Server-side API keys with full access
-     * - 'publishable_key': Client-side safe keys with limited access
-     * - 'restricted_key': Custom restricted access keys
+     * Common token types: - 'secret_key': Server-side API keys with full access
+     * - 'publishable_key': Client-side safe keys with limited access -
+     * 'restricted_key': Custom restricted access keys
      *
-     * Example usage:
-     * ```php
-     * // Enforce server-side only operations
-     * if (!$user->tokenIs('secret_key')) {
+     * Example usage: ```php // Enforce server-side only operations if
+     * (!$user->tokenIs('secret_key')) {
      *     abort(403, 'This operation requires a secret key');
      * }
      *
-     * // Different behavior based on token type
-     * if ($user->tokenIs('publishable_key')) {
+     * // Different behavior based on token type if
+     * ($user->tokenIs('publishable_key')) {
      *     // Apply client-side restrictions
      *     $data = $this->getPublicData();
      * } else {
      *     $data = $this->getFullData();
      * }
      *
-     * // Audit logging
-     * if ($user->tokenIs('restricted_key')) {
+     * // Audit logging if ($user->tokenIs('restricted_key')) {
      *     Log::info('Restricted key used', [
      *         'user_id' => $user->id,
      *         'action' => $action
      *     ]);
-     * }
-     * ```
+     * } ```
      *
      * @param  string $type The token type to check (e.g., 'secret_key', 'publishable_key')
      * @return bool   True if current token matches the type, false otherwise
@@ -554,18 +490,14 @@ trait HasAccessTokensTrait
     /**
      * Get the current token's environment.
      *
-     * Returns the environment designation of the currently associated token,
-     * or null if no AccessToken is associated.
+     * Returns the environment designation of the currently associated token, or
+     * null if no AccessToken is associated.
      *
-     * Common environments:
-     * - 'production': Live production use
-     * - 'development': Development and testing
-     * - 'staging': Pre-production staging
+     * Common environments: - 'production': Live production use - 'development':
+     * Development and testing - 'staging': Pre-production staging
      *
-     * Example usage:
-     * ```php
-     * // Environment-specific behavior
-     * if ($user->tokenEnvironment() === 'production') {
+     * Example usage: ```php // Environment-specific behavior if
+     * ($user->tokenEnvironment() === 'production') {
      *     // Use production services
      *     $service = new ProductionPaymentService();
      * } else {
@@ -573,20 +505,17 @@ trait HasAccessTokensTrait
      *     $service = new SandboxPaymentService();
      * }
      *
-     * // Validation
-     * if ($user->tokenEnvironment() !== config('app.env')) {
+     * // Validation if ($user->tokenEnvironment() !== config('app.env')) {
      *     throw new AbstractInvalidEnvironmentException(
      *         "Token environment mismatch"
      *     );
      * }
      *
-     * // Audit logging
-     * Log::info('API request', [
+     * // Audit logging Log::info('API request', [
      *     'user_id' => $user->id,
      *     'environment' => $user->tokenEnvironment(),
      *     'endpoint' => $request->path()
-     * ]);
-     * ```
+     * ]); ```
      *
      * @return null|string The token's environment, or null if no token is set
      */
@@ -602,36 +531,31 @@ trait HasAccessTokensTrait
     /**
      * Get the current token's type.
      *
-     * Returns the type designation of the currently associated token,
-     * or null if no AccessToken is associated.
+     * Returns the type designation of the currently associated token, or null
+     * if no AccessToken is associated.
      *
      * This is useful when you need to inspect the token type for logging,
-     * analytics, or conditional logic without using tokenIs() for specific
-     * type comparisons.
+     * analytics, or conditional logic without using tokenIs() for specific type
+     * comparisons.
      *
-     * Example usage:
-     * ```php
-     * // Logging and analytics
-     * Log::info('API access', [
+     * Example usage: ```php // Logging and analytics Log::info('API access', [
      *     'user_id' => $user->id,
      *     'token_type' => $user->tokenType(),
      *     'endpoint' => $request->path()
      * ]);
      *
-     * // Dynamic behavior based on type
-     * $rateLimit = match ($user->tokenType()) {
+     * // Dynamic behavior based on type $rateLimit = match ($user->tokenType())
+     * {
      *     'secret_key' => 1000,
      *     'publishable_key' => 100,
      *     'restricted_key' => 50,
      *     default => 10,
      * };
      *
-     * // Response headers
-     * return response()->json($data)->header(
+     * // Response headers return response()->json($data)->header(
      *     'X-Token-Type',
      *     $user->tokenType() ?? 'none'
-     * );
-     * ```
+     * ); ```
      *
      * @return null|string The token's type (e.g., 'secret_key'), or null if no token is set
      */
@@ -647,11 +571,11 @@ trait HasAccessTokensTrait
     /**
      * Boot the HasAccessTokensTrait.
      *
-     * Registers model event listeners for cascade deletion of tokens
-     * when the tokenable model is deleted.
+     * Registers model event listeners for cascade deletion of tokens when the
+     * tokenable model is deleted.
      *
-     * Laravel 10 compatibility: Uses boot{TraitName} naming convention
-     * instead of #[Boot] attribute (which only works in Laravel 11+).
+     * Laravel 10 compatibility: Uses boot{TraitName} naming convention instead
+     * of #[Boot] attribute (which only works in Laravel 11+).
      */
     protected static function bootHasAccessTokensTrait(): void
     {

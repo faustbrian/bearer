@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Exceptions;
 
 use RuntimeException;
@@ -14,13 +7,13 @@ use RuntimeException;
 use function implode;
 
 /**
- * Exception thrown when derived token abilities are not a subset of parent abilities.
+ * Exception thrown when derived token abilities are not a subset of parent
+ * abilities.
  *
  * Token derivation enforces that child tokens cannot have more permissions than
- * their parent tokens. This exception occurs when attempting to create a derived
- * token with abilities that exceed or differ from the parent's abilities.
- *
- * @author Brian Faust <brian@cline.sh>
+ * their parent tokens. This exception occurs when attempting to create a
+ * derived token with abilities that exceed or differ from the parent's
+ * abilities.
  */
 final class InvalidDerivedAbilitiesException extends RuntimeException implements BearerExceptionInterface
 {

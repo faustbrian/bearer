@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Tests\Fixtures;
 
 use Cline\Bearer\Concerns\HasAccessTokensTrait;
@@ -22,7 +15,6 @@ use Override;
  * Used to prove that Bearer's polymorphic owner relations can resolve models
  * whose primary key column is not `id`.
  *
- * @author Brian Faust <brian@cline.sh>
  * @internal
  */
 final class UlidUser extends Authenticatable implements HasAccessTokensInterface

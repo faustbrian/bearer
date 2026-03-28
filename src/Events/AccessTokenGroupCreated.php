@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Events;
 
 use Cline\Bearer\Database\Models\AccessTokenGroup;
@@ -19,8 +12,6 @@ use Illuminate\Support\Collection;
  * Dispatched whenever a new token group is created with its associated tokens.
  * Useful for auditing bulk token operations, tracking group-based token
  * management, and implementing organizational token hierarchies.
- *
- * @author Brian Faust <brian@cline.sh>
  *
  * @psalm-immutable
  */

@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Database\Models;
 
 use Cline\Bearer\Database\Factories\AccessTokenGroupFactory;
@@ -29,21 +22,18 @@ use function now;
 /**
  * Eloquent model representing token groups for linking related tokens.
  *
- * Token groups allow multiple related tokens (e.g., secret_key, publishable_key,
- * restricted_key) to be associated together, enabling operations like batch
- * revocation and sibling token lookups.
+ * Token groups allow multiple related tokens (e.g., secret_key,
+ * publishable_key, restricted_key) to be associated together, enabling
+ * operations like batch revocation and sibling token lookups.
  *
- * Common use case: Stripe-like token pairs where a secret key and publishable key
- * belong to the same group, allowing you to revoke all related tokens at once or
- * retrieve sibling tokens for validation.
+ * Common use case: Stripe-like token pairs where a secret key and publishable
+ * key belong to the same group, allowing you to revoke all related tokens at
+ * once or retrieve sibling tokens for validation.
  *
- * Example usage:
- * ```php
- * $group = AccessTokenGroup::create(['name' => 'Production Keys']);
- * $group->accessTokens()->create([...secretKeyData...]);
+ * Example usage: ```php $group = AccessTokenGroup::create(['name' =>
+ * 'Production Keys']); $group->accessTokens()->create([...secretKeyData...]);
  * $group->accessTokens()->create([...publishableKeyData...]);
- * $group->revokeAll(); // Revoke all tokens in the group
- * ```
+ * $group->revokeAll(); // Revoke all tokens in the group ```
  *
  * @property Collection<int, AccessToken> $accessTokens All tokens belonging to this group
  * @property Carbon                       $created_at   Record creation timestamp
@@ -54,8 +44,6 @@ use function now;
  * @property string                       $owner_id     Polymorphic foreign key ID
  * @property string                       $owner_type   Polymorphic foreign key type
  * @property Carbon                       $updated_at   Record last modification timestamp
- *
- * @author Brian Faust <brian@cline.sh>
  */
 #[UseFactory(AccessTokenGroupFactory::class)]
 final class AccessTokenGroup extends Model
@@ -88,8 +76,8 @@ final class AccessTokenGroup extends Model
     /**
      * Get the table name from configuration.
      *
-     * Retrieves the access_token_groups table name from the Bearer configuration,
-     * defaulting to 'access_token_groups' if not configured.
+     * Retrieves the access_token_groups table name from the Bearer
+     * configuration, defaulting to 'access_token_groups' if not configured.
      *
      * @return string The table name for token group storage
      */
@@ -103,8 +91,8 @@ final class AccessTokenGroup extends Model
     /**
      * Get the owner model that the token group belongs to.
      *
-     * Defines the relationship to the model that owns this token group,
-     * such as a User or Organization.
+     * Defines the relationship to the model that owns this token group, such as
+     * a User or Organization.
      *
      * @return MorphTo<Model, $this> The polymorphic relationship to the owning entity
      */
@@ -135,8 +123,8 @@ final class AccessTokenGroup extends Model
     /**
      * Get a specific token from this group by type.
      *
-     * Retrieves a single token with the specified type identifier from this group.
-     * Returns null if no token of the given type exists in the group.
+     * Retrieves a single token with the specified type identifier from this
+     * group. Returns null if no token of the given type exists in the group.
      *
      * @param  string           $type The token type to retrieve (e.g., 'secret_key', 'pk')
      * @return null|AccessToken The token if found, null otherwise
@@ -149,8 +137,8 @@ final class AccessTokenGroup extends Model
     /**
      * Get the secret key token from this group.
      *
-     * Convenience method for retrieving the secret key token using the configured
-     * type identifier from 'bearer.types.group_helpers.secret'.
+     * Convenience method for retrieving the secret key token using the
+     * configured type identifier from 'bearer.types.group_helpers.secret'.
      *
      * @return null|AccessToken The secret key token if found, null otherwise
      */
@@ -197,8 +185,8 @@ final class AccessTokenGroup extends Model
     /**
      * Revoke all tokens in this group.
      *
-     * Performs a batch update to set the revoked_at timestamp on all tokens
-     * in the group. This is useful for invalidating all related tokens at once,
+     * Performs a batch update to set the revoked_at timestamp on all tokens in
+     * the group. This is useful for invalidating all related tokens at once,
      * such as when a user requests to revoke all API keys.
      *
      * @return int The number of tokens that were revoked

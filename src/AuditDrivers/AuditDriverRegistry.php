@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\AuditDrivers;
 
 use Cline\Bearer\Contracts\AuditDriverInterface;
@@ -24,38 +17,26 @@ use function array_keys;
  * different audit driver strategies. Allows applications to configure which
  * driver to use as the default and switch between implementations as needed.
  *
- * This registry pattern enables:
- * - Pluggable audit storage backends
- * - Runtime driver switching
- * - Custom driver implementations
- * - Multiple concurrent drivers
- * - Testing with mock drivers
+ * This registry pattern enables: - Pluggable audit storage backends - Runtime
+ * driver switching - Custom driver implementations - Multiple concurrent
+ * drivers - Testing with mock drivers
  *
- * Example usage:
- * ```php
- * $registry = new AuditDriverRegistry();
+ * Example usage: ```php $registry = new AuditDriverRegistry();
  *
- * // Register drivers
- * $registry->register('database', new DatabaseAuditDriver());
- * $registry->register('spatie', new SpatieActivityLogDriver('access-tokens'));
- * $registry->register('null', new NullAuditDriver());
+ * // Register drivers $registry->register('database', new
+ * DatabaseAuditDriver()); $registry->register('spatie', new
+ * SpatieActivityLogDriver('access-tokens')); $registry->register('null', new
+ * NullAuditDriver());
  *
- * // Retrieve a specific driver
- * $driver = $registry->get('database');
+ * // Retrieve a specific driver $driver = $registry->get('database');
  *
- * // Check if a driver exists
- * if ($registry->has('spatie')) {
+ * // Check if a driver exists if ($registry->has('spatie')) {
  *     // ...
  * }
  *
- * // Get the default driver
- * $default = $registry->default();
+ * // Get the default driver $default = $registry->default();
  *
- * // Set a different default
- * $registry->setDefault('spatie');
- * ```
- *
- * @author Brian Faust <brian@cline.sh>
+ * // Set a different default $registry->setDefault('spatie'); ```
  */
 final class AuditDriverRegistry
 {

@@ -1,30 +1,24 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Exceptions;
 
 use DateTimeInterface;
 use RuntimeException;
 
 /**
- * Exception thrown when derived token expiration exceeds parent token expiration.
+ * Exception thrown when derived token expiration exceeds parent token
+ * expiration.
  *
- * Token derivation enforces that child tokens cannot have a longer lifespan than
- * their parent tokens. This exception occurs when attempting to create a derived
- * token with an expiration date that extends beyond the parent's expiration.
- *
- * @author Brian Faust <brian@cline.sh>
+ * Token derivation enforces that child tokens cannot have a longer lifespan
+ * than their parent tokens. This exception occurs when attempting to create a
+ * derived token with an expiration date that extends beyond the parent's
+ * expiration.
  */
 final class InvalidDerivedExpirationException extends RuntimeException implements BearerExceptionInterface
 {
     /**
-     * Create an exception for an expiration that exceeds the parent's expiration.
+     * Create an exception for an expiration that exceeds the parent's
+     * expiration.
      *
      * @param  DateTimeInterface $childExpiration  The expiration requested for the child token
      * @param  DateTimeInterface $parentExpiration The expiration of the parent token

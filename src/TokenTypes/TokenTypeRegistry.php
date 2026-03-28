@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\TokenTypes;
 
 use Cline\Bearer\Contracts\TokenTypeInterface;
@@ -24,20 +17,14 @@ use function array_key_exists;
  * The registry supports both lookup by exact name and discovery by token
  * prefix, enabling automatic type detection from token strings.
  *
- * Example usage:
- * ```php
- * $registry = new TokenTypeRegistry();
+ * Example usage: ```php $registry = new TokenTypeRegistry();
  * $registry->register('secret', new SecretTokenType());
  * $registry->register('publishable', new PublishableTokenType());
  *
- * // Retrieve by name
- * $type = $registry->get('secret');
+ * // Retrieve by name $type = $registry->get('secret');
  *
- * // Find by prefix
- * $type = $registry->findByPrefix('sk'); // Returns SecretTokenType
- * ```
- *
- * @author Brian Faust <brian@cline.sh>
+ * // Find by prefix $type = $registry->findByPrefix('sk'); // Returns
+ * SecretTokenType ```
  */
 final class TokenTypeRegistry
 {
@@ -105,8 +92,8 @@ final class TokenTypeRegistry
      * Find a token type by its prefix.
      *
      * Searches through all registered token types to find one with a matching
-     * prefix. This is useful for automatically determining token type from
-     * a token string (e.g., 'sk_abc123' -> SecretTokenType).
+     * prefix. This is useful for automatically determining token type from a
+     * token string (e.g., 'sk_abc123' -> SecretTokenType).
      *
      * @param  string                  $prefix Token prefix to search for
      * @return null|TokenTypeInterface The matching token type, or null if none found

@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\AuditDrivers;
 
 use Cline\Bearer\Contracts\AuditDriverInterface;
@@ -26,32 +19,22 @@ use function request;
  * driver is ideal when you're already using Spatie's activity log for other
  * models and want consistent logging infrastructure.
  *
- * Features:
- * - Unified activity log interface across all models
- * - Rich query capabilities from Spatie's Activity model
- * - Support for causer tracking (who performed the action)
- * - Custom log names for filtering and organization
- * - Properties and metadata support
+ * Features: - Unified activity log interface across all models - Rich query
+ * capabilities from Spatie's Activity model - Support for causer tracking (who
+ * performed the action) - Custom log names for filtering and organization -
+ * Properties and metadata support
  *
- * Requirements:
- * - spatie/laravel-activitylog package installed
- * - Activity log migrations run
+ * Requirements: - spatie/laravel-activitylog package installed - Activity log
+ * migrations run
  *
- * Example usage:
- * ```php
- * $driver = new SpatieActivityLogDriver('access-tokens');
+ * Example usage: ```php $driver = new SpatieActivityLogDriver('access-tokens');
  *
- * // Log an event
- * $driver->log($token, AuditEvent::Authenticated, [
+ * // Log an event $driver->log($token, AuditEvent::Authenticated, [
  *     'endpoint' => '/api/users',
  *     'method' => 'GET',
  * ]);
  *
- * // Retrieve logs
- * $logs = $driver->getLogsForToken($token);
- * ```
- *
- * @author Brian Faust <brian@cline.sh>
+ * // Retrieve logs $logs = $driver->getLogsForToken($token); ```
  *
  * @psalm-immutable
  */
@@ -74,8 +57,8 @@ final readonly class SpatieActivityLogDriver implements AuditDriverInterface
      * Log an audit event for a token.
      *
      * Creates an activity log entry using Spatie's activity() helper, recording
-     * the token as the subject, the owner as the causer, and capturing
-     * request metadata in properties.
+     * the token as the subject, the owner as the causer, and capturing request
+     * metadata in properties.
      *
      * @param AccessToken          $token   The token this event relates to
      * @param AuditEvent           $event   The event being logged
@@ -98,8 +81,8 @@ final readonly class SpatieActivityLogDriver implements AuditDriverInterface
     /**
      * Retrieve all audit logs for a specific token.
      *
-     * Queries Spatie's Activity model for all entries related to this token
-     * in the configured log name, ordered by creation time (newest first).
+     * Queries Spatie's Activity model for all entries related to this token in
+     * the configured log name, ordered by creation time (newest first).
      *
      * @param  AccessToken                       $token The token to retrieve logs for
      * @return EloquentCollection<int, Activity> Collection of activity log entries

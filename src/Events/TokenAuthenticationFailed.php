@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer\Events;
 
 use Cline\Bearer\Database\Models\AccessToken;
@@ -16,10 +9,8 @@ use Cline\Bearer\Enums\AuditEvent;
  * Event fired when authentication fails.
  *
  * Dispatched whenever a token authentication attempt fails, whether due to
- * invalid credentials, expired tokens, or other security violations.
- * Useful for security monitoring, rate limiting, and tracking attack patterns.
- *
- * @author Brian Faust <brian@cline.sh>
+ * invalid credentials, expired tokens, or other security violations. Useful for
+ * security monitoring, rate limiting, and tracking attack patterns.
  *
  * @psalm-immutable
  */

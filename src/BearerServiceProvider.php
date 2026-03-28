@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Copyright (C) Brian Faust
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Cline\Bearer;
 
 use Cline\Bearer\AbilityProviders\AbilityProviderRegistry;
@@ -77,19 +70,15 @@ use function tap;
 /**
  * Service provider for the Bearer access token package.
  *
- * Registers the Bearer authentication guard, token type registry, token generator
- * registry, audit driver registry, and console commands. Sets up middleware priority
- * and configures polymorphic relationship key mappings.
+ * Registers the Bearer authentication guard, token type registry, token
+ * generator registry, audit driver registry, and console commands. Sets up
+ * middleware priority and configures polymorphic relationship key mappings.
  *
- * Key features:
- * - Custom authentication guard for token-based API authentication
- * - Pluggable token type system with registry
- * - Configurable token generators (Seam, UUID, Random)
- * - Audit driver system for token activity logging
- * - Console commands for token and audit log maintenance
- * - Polymorphic relationship support with Morphism
- *
- * @author Brian Faust <brian@cline.sh>
+ * Key features: - Custom authentication guard for token-based API
+ * authentication - Pluggable token type system with registry - Configurable
+ * token generators (Seam, UUID, Random) - Audit driver system for token
+ * activity logging - Console commands for token and audit log maintenance -
+ * Polymorphic relationship support with Morphism
  */
 final class BearerServiceProvider extends PackageServiceProvider
 {
@@ -117,8 +106,9 @@ final class BearerServiceProvider extends PackageServiceProvider
      * Register the package's services in the container.
      *
      * Registers all registries as singletons and configures their default
-     * implementations based on package configuration. This includes token types,
-     * generators, hashers, audit drivers, and revocation/rotation strategies.
+     * implementations based on package configuration. This includes token
+     * types, generators, hashers, audit drivers, and revocation/rotation
+     * strategies.
      */
     #[Override()]
     public function registeringPackage(): void
@@ -136,9 +126,9 @@ final class BearerServiceProvider extends PackageServiceProvider
     /**
      * Bootstrap the package's services.
      *
-     * Configures the authentication guard, registers middleware priority,
-     * and sets up polymorphic relationship key mappings. This runs after
-     * all service providers have been registered.
+     * Configures the authentication guard, registers middleware priority, and
+     * sets up polymorphic relationship key mappings. This runs after all
+     * service providers have been registered.
      */
     #[Override()]
     public function bootingPackage(): void
@@ -153,8 +143,8 @@ final class BearerServiceProvider extends PackageServiceProvider
      * Register the token type registry singleton.
      *
      * Loads token types from configuration and registers them in the registry.
-     * Supports both custom class-based types and ConfigurableTokenType instances
-     * defined in the configuration file.
+     * Supports both custom class-based types and ConfigurableTokenType
+     * instances defined in the configuration file.
      */
     private function registerTokenTypeRegistry(): void
     {
@@ -324,8 +314,8 @@ final class BearerServiceProvider extends PackageServiceProvider
      * Register the audit driver registry singleton.
      *
      * Loads audit drivers from configuration and sets the default driver.
-     * Provides built-in support for Database, Null, and Spatie Activity Log drivers,
-     * plus any custom drivers defined in the configuration.
+     * Provides built-in support for Database, Null, and Spatie Activity Log
+     * drivers, plus any custom drivers defined in the configuration.
      */
     private function registerAuditDriverRegistry(): void
     {
@@ -457,9 +447,9 @@ final class BearerServiceProvider extends PackageServiceProvider
     /**
      * Register the revocation strategy registry singleton.
      *
-     * Loads revocation strategies from configuration and sets the default strategy.
-     * Provides built-in support for None, Cascade, Partial, and Timed strategies,
-     * plus any custom strategies defined in the configuration.
+     * Loads revocation strategies from configuration and sets the default
+     * strategy. Provides built-in support for None, Cascade, Partial, and Timed
+     * strategies, plus any custom strategies defined in the configuration.
      */
     private function registerRevocationStrategyRegistry(): void
     {
@@ -530,9 +520,10 @@ final class BearerServiceProvider extends PackageServiceProvider
     /**
      * Register the rotation strategy registry singleton.
      *
-     * Loads rotation strategies from configuration and sets the default strategy.
-     * Provides built-in support for Immediate, GracePeriod, and DualValid strategies,
-     * plus any custom strategies defined in the configuration.
+     * Loads rotation strategies from configuration and sets the default
+     * strategy. Provides built-in support for Immediate, GracePeriod, and
+     * DualValid strategies, plus any custom strategies defined in the
+     * configuration.
      */
     private function registerRotationStrategyRegistry(): void
     {
@@ -598,8 +589,8 @@ final class BearerServiceProvider extends PackageServiceProvider
     /**
      * Register the bearer manager singleton.
      *
-     * Wires up all registries into the central BearerManager instance,
-     * creating the main entry point for token operations.
+     * Wires up all registries into the central BearerManager instance, creating
+     * the main entry point for token operations.
      */
     private function registerBearerManager(): void
     {
@@ -647,7 +638,8 @@ final class BearerServiceProvider extends PackageServiceProvider
      * Configure the Bearer authentication guard.
      *
      * Registers the 'bearer' guard driver and sets up the auth configuration.
-     * The guard handles both stateful session authentication and bearer token validation.
+     * The guard handles both stateful session authentication and bearer token
+     * validation.
      */
     private function configureGuard(): void
     {
@@ -701,8 +693,8 @@ final class BearerServiceProvider extends PackageServiceProvider
     /**
      * Configure middleware priority.
      *
-     * Ensures the EnsureFrontendRequestsAreStateful middleware runs early
-     * in the middleware stack for proper session/CSRF handling.
+     * Ensures the EnsureFrontendRequestsAreStateful middleware runs early in
+     * the middleware stack for proper session/CSRF handling.
      */
     private function configureMiddleware(): void
     {
@@ -714,9 +706,9 @@ final class BearerServiceProvider extends PackageServiceProvider
     /**
      * Configure polymorphic relationship key mappings.
      *
-     * Applies morphKeyMap or enforceMorphKeyMap configuration based on which is defined.
-     * This enables different models to use different primary key types in polymorphic
-     * relationships (e.g., User with 'uuid', Team with 'id').
+     * Applies morphKeyMap or enforceMorphKeyMap configuration based on which is
+     * defined. This enables different models to use different primary key types
+     * in polymorphic relationships (e.g., User with 'uuid', Team with 'id').
      */
     private function configureMorphKeyMaps(): void
     {
