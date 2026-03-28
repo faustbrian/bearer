@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-use Cline\Bearer\Database\ModelRegistry;
+use Cline\Bearer\Database\Models;
 use Cline\Bearer\Facades\Bearer;
 use Illuminate\Support\Facades\Config;
 use Tests\Fixtures\UlidUser;
@@ -190,17 +190,17 @@ describe('AccessToken Model', function (): void {
 
     describe('Morph Key Integration', function (): void {
         beforeEach(function (): void {
-            app(ModelRegistry::class)->reset();
+            Models::reset();
         });
 
         afterEach(function (): void {
-            app(ModelRegistry::class)->reset();
+            Models::reset();
         });
 
         test('owner() resolves the owner model by the configured ULID key', function (): void {
             // Arrange
             $user = createUlidUser();
-            app(ModelRegistry::class)->enforceMorphKeyMap([
+            Models::enforceMorphKeyMap([
                 UlidUser::class => 'ulid',
             ]);
 
@@ -217,7 +217,7 @@ describe('AccessToken Model', function (): void {
         test('owner() resolves access token groups by the configured ULID key', function (): void {
             // Arrange
             $user = createUlidUser();
-            app(ModelRegistry::class)->enforceMorphKeyMap([
+            Models::enforceMorphKeyMap([
                 UlidUser::class => 'ulid',
             ]);
 

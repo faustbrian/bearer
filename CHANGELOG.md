@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   their lookup keys through the configured morph key registry, so ULID
   and UUID owners are hydrated correctly without subclassing the token
   models.
+- Added a `Cline\Bearer\Database\Models` facade so registry access
+  follows the same pattern used by the other Cline packages.
 
 ### Breaking
 - Renamed public contracts and abstract exception base classes, including

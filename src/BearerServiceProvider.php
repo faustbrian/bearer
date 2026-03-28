@@ -29,6 +29,7 @@ use Cline\Bearer\Database\ModelRegistry;
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Database\Models\AccessTokenAuditLog;
 use Cline\Bearer\Database\Models\AccessTokenGroup;
+use Cline\Bearer\Database\Models as DatabaseModels;
 use Cline\Bearer\Guards\BearerGuard;
 use Cline\Bearer\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use Cline\Bearer\RevocationStrategies\CascadeStrategy;
@@ -738,14 +739,12 @@ final class BearerServiceProvider extends PackageServiceProvider
             return;
         }
 
-        $registry = $this->app->make(ModelRegistry::class);
-
         if ($hasEnforceMorphKeyMap) {
             /** @var array<class-string, string> $enforceMorphKeyMap */
-            $registry->enforceMorphKeyMap($enforceMorphKeyMap);
+            DatabaseModels::enforceMorphKeyMap($enforceMorphKeyMap);
         } elseif ($hasMorphKeyMap) {
             /** @var array<class-string, string> $morphKeyMap */
-            $registry->morphKeyMap($morphKeyMap);
+            DatabaseModels::morphKeyMap($morphKeyMap);
         }
     }
 }

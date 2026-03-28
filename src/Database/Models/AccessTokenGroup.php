@@ -10,7 +10,7 @@
 namespace Cline\Bearer\Database\Models;
 
 use Cline\Bearer\Database\Factories\AccessTokenGroupFactory;
-use Cline\Bearer\Database\ModelRegistry;
+use Cline\Bearer\Database\Models as DatabaseModels;
 use Cline\VariableKeys\Database\Concerns\HasVariablePrimaryKey;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Collection;
@@ -23,7 +23,6 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Config;
 use Override;
 
-use function app;
 use function is_string;
 use function now;
 
@@ -111,7 +110,14 @@ final class AccessTokenGroup extends Model
      */
     public function owner(): MorphTo
     {
-        return $this->morphTo('owner', 'owner_type', 'owner_id', $this->morphKeyFor('owner_type'));
+        $ownerType = $this->getAttributeFromArray('owner_type');
+
+        return $this->morphTo(
+            'owner',
+            'owner_type',
+            'owner_id',
+            is_string($ownerType) && $ownerType !== '' ? DatabaseModels::getModelKeyFromClass($ownerType) : null,
+        );
     }
 
     /**
@@ -200,22 +206,5 @@ final class AccessTokenGroup extends Model
     public function revokeAll(): int
     {
         return $this->accessTokens()->update(['revoked_at' => now()]);
-    }
-
-    /**
-     * Resolve the key column for the owner relation based on the stored type.
-     *
-     * @param  string      $typeAttribute The morph type attribute name
-     * @return null|string The related model key column, or null when the type is missing
-     */
-    private function morphKeyFor(string $typeAttribute): ?string
-    {
-        $type = $this->getAttributeFromArray($typeAttribute);
-
-        if (!is_string($type) || $type === '') {
-            return null;
-        }
-
-        return app(ModelRegistry::class)->getModelKeyFromClass($type);
     }
 }
