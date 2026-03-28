@@ -13,6 +13,9 @@ use LogicException;
 
 use function sprintf;
 
+/**
+ * @author Brian Faust <brian@cline.sh>
+ */
 final class AbilityQueryNotSupportedException extends LogicException implements BearerExceptionInterface
 {
     public static function forProvider(string $name): self

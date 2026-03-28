@@ -19,6 +19,9 @@ use Illuminate\Database\Eloquent\Model;
 
 use function in_array;
 
+/**
+ * @author Brian Faust <brian@cline.sh>
+ */
 final class ArrayAbilityProvider implements AbilityProviderInterface, QueriesAbilitiesInterface
 {
     public function can(HasAbilitiesInterface $token, string $ability, ?Model $authority = null): bool

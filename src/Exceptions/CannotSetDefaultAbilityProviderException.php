@@ -11,6 +11,9 @@ namespace Cline\Bearer\Exceptions;
 
 use function sprintf;
 
+/**
+ * @author Brian Faust <brian@cline.sh>
+ */
 final class CannotSetDefaultAbilityProviderException extends AbstractAbilityProviderNotRegisteredException
 {
     public static function cannotSetAsDefault(string $name): self

@@ -11,6 +11,9 @@ namespace Cline\Bearer\Exceptions;
 
 use InvalidArgumentException;
 
+/**
+ * @author Brian Faust <brian@cline.sh>
+ */
 abstract class AbstractAbilityProviderNotRegisteredException extends InvalidArgumentException implements BearerExceptionInterface
 {
     // Abstract base class - use concrete implementations.

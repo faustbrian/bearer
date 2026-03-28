@@ -11,6 +11,9 @@ namespace Cline\Bearer\Exceptions;
 
 use function sprintf;
 
+/**
+ * @author Brian Faust <brian@cline.sh>
+ */
 final class AbilityProviderNotFoundException extends AbstractAbilityProviderNotRegisteredException
 {
     public static function forName(string $name): self

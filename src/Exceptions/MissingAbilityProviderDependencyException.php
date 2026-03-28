@@ -13,6 +13,9 @@ use RuntimeException;
 
 use function sprintf;
 
+/**
+ * @author Brian Faust <brian@cline.sh>
+ */
 final class MissingAbilityProviderDependencyException extends RuntimeException implements BearerExceptionInterface
 {
     public static function forPackage(string $provider, string $package): self

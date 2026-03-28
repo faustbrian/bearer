@@ -9,6 +9,9 @@
 
 namespace Cline\Bearer\Contracts;
 
+/**
+ * @author Brian Faust <brian@cline.sh>
+ */
 interface HasAbilityClaimsInterface
 {
     /**

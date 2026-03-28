@@ -12,6 +12,9 @@ namespace Cline\Bearer\Contracts;
 use Cline\Bearer\Database\Models\AccessToken;
 use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * @author Brian Faust <brian@cline.sh>
+ */
 interface QueriesAbilitiesInterface
 {
     /**

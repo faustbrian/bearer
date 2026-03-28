@@ -17,6 +17,9 @@ use Cline\Bearer\Exceptions\NoDefaultAbilityProviderException;
 use function array_key_exists;
 use function array_keys;
 
+/**
+ * @author Brian Faust <brian@cline.sh>
+ */
 final class AbilityProviderRegistry
 {
     /** @var array<string, AbilityProviderInterface> */

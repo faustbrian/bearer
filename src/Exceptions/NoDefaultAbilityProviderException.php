@@ -9,6 +9,9 @@
 
 namespace Cline\Bearer\Exceptions;
 
+/**
+ * @author Brian Faust <brian@cline.sh>
+ */
 final class NoDefaultAbilityProviderException extends AbstractAbilityProviderNotRegisteredException
 {
     public static function noDefault(): self

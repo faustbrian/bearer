@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   models.
 - Added a `Cline\Bearer\Database\Models` facade so registry access
   follows the same pattern used by the other Cline packages.
+- Added facade-level and service-provider integration tests for morph
+  key registry wiring.
 
 ### Breaking
 - Renamed public contracts and abstract exception base classes, including

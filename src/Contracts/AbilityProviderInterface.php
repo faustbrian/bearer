@@ -11,6 +11,9 @@ namespace Cline\Bearer\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @author Brian Faust <brian@cline.sh>
+ */
 interface AbilityProviderInterface
 {
     public function can(HasAbilitiesInterface $token, string $ability, ?Model $authority = null): bool;
