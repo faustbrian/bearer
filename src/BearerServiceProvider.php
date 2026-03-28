@@ -18,7 +18,6 @@ use Cline\Bearer\Contracts\RotationStrategyInterface;
 use Cline\Bearer\Contracts\TokenGeneratorInterface;
 use Cline\Bearer\Contracts\TokenHasherInterface;
 use Cline\Bearer\Contracts\TokenTypeInterface;
-use Cline\Bearer\Database\ModelRegistry;
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Database\Models\AccessTokenAuditLog;
 use Cline\Bearer\Database\Models\AccessTokenGroup;

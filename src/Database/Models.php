@@ -2,6 +2,7 @@
 
 namespace Cline\Bearer\Database;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Facade;
 use Override;
 
@@ -12,7 +13,7 @@ use Override;
  * registry container-bound for Octane compatibility.
  *
  * @method static void   enforceMorphKeyMap(array<class-string, string> $map)
- * @method static string getModelKey(\Illuminate\Database\Eloquent\Model $model)
+ * @method static string getModelKey(Model $model)
  * @method static string getModelKeyFromClass(string $class)
  * @method static void   morphKeyMap(array<class-string, string> $map)
  * @method static void   requireKeyMap()
