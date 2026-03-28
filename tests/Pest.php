@@ -10,6 +10,7 @@
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Facades\Bearer;
 use Tests\AbstractTestCase;
+use Tests\Fixtures\UlidUser;
 use Tests\Fixtures\User;
 
 pest()->extend(AbstractTestCase::class)->in(__DIR__);
@@ -53,4 +54,19 @@ function createAccessToken(User $user, string $type = 'sk', array $attributes = 
     );
 
     return $newToken->accessToken;
+}
+
+/**
+ * Create a ULID-backed test user.
+ *
+ * @param  array<string, mixed> $attributes Custom attributes to merge with defaults
+ * @return UlidUser             The created user instance
+ */
+function createUlidUser(array $attributes = []): UlidUser
+{
+    return UlidUser::query()->create(array_merge([
+        'name' => 'ULID Test User',
+        'email' => 'ulid-test@example.com',
+        'password' => bcrypt('password'),
+    ], $attributes));
 }

@@ -7,8 +7,10 @@
  * file that was distributed with this source code.
  */
 
+use Cline\Bearer\Database\ModelRegistry;
 use Cline\Bearer\Facades\Bearer;
 use Illuminate\Support\Facades\Config;
+use Tests\Fixtures\UlidUser;
 use Tests\Fixtures\User;
 
 describe('AccessToken Model', function (): void {
@@ -183,6 +185,54 @@ describe('AccessToken Model', function (): void {
             // Assert
             expect($found)->not->toBeNull();
             expect($found->id)->toBe($newToken->accessToken->id);
+        });
+    });
+
+    describe('Morph Key Integration', function (): void {
+        beforeEach(function (): void {
+            app(ModelRegistry::class)->reset();
+        });
+
+        afterEach(function (): void {
+            app(ModelRegistry::class)->reset();
+        });
+
+        test('owner() resolves the owner model by the configured ULID key', function (): void {
+            // Arrange
+            $user = createUlidUser();
+            app(ModelRegistry::class)->enforceMorphKeyMap([
+                UlidUser::class => 'ulid',
+            ]);
+
+            $token = Bearer::for($user)->issue('sk', 'ULID Token')->accessToken->refresh();
+
+            // Act
+            $owner = $token->owner;
+
+            // Assert
+            expect($owner)->toBeInstanceOf(UlidUser::class);
+            expect($owner?->getKey())->toBe($user->getKey());
+        });
+
+        test('owner() resolves access token groups by the configured ULID key', function (): void {
+            // Arrange
+            $user = createUlidUser();
+            app(ModelRegistry::class)->enforceMorphKeyMap([
+                UlidUser::class => 'ulid',
+            ]);
+
+            $group = Bearer::for($user)->issueGroup(
+                types: ['sk', 'pk'],
+                name: 'ULID Group',
+            );
+            $group->refresh();
+
+            // Act
+            $owner = $group->owner;
+
+            // Assert
+            expect($owner)->toBeInstanceOf(UlidUser::class);
+            expect($owner?->getKey())->toBe($user->getKey());
         });
     });
 });

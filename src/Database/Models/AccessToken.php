@@ -12,6 +12,7 @@ namespace Cline\Bearer\Database\Models;
 use Cline\Ancestry\Concerns\HasAncestry;
 use Cline\Bearer\Contracts\HasAbilitiesInterface;
 use Cline\Bearer\Contracts\HasAbilityClaimsInterface;
+use Cline\Bearer\Database\ModelRegistry;
 use Cline\Bearer\Enums\AuditEvent;
 use Cline\Bearer\Facades\Bearer;
 use Cline\VariableKeys\Database\Concerns\HasVariablePrimaryKey;
@@ -27,8 +28,10 @@ use Illuminate\Support\Facades\Config;
 use Override;
 use Throwable;
 
+use function app;
 use function array_diff;
 use function in_array;
+use function is_string;
 use function now;
 
 /**
@@ -196,7 +199,7 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
      */
     public function owner(): MorphTo
     {
-        return $this->morphTo('owner');
+        return $this->morphTo('owner', 'owner_type', 'owner_id', $this->morphKeyFor('owner_type'));
     }
 
     /**
@@ -210,7 +213,7 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
      */
     public function context(): MorphTo
     {
-        return $this->morphTo('context');
+        return $this->morphTo('context', 'context_type', 'context_id', $this->morphKeyFor('context_type'));
     }
 
     /**
@@ -224,7 +227,7 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
      */
     public function boundary(): MorphTo
     {
-        return $this->morphTo('boundary');
+        return $this->morphTo('boundary', 'boundary_type', 'boundary_id', $this->morphKeyFor('boundary_type'));
     }
 
     /**
@@ -494,5 +497,25 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
 
         /** @var Collection<int, self> */
         return $this->getAncestryDescendants($hierarchyType);
+    }
+
+    /**
+     * Resolve the key column for a polymorphic relation based on the stored type.
+     *
+     * The registry only knows the related key once the morph type has been set on
+     * the model, so this resolves the concrete class lazily from the current record.
+     *
+     * @param  string      $typeAttribute The morph type attribute name
+     * @return null|string The related model key column, or null when the type is missing
+     */
+    private function morphKeyFor(string $typeAttribute): ?string
+    {
+        $type = $this->getAttributeFromArray($typeAttribute);
+
+        if (!is_string($type) || $type === '') {
+            return null;
+        }
+
+        return app(ModelRegistry::class)->getModelKeyFromClass($type);
     }
 }

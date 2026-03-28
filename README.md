@@ -34,6 +34,12 @@ composer require cline/warden
 `array` remains the default provider. `warden` requires both the token's
 stored ability scope and the token owner's Warden permission to pass.
 
+Bearer also honors the configured morph key map when hydrating token
+ownership relations. If your `User`, `Organization`, or other owner model
+uses `ulid` or `uuid` as its primary key, configure the relevant entry in
+`morphKeyMap` or `enforceMorphKeyMap` and Bearer will resolve `owner`,
+`context`, and `boundary` correctly.
+
 ## Documentation
 
 - **[Getting Started](DOCS.md#doc-docs-readme)** - Installation, configuration, and first steps

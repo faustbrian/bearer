@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Renamed package interfaces to `*Interface`, traits to `*Trait`, and
   abstract classes to `Abstract*` for consistency.
+- Polymorphic `owner`, `context`, and `boundary` relations now resolve
+  their lookup keys through the configured morph key registry, so ULID
+  and UUID owners are hydrated correctly without subclassing the token
+  models.
 
 ### Breaking
 - Renamed public contracts and abstract exception base classes, including
