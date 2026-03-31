@@ -7,6 +7,7 @@ use Cline\Bearer\Contracts\HasAbilitiesInterface;
 use Cline\Bearer\Contracts\HasAccessTokensInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Database\Models\AccessTokenGroup;
+use Cline\Bearer\Database\Models as DatabaseModels;
 use Cline\Bearer\Facades\Bearer;
 use Cline\Bearer\NewAccessToken;
 use DateTimeInterface;
@@ -136,6 +137,7 @@ trait HasAccessTokensTrait
         return $this->morphMany(
             Bearer::accessTokenModel(),
             'owner',
+            localKey: DatabaseModels::getModelKey($this),
         );
     }
 
@@ -162,6 +164,7 @@ trait HasAccessTokensTrait
         return $this->morphMany(
             Bearer::accessTokenModel(),
             'context',
+            localKey: DatabaseModels::getModelKey($this),
         );
     }
 
@@ -188,6 +191,7 @@ trait HasAccessTokensTrait
         return $this->morphMany(
             Bearer::accessTokenModel(),
             'boundary',
+            localKey: DatabaseModels::getModelKey($this),
         );
     }
 
@@ -218,7 +222,11 @@ trait HasAccessTokensTrait
         /** @var class-string<AccessTokenGroup> $model */
         $model = Bearer::tokenGroupModel();
 
-        return $this->morphMany($model, 'owner');
+        return $this->morphMany(
+            $model,
+            'owner',
+            localKey: DatabaseModels::getModelKey($this),
+        );
     }
 
     /**

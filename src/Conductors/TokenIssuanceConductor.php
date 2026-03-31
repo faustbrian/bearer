@@ -6,6 +6,7 @@ use Cline\Bearer\BearerManager;
 use Cline\Bearer\Contracts\HasAccessTokensInterface;
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Database\Models\AccessTokenGroup;
+use Cline\Bearer\Database\Models as DatabaseModels;
 use Cline\Bearer\Enums\AuditEvent;
 use Cline\Bearer\Exceptions\AccessTokenGroupRefreshException;
 use Cline\Bearer\NewAccessToken;
@@ -184,13 +185,23 @@ final readonly class TokenIssuanceConductor
 
         // Associate context relationship if set (respects morph map)
         if ($this->context instanceof Model) {
-            $token->context()->associate($this->context);
+            $token->forceFill([
+                'context_type' => $this->context->getMorphClass(),
+                'context_id' => $this->context->getAttribute(
+                    DatabaseModels::getModelKey($this->context),
+                ),
+            ]);
             $token->save();
         }
 
         // Associate boundary relationship if set (respects morph map)
         if ($this->boundary instanceof Model) {
-            $token->boundary()->associate($this->boundary);
+            $token->forceFill([
+                'boundary_type' => $this->boundary->getMorphClass(),
+                'boundary_id' => $this->boundary->getAttribute(
+                    DatabaseModels::getModelKey($this->boundary),
+                ),
+            ]);
             $token->save();
         }
 
@@ -273,7 +284,12 @@ final readonly class TokenIssuanceConductor
 
             // Associate context relationship if set (respects morph map)
             if ($this->context instanceof Model) {
-                $token->context()->associate($this->context);
+                $token->forceFill([
+                    'context_type' => $this->context->getMorphClass(),
+                    'context_id' => $this->context->getAttribute(
+                        DatabaseModels::getModelKey($this->context),
+                    ),
+                ]);
                 $token->save();
             }
 
@@ -282,7 +298,12 @@ final readonly class TokenIssuanceConductor
                 continue;
             }
 
-            $token->boundary()->associate($this->boundary);
+            $token->forceFill([
+                'boundary_type' => $this->boundary->getMorphClass(),
+                'boundary_id' => $this->boundary->getAttribute(
+                    DatabaseModels::getModelKey($this->boundary),
+                ),
+            ]);
             $token->save();
         }
 

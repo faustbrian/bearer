@@ -6,6 +6,7 @@ use Cline\Ancestry\Facades\Ancestry;
 use Cline\Bearer\BearerManager;
 use Cline\Bearer\Contracts\HasAccessTokensInterface;
 use Cline\Bearer\Database\Models\AccessToken;
+use Cline\Bearer\Database\Models as DatabaseModels;
 use Cline\Bearer\Enums\AuditEvent;
 use Cline\Bearer\Exceptions\CannotDeriveTokenException;
 use Cline\Bearer\Exceptions\InvalidDerivedAbilitiesException;
@@ -205,12 +206,22 @@ final readonly class TokenDerivationConductor
 
         // Inherit context and boundary from parent token (respects morph map)
         if ($this->parentToken->context !== null) {
-            $derivedToken->context()->associate($this->parentToken->context);
+            $derivedToken->forceFill([
+                'context_type' => $this->parentToken->context->getMorphClass(),
+                'context_id' => $this->parentToken->context->getAttribute(
+                    DatabaseModels::getModelKey($this->parentToken->context),
+                ),
+            ]);
             $derivedToken->save();
         }
 
         if ($this->parentToken->boundary !== null) {
-            $derivedToken->boundary()->associate($this->parentToken->boundary);
+            $derivedToken->forceFill([
+                'boundary_type' => $this->parentToken->boundary->getMorphClass(),
+                'boundary_id' => $this->parentToken->boundary->getAttribute(
+                    DatabaseModels::getModelKey($this->parentToken->boundary),
+                ),
+            ]);
             $derivedToken->save();
         }
 

@@ -38,7 +38,8 @@ Bearer also honors the configured morph key map when hydrating token
 ownership relations. If your `User`, `Organization`, or other owner model
 uses `ulid` or `uuid` as its primary key, configure the relevant entry in
 `morphKeyMap` or `enforceMorphKeyMap` and Bearer will resolve `owner`,
-`context`, and `boundary` correctly.
+`context`, `boundary`, and the corresponding `HasAccessTokensTrait`
+relations correctly.
 
 ## Documentation
 

@@ -5,6 +5,7 @@ namespace Cline\Bearer\Conductors;
 use Cline\Bearer\BearerManager;
 use Cline\Bearer\Contracts\HasAccessTokensInterface;
 use Cline\Bearer\Database\Models\AccessToken;
+use Cline\Bearer\Database\Models as DatabaseModels;
 use Cline\Bearer\Enums\AuditEvent;
 use Cline\Bearer\Enums\RotationMode;
 use Cline\Bearer\Exceptions\MissingTokenableForRotationException;
@@ -123,12 +124,22 @@ final readonly class TokenRotationConductor
 
         // Preserve context and boundary from original token (respects morph map)
         if ($this->token->context !== null) {
-            $createdToken->context()->associate($this->token->context);
+            $createdToken->forceFill([
+                'context_type' => $this->token->context->getMorphClass(),
+                'context_id' => $this->token->context->getAttribute(
+                    DatabaseModels::getModelKey($this->token->context),
+                ),
+            ]);
             $createdToken->save();
         }
 
         if ($this->token->boundary !== null) {
-            $createdToken->boundary()->associate($this->token->boundary);
+            $createdToken->forceFill([
+                'boundary_type' => $this->token->boundary->getMorphClass(),
+                'boundary_id' => $this->token->boundary->getAttribute(
+                    DatabaseModels::getModelKey($this->token->boundary),
+                ),
+            ]);
             $createdToken->save();
         }
 
