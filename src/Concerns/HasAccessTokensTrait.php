@@ -116,8 +116,14 @@ trait HasAccessTokensTrait
      *
      * Example usage: ```php // Get all active tokens owned by this user
      * $activeTokens = $user->accessTokens()
-     *     ->whereNull('revoked_at')
-     *     ->where('expires_at', '>', now())
+     *     ->where(function ($query) {
+     *         $query->whereNull('revoked_at')
+     *             ->orWhere('revoked_at', '>', now());
+     *     })
+     *     ->where(function ($query) {
+     *         $query->whereNull('expires_at')
+     *             ->orWhere('expires_at', '>', now());
+     *     })
      *     ->get();
      *
      * // Get tokens by type $secretKeys = $user->accessTokens()->where('type',
@@ -153,7 +159,10 @@ trait HasAccessTokensTrait
      *
      * // Get active tokens for this context $activeTokens =
      * $serviceAccount->contextTokens()
-     *     ->whereNull('revoked_at')
+     *     ->where(function ($query) {
+     *         $query->whereNull('revoked_at')
+     *             ->orWhere('revoked_at', '>', now());
+     *     })
      *     ->get();
      * ```
      *
@@ -180,7 +189,10 @@ trait HasAccessTokensTrait
      *
      * // Get all active tokens in this organization $activeTokens =
      * $organization->boundaryTokens()
-     *     ->whereNull('revoked_at')
+     *     ->where(function ($query) {
+     *         $query->whereNull('revoked_at')
+     *             ->orWhere('revoked_at', '>', now());
+     *     })
      *     ->get();
      * ```
      *

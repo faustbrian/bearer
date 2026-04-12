@@ -119,6 +119,20 @@ describe('Token Authentication', function (): void {
         expect($token->isValid())->toBeFalse();
     });
 
+    it('treats future revoked_at as scheduled revocation, not active revocation', function (): void {
+        $user = createUser();
+        $token = createAccessToken($user);
+
+        $token->update([
+            'revoked_at' => now()->addMinutes(10),
+        ]);
+        $token->refresh();
+
+        expect($token->isRevocationScheduled())->toBeTrue();
+        expect($token->isRevoked())->toBeFalse();
+        expect($token->isValid())->toBeTrue();
+    });
+
     it('validates token is invalid when revoked or expired', function (): void {
         $user = createUser();
         $token = createAccessToken($user);

@@ -353,14 +353,25 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     /**
      * Check if the token is revoked.
      *
-     * Revoked tokens cannot be used for authentication even if they haven't
-     * expired. Revocation is permanent and cannot be undone.
+     * Revocation becomes effective once the stored timestamp is in the past.
+     * Future timestamps represent scheduled revocation windows during which the
+     * token is still valid.
      *
-     * @return bool True if the token has been explicitly revoked
+     * @return bool True if revocation has taken effect
      */
     public function isRevoked(): bool
     {
-        return $this->revoked_at !== null;
+        return $this->revoked_at !== null && $this->revoked_at->isPast();
+    }
+
+    /**
+     * Check if the token has a revocation scheduled for a future instant.
+     *
+     * @return bool True if revocation is pending but has not yet taken effect
+     */
+    public function isRevocationScheduled(): bool
+    {
+        return $this->revoked_at !== null && $this->revoked_at->isFuture();
     }
 
     /**
@@ -453,7 +464,7 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
         $currentDepth = $this->getAncestryDepth($hierarchyType);
 
         return $currentDepth < $maxDepth
-            && !$this->revoked_at
+            && !$this->isRevoked()
             && (!$this->expires_at || $this->expires_at->isFuture());
     }
 

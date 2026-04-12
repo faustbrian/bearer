@@ -97,14 +97,19 @@ final readonly class TokenQueryConductor
     /**
      * Filter to only valid tokens.
      *
-     * Valid tokens are those that are not expired and not revoked.
+     * Valid tokens are those that are not expired and are not effectively
+     * revoked. Tokens with a future `revoked_at` are still valid until that
+     * instant arrives.
      *
      * @return self Current conductor instance for method chaining
      */
     public function valid(): self
     {
         $this->query
-            ->whereNull('revoked_at')
+            ->where(function (Builder $query): void {
+                $query->whereNull('revoked_at')
+                    ->orWhere('revoked_at', '>', now());
+            })
             ->where(function (Builder $query): void {
                 $query->whereNull('expires_at')
                     ->orWhere('expires_at', '>', now());
@@ -134,7 +139,9 @@ final readonly class TokenQueryConductor
      */
     public function revoked(): self
     {
-        $this->query->whereNotNull('revoked_at');
+        $this->query
+            ->whereNotNull('revoked_at')
+            ->where('revoked_at', '<=', now());
 
         return $this;
     }

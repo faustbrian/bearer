@@ -137,6 +137,21 @@ describe('TokenQueryConductor', function (): void {
             // Assert
             expect($result)->toHaveCount(0);
         });
+
+        it('includes tokens with a future revoked_at as still valid', function (): void {
+            // Arrange
+            $user = createUser();
+            $scheduledToken = createAccessToken($user, 'sk', ['name' => 'Scheduled Revocation']);
+            $scheduledToken->update([
+                'revoked_at' => now()->addMinutes(10),
+            ]);
+
+            // Act
+            $result = new TokenQueryConductor($user)->valid()->get();
+
+            // Assert
+            expect($result->pluck('name'))->toContain('Scheduled Revocation');
+        });
     });
 
     describe('expired()', function (): void {
@@ -248,6 +263,21 @@ describe('TokenQueryConductor', function (): void {
 
             // Assert
             expect($result)->toHaveCount(1);
+        });
+
+        it('excludes tokens whose revocation is still scheduled in the future', function (): void {
+            // Arrange
+            $user = createUser();
+            $token = createAccessToken($user, 'sk', ['name' => 'Scheduled Revocation']);
+            $token->update([
+                'revoked_at' => now()->addMinutes(10),
+            ]);
+
+            // Act
+            $result = new TokenQueryConductor($user)->revoked()->get();
+
+            // Assert
+            expect($result)->toHaveCount(0);
         });
     });
 
