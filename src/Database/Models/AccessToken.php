@@ -361,7 +361,7 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
      */
     public function isRevoked(): bool
     {
-        return $this->revoked_at !== null && $this->revoked_at->isPast();
+        return $this->revoked_at !== null && !$this->revoked_at->isFuture();
     }
 
     /**

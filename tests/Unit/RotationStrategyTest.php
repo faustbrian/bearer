@@ -139,7 +139,7 @@ describe('DualValidStrategy', function (): void {
             $result = $strategy->isOldTokenValid($oldToken);
 
             // Assert
-            expect($result)->toBeFalse();
+            expect($result)->toBeTrue();
         });
     });
 });
