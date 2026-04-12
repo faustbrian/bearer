@@ -6,6 +6,7 @@ use Cline\Bearer\Concerns\HasAccessTokensTrait;
 use Cline\Bearer\Contracts\HasAccessTokensInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Override;
 
 /**
  * Test fixture user model whose morph key is mapped to a non-primary column.
@@ -22,6 +23,7 @@ final class MappedOwner extends Authenticatable implements HasAccessTokensInterf
      *
      * @var array<string>
      */
+    #[Override()]
     protected $guarded = [];
 
     /**
@@ -29,5 +31,6 @@ final class MappedOwner extends Authenticatable implements HasAccessTokensInterf
      *
      * @var string
      */
+    #[Override()]
     protected $table = 'mapped_users';
 }

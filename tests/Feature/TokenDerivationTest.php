@@ -226,6 +226,7 @@ describe('Token Derivation', function (): void {
         $validToken = Bearer::for($user)->issue('sk', 'Valid', abilities: ['*']);
         $revokedToken = Bearer::for($user)->issue('sk', 'Revoked', abilities: ['*']);
         $revokedToken->accessToken->revoke();
+
         $scheduledRevocationToken = Bearer::for($user)->issue('sk', 'Scheduled', abilities: ['*']);
         $scheduledRevocationToken->accessToken->update([
             'revoked_at' => now()->addMinutes(10),

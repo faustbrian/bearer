@@ -5,6 +5,7 @@ namespace Tests\Fixtures;
 use Cline\Bearer\Concerns\HasAccessTokensTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Override;
 
 /**
  * Test fixture boundary model whose morph key is mapped to a non-primary
@@ -22,6 +23,7 @@ final class MappedBoundary extends Authenticatable
      *
      * @var array<string>
      */
+    #[Override()]
     protected $guarded = [];
 
     /**
@@ -29,5 +31,6 @@ final class MappedBoundary extends Authenticatable
      *
      * @var string
      */
+    #[Override()]
     protected $table = 'mapped_boundaries';
 }
