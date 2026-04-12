@@ -41,6 +41,14 @@ enum AuditEvent: string
     case Rotated = 'rotated';
 
     /**
+     * Token configuration was updated.
+     *
+     * Logged when mutable token attributes such as name, allowlists, rate
+     * limits, metadata, or expiry are changed after issuance.
+     */
+    case Updated = 'updated';
+
+    /**
      * Authentication failed.
      *
      * Logged when a token fails authentication due to invalid credentials,

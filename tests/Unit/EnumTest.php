@@ -27,6 +27,11 @@ describe('AuditEvent', function (): void {
             expect(AuditEvent::Rotated->value)->toBe('rotated');
         });
 
+        test('has updated case', function (): void {
+            // Act & Assert
+            expect(AuditEvent::Updated->value)->toBe('updated');
+        });
+
         test('has failed case', function (): void {
             // Act & Assert
             expect(AuditEvent::Failed->value)->toBe('failed');
@@ -62,11 +67,12 @@ describe('AuditEvent', function (): void {
             $cases = AuditEvent::cases();
 
             // Assert
-            expect($cases)->toHaveCount(11);
+            expect($cases)->toHaveCount(12);
             expect($cases)->toContain(AuditEvent::Created);
             expect($cases)->toContain(AuditEvent::Authenticated);
             expect($cases)->toContain(AuditEvent::Revoked);
             expect($cases)->toContain(AuditEvent::Rotated);
+            expect($cases)->toContain(AuditEvent::Updated);
             expect($cases)->toContain(AuditEvent::Failed);
             expect($cases)->toContain(AuditEvent::RateLimited);
             expect($cases)->toContain(AuditEvent::IpBlocked);
