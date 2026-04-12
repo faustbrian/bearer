@@ -176,7 +176,7 @@ final readonly class BearerGuard
         }
 
         // Check if token is revoked
-        if ($token->revoked_at !== null) {
+        if ($token->revoked_at !== null && $token->revoked_at->isPast()) {
             throw TokenHasBeenRevokedException::revoked();
         }
 

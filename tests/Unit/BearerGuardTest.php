@@ -4,12 +4,14 @@ use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Events\TokenAuthenticated;
 use Cline\Bearer\Exceptions\TokenHasBeenRevokedException;
 use Cline\Bearer\Exceptions\TokenHasExpiredException;
+use Cline\Bearer\RotationStrategies\GracePeriodStrategy;
 use Cline\Bearer\TransientToken;
 use Illuminate\Contracts\Auth\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Tests\Fixtures\User;
@@ -41,6 +43,10 @@ describe('BearerGuard', function (): void {
 
         // Define login route to prevent RouteNotFoundException
         Route::get('/login', fn () => response()->json(['error' => 'Unauthenticated'], 401))->name('login');
+    });
+
+    afterEach(function (): void {
+        Date::setTestNow();
     });
 
     describe('Happy Path', function (): void {
@@ -76,6 +82,30 @@ describe('BearerGuard', function (): void {
 
             $token->refresh();
             expect($token->last_used_at)->not->toBeNull();
+        });
+
+        test('accepts tokens whose grace-period revocation time is still in the future', function (): void {
+            Date::setTestNow('2024-01-15 10:00:00');
+
+            $strategy = new GracePeriodStrategy(5);
+            $user = createUser(['email' => uniqid().'@example.com']);
+            $plainToken = 'grace-token-'.uniqid();
+            $oldToken = createRawToken($user, [
+                'token' => hash('sha256', $plainToken),
+            ]);
+            $newToken = createRawToken($user, [
+                'token' => hash('sha256', 'replacement-'.uniqid()),
+            ]);
+
+            $strategy->rotate($oldToken, $newToken);
+
+            $response = $this->withHeader('Authorization', 'Bearer '.$plainToken)->get('/test-auth');
+
+            $response->assertOk();
+
+            $oldToken->refresh();
+            expect($oldToken->revoked_at)->not->toBeNull()
+                ->and($oldToken->revoked_at?->format('Y-m-d H:i:s'))->toBe('2024-01-15 10:05:00');
         });
 
         test('updates last_used_at timestamp on authentication', function (): void {
@@ -203,6 +233,28 @@ describe('BearerGuard', function (): void {
                 'token' => hash('sha256', $plainToken),
                 'revoked_at' => now()->subHour(),
             ]);
+
+            $this->withoutExceptionHandling();
+
+            expect(fn () => $this->withHeader('Authorization', 'Bearer '.$plainToken)->get('/test-auth'))
+                ->toThrow(TokenHasBeenRevokedException::class);
+        });
+
+        test('throws TokenHasBeenRevokedException once the grace period has elapsed', function (): void {
+            Date::setTestNow('2024-01-15 10:00:00');
+
+            $strategy = new GracePeriodStrategy(5);
+            $user = createUser(['email' => uniqid().'@example.com']);
+            $plainToken = 'expired-grace-token-'.uniqid();
+            $oldToken = createRawToken($user, [
+                'token' => hash('sha256', $plainToken),
+            ]);
+            $newToken = createRawToken($user, [
+                'token' => hash('sha256', 'replacement-'.uniqid()),
+            ]);
+
+            $strategy->rotate($oldToken, $newToken);
+            Date::setTestNow('2024-01-15 10:06:00');
 
             $this->withoutExceptionHandling();
 
