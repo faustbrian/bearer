@@ -76,8 +76,8 @@ use function tap;
  * Key features: - Custom authentication guard for token-based API
  * authentication - Pluggable token type system with registry - Configurable
  * token generators (Seam, UUID, Random) - Audit driver system for token
- * activity logging - Console commands for token and audit log maintenance -
- * Polymorphic relationship support with Morphism
+ * activity logging - Console commands for token and audit log maintenance
+ * - Polymorphic relationship support with Morphism
  */
 final class BearerServiceProvider extends PackageServiceProvider
 {
@@ -104,10 +104,10 @@ final class BearerServiceProvider extends PackageServiceProvider
     /**
      * Register the package's services in the container.
      *
-     * Registers all registries as singletons and configures their default
-     * implementations based on package configuration. This includes token
-     * types, generators, hashers, audit drivers, and revocation/rotation
-     * strategies.
+     * Registers all registries as singletons and configures their
+     * default implementations based on package configuration. This
+     * includes token types, generators, hashers, audit drivers, and
+     * revocation/rotation strategies.
      */
     #[Override()]
     public function registeringPackage(): void
@@ -125,9 +125,9 @@ final class BearerServiceProvider extends PackageServiceProvider
     /**
      * Bootstrap the package's services.
      *
-     * Configures the authentication guard, registers middleware priority, and
-     * sets up polymorphic relationship key mappings. This runs after all
-     * service providers have been registered.
+     * Configures the authentication guard, registers middleware priority,
+     * and sets up polymorphic relationship key mappings. This runs after
+     * all service providers have been registered.
      */
     #[Override()]
     public function bootingPackage(): void
@@ -186,8 +186,8 @@ final class BearerServiceProvider extends PackageServiceProvider
      * Register the token generator registry singleton.
      *
      * Loads token generators from configuration and sets the default generator.
-     * Provides built-in support for Seam, UUID, and Random generators, plus any
-     * custom generators defined in the configuration.
+     * Provides built-in support for Seam, UUID, and Random generators, plus
+     * any custom generators defined in the configuration.
      */
     private function registerTokenGeneratorRegistry(): void
     {
@@ -384,9 +384,9 @@ final class BearerServiceProvider extends PackageServiceProvider
     /**
      * Register the ability provider registry singleton.
      *
-     * Loads authorization providers from configuration and sets the default
-     * provider. Built-in support includes array-backed token checks and
-     * Warden-backed owner checks.
+     * Loads authorization providers from configuration and sets the
+     * default provider. Built-in support includes array-backed token
+     * checks and Warden-backed owner checks.
      */
     private function registerAbilityProviderRegistry(): void
     {
@@ -520,9 +520,9 @@ final class BearerServiceProvider extends PackageServiceProvider
      * Register the rotation strategy registry singleton.
      *
      * Loads rotation strategies from configuration and sets the default
-     * strategy. Provides built-in support for Immediate, GracePeriod, and
-     * DualValid strategies, plus any custom strategies defined in the
-     * configuration.
+     * strategy. Provides built-in support for Immediate, GracePeriod,
+     * and DualValid strategies, plus any custom strategies defined
+     * in the configuration.
      */
     private function registerRotationStrategyRegistry(): void
     {
@@ -588,8 +588,8 @@ final class BearerServiceProvider extends PackageServiceProvider
     /**
      * Register the bearer manager singleton.
      *
-     * Wires up all registries into the central BearerManager instance, creating
-     * the main entry point for token operations.
+     * Wires up all registries into the central BearerManager instance,
+     * creating the main entry point for token operations.
      */
     private function registerBearerManager(): void
     {
@@ -636,8 +636,8 @@ final class BearerServiceProvider extends PackageServiceProvider
     /**
      * Configure the Bearer authentication guard.
      *
-     * Registers the 'bearer' and 'stateful-bearer' guard drivers and sets up
-     * the auth configuration. The default bearer guard is stateless and
+     * Registers the 'bearer' and 'stateful-bearer' guard drivers and sets
+     * up the auth configuration. The default bearer guard is stateless and
      * bearer-token-only, while the stateful variant preserves session-first
      * fallback for first-party browser flows that explicitly opt into it.
      */

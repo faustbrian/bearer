@@ -23,8 +23,7 @@ final readonly class BearerRequestGuardFactory
     ) {}
 
     /**
-     * @param  AuthManager          $auth
-     * @param  array<string, mixed> $config
+     * @param array<string, mixed> $config
      */
     public function make(AuthManager $auth, array $config, Request $request): RequestGuard
     {
