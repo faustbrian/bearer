@@ -17,7 +17,7 @@
 
 ## Requirements
 
-Bearer requires PHP 8.4+ and Laravel 11+.
+Bearer requires PHP 8.5+ and Laravel 10+.
 
 ## Installation
 
@@ -39,11 +39,11 @@ composer require cline/warden
 Add Bearer's trait to your user model:
 
 ```php
-use Cline\Bearer\Concerns\HasApiTokens;
+use Cline\Bearer\Concerns\HasAccessTokensTrait;
 
 class User extends Authenticatable
 {
-    use HasApiTokens;
+    use HasAccessTokensTrait;
 }
 ```
 
@@ -139,7 +139,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class User extends Authenticatable
 {
-    use HasApiTokens;
+    use HasAccessTokensTrait;
     use HasUuids;
 
     public $incrementing = false;
@@ -151,7 +151,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
 class User extends Authenticatable
 {
-    use HasApiTokens;
+    use HasAccessTokensTrait;
     use HasUlids;
 
     public $incrementing = false;
@@ -340,16 +340,16 @@ $token = Bearer::findToken('sk_test_abc123...');
 $token = Bearer::findByPrefix('sk_test_abc');
 ```
 
-## Using the HasApiTokens Trait
+## Using HasAccessTokensTrait
 
 Add the trait to your User model:
 
 ```php
-use Cline\Bearer\Concerns\HasApiTokens;
+use Cline\Bearer\Concerns\HasAccessTokensTrait;
 
 class User extends Authenticatable
 {
-    use HasApiTokens;
+    use HasAccessTokensTrait;
 }
 ```
 
@@ -398,6 +398,10 @@ Route::middleware('auth:bearer')->group(function () {
     });
 });
 ```
+
+The default `bearer` guard is stateless in `6.0.0`. It authenticates only
+from the `Authorization: Bearer ...` header and will not fall back to an
+existing web session.
 
 ## Checking Abilities
 
@@ -553,14 +557,30 @@ Configure stateful domains for session-based auth:
 'stateful' => ['localhost', 'spa.example.com', '*.example.com']
 ```
 
-These domains will use session-based auth (cookies) instead of tokens. Perfect for first-party SPAs where you don't want to expose tokens.
+These domains still control when Bearer should apply the frontend cookie
+middleware stack. They do not make `auth:bearer` session-aware by
+themselves in `6.0.0`.
+
+If you want first-party browser routes to accept session auth before
+falling back to bearer tokens, define a dedicated guard that uses the
+`stateful-bearer` driver:
+
+```php
+// config/auth.php
+'guards' => [
+    'api-browser' => [
+        'driver' => 'stateful-bearer',
+        'provider' => 'users',
+    ],
+],
+```
 
 ```php
 // routes/api.php
-Route::middleware('auth:bearer')->group(function () {
+Route::middleware('auth:api-browser')->group(function () {
     // Works with both:
     // 1. Bearer tokens (Authorization: Bearer sk_test_...)
-    // 2. Session cookies (for stateful domains)
+    // 2. Session cookies from configured stateful domains
     Route::get('/user', fn (Request $request) => $request->user());
 });
 ```
@@ -2732,14 +2752,14 @@ $token->accessToken->context; // ServiceAccount#5 (who it acts for)
 
 ### Querying by Context
 
-Add the `HasApiTokens` trait to your context model:
+Add the `HasAccessTokensTrait` trait to your context model:
 
 ```php
-use Cline\Bearer\Concerns\HasApiTokens;
+use Cline\Bearer\Concerns\HasAccessTokensTrait;
 
 class ServiceAccount extends Model
 {
-    use HasApiTokens;
+    use HasAccessTokensTrait;
 }
 ```
 
@@ -2777,14 +2797,14 @@ $token->accessToken->boundary; // Team#3 (tenant scope)
 
 ### Querying by Boundary
 
-Add the `HasApiTokens` trait to your boundary model:
+Add the `HasAccessTokensTrait` trait to your boundary model:
 
 ```php
-use Cline\Bearer\Concerns\HasApiTokens;
+use Cline\Bearer\Concerns\HasAccessTokensTrait;
 
 class Team extends Model
 {
-    use HasApiTokens;
+    use HasAccessTokensTrait;
 }
 ```
 

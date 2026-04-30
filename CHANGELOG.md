@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.0.0] - 2026-04-30
+
 ### Changed
 - Updated package dependency constraints and refreshed docblocks to match
   the current codebase.
@@ -22,6 +24,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   follows the same pattern used by the other Cline packages.
 - Added facade-level and service-provider integration tests for morph
   key registry wiring.
+- The default `bearer` auth guard is now stateless and authenticates only
+  from `Authorization: Bearer ...` headers. Session-first fallback now
+  lives behind the explicit `stateful-bearer` driver.
 
 ### Breaking
 - Renamed public contracts and abstract exception base classes, including
@@ -30,6 +35,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `HasAccessTokensTrait`, and `BearerException` to
   `BearerExceptionInterface`. Update imports, implementations, and
   extends clauses accordingly.
+- Routes protected with `auth:bearer` no longer authenticate through an
+  existing stateful web session. Applications that need the old mixed
+  session-plus-bearer behavior must switch those routes to a
+  `stateful-bearer` guard configuration.
 
 ### Added
 - Added repository-level maintainer guidance in `AGENTS.md`.

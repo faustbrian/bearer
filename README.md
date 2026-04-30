@@ -9,7 +9,7 @@ Stripe-style typed API tokens with groups, environments, and audit logging for L
 
 ## Requirements
 
-> **Requires [PHP 8.4+](https://php.net/releases/)** and Laravel 11+
+> **Requires [PHP 8.5+](https://php.net/releases/)** and Laravel 10+
 
 ## Installation
 
@@ -40,6 +40,11 @@ uses `ulid` or `uuid` as its primary key, configure the relevant entry in
 `morphKeyMap` or `enforceMorphKeyMap` and Bearer will resolve `owner`,
 `context`, `boundary`, and the corresponding `HasAccessTokensTrait`
 relations correctly.
+
+As of `6.0.0`, the default `bearer` guard is stateless. Routes protected
+with `auth:bearer` authenticate only from bearer tokens. If you need the
+previous session-first behavior for first-party browser flows, register a
+guard that uses the `stateful-bearer` driver instead.
 
 ## Documentation
 
