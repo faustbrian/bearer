@@ -22,9 +22,8 @@ use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Database\Models\AccessTokenAuditLog;
 use Cline\Bearer\Database\Models\AccessTokenGroup;
 use Cline\Bearer\Database\Models as DatabaseModels;
-use Cline\Bearer\Guards\BearerGuard;
-use Cline\Bearer\Guards\BearerTokenAuthenticator;
-use Cline\Bearer\Guards\StatefulBearerGuard;
+use Cline\Bearer\Guards\BearerRequestGuardFactory;
+use Cline\Bearer\Guards\StatefulBearerRequestGuardFactory;
 use Cline\Bearer\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use Cline\Bearer\RevocationStrategies\CascadeStrategy;
 use Cline\Bearer\RevocationStrategies\NoneStrategy;
@@ -65,7 +64,6 @@ use function class_exists;
 use function config;
 use function is_array;
 use function is_string;
-use function request;
 use function tap;
 
 /**
@@ -656,77 +654,26 @@ final class BearerServiceProvider extends PackageServiceProvider
         ]);
 
         Auth::resolved(function (AuthManager $auth): void {
-            $auth->extend('bearer', function ($app, $name, array $config) use ($auth): RequestGuard {
+            $auth->extend('bearer', static function ($app, $name, array $config) use ($auth): RequestGuard {
                 /** @var array<string, mixed> $config */
-                return tap($this->createGuard($auth, $config), function ($guard): void {
-                    app()->refresh('request', $guard, 'setRequest');
+                /** @var BearerRequestGuardFactory $factory */
+                $factory = $app->make(BearerRequestGuardFactory::class);
+
+                return tap($factory->make($auth, $config, $app['request']), static function (RequestGuard $guard) use ($app): void {
+                    $app->refresh('request', $guard, 'setRequest');
                 });
             });
 
-            $auth->extend('stateful-bearer', function ($app, $name, array $config) use ($auth): RequestGuard {
+            $auth->extend('stateful-bearer', static function ($app, $name, array $config) use ($auth): RequestGuard {
                 /** @var array<string, mixed> $config */
-                return tap($this->createStatefulGuard($auth, $config), function ($guard): void {
-                    app()->refresh('request', $guard, 'setRequest');
+                /** @var StatefulBearerRequestGuardFactory $factory */
+                $factory = $app->make(StatefulBearerRequestGuardFactory::class);
+
+                return tap($factory->make($auth, $config, $app['request']), static function (RequestGuard $guard) use ($app): void {
+                    $app->refresh('request', $guard, 'setRequest');
                 });
             });
         });
-    }
-
-    /**
-     * Create a new Bearer request guard instance.
-     *
-     * @param  AuthManager          $auth   The authentication manager
-     * @param  array<string, mixed> $config Guard configuration
-     * @return RequestGuard         The configured request guard
-     */
-    private function createGuard(AuthManager $auth, array $config): RequestGuard
-    {
-        /** @var null|int $expiration */
-        $expiration = Config::get('bearer.expiration');
-
-        /** @var null|string $provider */
-        $provider = $config['provider'] ?? null;
-
-        return new RequestGuard(
-            new BearerGuard(
-                new BearerTokenAuthenticator(
-                    $this->app->make(BearerManager::class),
-                    $expiration,
-                    $provider,
-                ),
-            ),
-            request(),
-            $auth->createUserProvider($provider),
-        );
-    }
-
-    /**
-     * Create a new stateful Bearer request guard instance.
-     *
-     * @param  AuthManager          $auth   The authentication manager
-     * @param  array<string, mixed> $config Guard configuration
-     * @return RequestGuard         The configured request guard
-     */
-    private function createStatefulGuard(AuthManager $auth, array $config): RequestGuard
-    {
-        /** @var null|int $expiration */
-        $expiration = Config::get('bearer.expiration');
-
-        /** @var null|string $provider */
-        $provider = $config['provider'] ?? null;
-
-        return new RequestGuard(
-            new StatefulBearerGuard(
-                $auth,
-                new BearerTokenAuthenticator(
-                    $this->app->make(BearerManager::class),
-                    $expiration,
-                    $provider,
-                ),
-            ),
-            request(),
-            $auth->createUserProvider($provider),
-        );
     }
 
     /**

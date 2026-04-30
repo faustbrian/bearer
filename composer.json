@@ -18,19 +18,19 @@
     "require": {
         "php": "^8.5.0",
         "cline/ancestry": "^2.0.3",
-        "cline/morphism": "^2.0.1",
+        "cline/morphism": "^2.0.3",
         "cline/variable-keys": "^2.0.3",
         "facade/ignition-contracts": "^1.0.2",
-        "laravel/framework": "^10.0 || ^11.0 || ^12.56 || ^13.0",
+        "laravel/framework": "^13.7",
         "spatie/laravel-package-tools": "^1.93.0"
     },
     "require-dev": {
-        "cline/coding-standard": "^3.2.1",
+        "cline/coding-standard": "^3.3.1",
         "cline/warden": "^5.0.3",
         "mockery/mockery": "^1.6.12",
-        "orchestra/testbench": "^8.0 || ^9.0 || ^10.11",
+        "orchestra/testbench": "^11.1",
         "spatie/laravel-activitylog": "^4.12.3",
-        "symfony/var-dumper": "^6.0 || ^7.4.6 || ^8.0"
+        "symfony/var-dumper": "^6.0 || ^7.4.6 || ^8.0.8"
     },
     "suggest": {
         "cline/warden": "Use the Warden ability provider for owner-based authorization checks."
