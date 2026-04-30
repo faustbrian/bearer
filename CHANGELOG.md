@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Bearer auth driver registration now builds `RequestGuard` instances
+  through dedicated bearer and stateful bearer guard factories instead of
+  constructing them inside the service provider. This keeps auth driver
+  wiring aligned with Laravel's auth manager integration seam and avoids
+  callback binding sensitivity during guard resolution.
+- Raised the supported framework floor to Laravel 13 and aligned the
+  package metadata and test harness with that support policy.
+
+### Added
+- Added package-level guard registration regression coverage that proves
+  Laravel can resolve both `bearer` and `stateful-bearer` drivers through
+  the auth manager and that the resolved stateful guard still honors
+  session authentication.
+
 ## [6.0.0] - 2026-04-30
 
 ### Changed
