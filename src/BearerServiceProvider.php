@@ -23,6 +23,8 @@ use Cline\Bearer\Database\Models\AccessTokenAuditLog;
 use Cline\Bearer\Database\Models\AccessTokenGroup;
 use Cline\Bearer\Database\Models as DatabaseModels;
 use Cline\Bearer\Guards\BearerGuard;
+use Cline\Bearer\Guards\BearerTokenAuthenticator;
+use Cline\Bearer\Guards\StatefulBearerGuard;
 use Cline\Bearer\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use Cline\Bearer\RevocationStrategies\CascadeStrategy;
 use Cline\Bearer\RevocationStrategies\NoneStrategy;
@@ -636,9 +638,10 @@ final class BearerServiceProvider extends PackageServiceProvider
     /**
      * Configure the Bearer authentication guard.
      *
-     * Registers the 'bearer' guard driver and sets up the auth configuration.
-     * The guard handles both stateful session authentication and bearer token
-     * validation.
+     * Registers the 'bearer' and 'stateful-bearer' guard drivers and sets up
+     * the auth configuration. The default bearer guard is stateless and
+     * bearer-token-only, while the stateful variant preserves session-first
+     * fallback for first-party browser flows that explicitly opt into it.
      */
     private function configureGuard(): void
     {
@@ -656,6 +659,13 @@ final class BearerServiceProvider extends PackageServiceProvider
             $auth->extend('bearer', function ($app, $name, array $config) use ($auth): RequestGuard {
                 /** @var array<string, mixed> $config */
                 return tap($this->createGuard($auth, $config), function ($guard): void {
+                    app()->refresh('request', $guard, 'setRequest');
+                });
+            });
+
+            $auth->extend('stateful-bearer', function ($app, $name, array $config) use ($auth): RequestGuard {
+                /** @var array<string, mixed> $config */
+                return tap($this->createStatefulGuard($auth, $config), function ($guard): void {
                     app()->refresh('request', $guard, 'setRequest');
                 });
             });
@@ -679,10 +689,40 @@ final class BearerServiceProvider extends PackageServiceProvider
 
         return new RequestGuard(
             new BearerGuard(
+                new BearerTokenAuthenticator(
+                    $this->app->make(BearerManager::class),
+                    $expiration,
+                    $provider,
+                ),
+            ),
+            request(),
+            $auth->createUserProvider($provider),
+        );
+    }
+
+    /**
+     * Create a new stateful Bearer request guard instance.
+     *
+     * @param  AuthManager          $auth   The authentication manager
+     * @param  array<string, mixed> $config Guard configuration
+     * @return RequestGuard         The configured request guard
+     */
+    private function createStatefulGuard(AuthManager $auth, array $config): RequestGuard
+    {
+        /** @var null|int $expiration */
+        $expiration = Config::get('bearer.expiration');
+
+        /** @var null|string $provider */
+        $provider = $config['provider'] ?? null;
+
+        return new RequestGuard(
+            new StatefulBearerGuard(
                 $auth,
-                $this->app->make(BearerManager::class),
-                $expiration,
-                $provider,
+                new BearerTokenAuthenticator(
+                    $this->app->make(BearerManager::class),
+                    $expiration,
+                    $provider,
+                ),
             ),
             request(),
             $auth->createUserProvider($provider),

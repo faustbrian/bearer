@@ -5,7 +5,6 @@ use Cline\Bearer\Events\TokenAuthenticated;
 use Cline\Bearer\Exceptions\TokenHasBeenRevokedException;
 use Cline\Bearer\Exceptions\TokenHasExpiredException;
 use Cline\Bearer\RotationStrategies\GracePeriodStrategy;
-use Cline\Bearer\TransientToken;
 use Illuminate\Contracts\Auth\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -50,17 +49,6 @@ describe('BearerGuard', function (): void {
     });
 
     describe('Happy Path', function (): void {
-        test('returns user from stateful guard when authenticated via session', function (): void {
-            $user = createUser(['email' => uniqid().'@example.com']);
-
-            $response = $this->actingAs($user, 'web')->get('/test-auth');
-
-            $response->assertOk();
-
-            expect($response->json('user_id'))->toBe($user->id);
-            expect($response->json('token_type'))->toBe(TransientToken::class);
-        });
-
         test('validates bearer token and returns user with token attached', function (): void {
             Event::fake();
 
@@ -140,19 +128,6 @@ describe('BearerGuard', function (): void {
                 && $event->userAgent === 'Test Agent');
         });
 
-        test('checks multiple stateful guards in order', function (): void {
-            Config::set('bearer.guard', ['web', 'admin']);
-
-            $user = createUser(['email' => uniqid().'@example.com']);
-
-            $response = $this->actingAs($user, 'web')->get('/test-auth');
-
-            $response->assertOk();
-
-            expect($response->json('user_id'))->toBe($user->id);
-            expect($response->json('token_type'))->toBe(TransientToken::class);
-        });
-
         test('token with IP allowlist succeeds when IP matches', function (): void {
             Event::fake();
 
@@ -216,6 +191,14 @@ describe('BearerGuard', function (): void {
     describe('Sad Path', function (): void {
         test('returns 401 when no bearer token and no session', function (): void {
             $response = $this->getJson('/test-auth');
+
+            $response->assertUnauthorized();
+        });
+
+        test('returns 401 when only a stateful session is present', function (): void {
+            $user = createUser(['email' => uniqid().'@example.com']);
+
+            $response = $this->actingAs($user, 'web')->getJson('/test-auth');
 
             $response->assertUnauthorized();
         });
@@ -338,27 +321,6 @@ describe('BearerGuard', function (): void {
     });
 
     describe('Edge Cases', function (): void {
-        test('returns user without token wrapper when session user lacks HasAccessTokensTrait', function (): void {
-            $user = UserWithoutTokens::query()->create([
-                'name' => 'No Token User',
-                'email' => uniqid().'@example.com',
-                'password' => bcrypt('password'),
-            ]);
-
-            // Create a custom route that doesn't call currentAccessToken()
-            Route::middleware(['auth:bearer'])->get('/test-no-tokens', fn () => response()->json([
-                'user_id' => Auth::id(),
-                'user_class' => Auth::user() ? Auth::user()::class : null,
-            ]));
-
-            $response = $this->actingAs($user, 'web')->get('/test-no-tokens');
-
-            $response->assertOk();
-
-            expect($response->json('user_id'))->toBe($user->id);
-            expect($response->json('user_class'))->toBe(UserWithoutTokens::class);
-        });
-
         test('returns null when owner does not support tokens via bearer auth', function (): void {
             $user = UserWithoutTokens::query()->create([
                 'name' => 'No Token User',
@@ -469,19 +431,7 @@ describe('BearerGuard', function (): void {
             expect($response->json('user_id'))->toBe($user->id);
         });
 
-        test('single guard string in config works correctly', function (): void {
-            Config::set('bearer.guard', 'web');
-
-            $user = createUser(['email' => uniqid().'@example.com']);
-
-            $response = $this->actingAs($user, 'web')->get('/test-auth');
-
-            $response->assertOk();
-
-            expect($response->json('user_id'))->toBe($user->id);
-        });
-
-        test('prefers stateful guard over bearer token when both present', function (): void {
+        test('prefers bearer token over stateful session when both are present', function (): void {
             $sessionUser = createUser(['email' => 'session-'.uniqid().'@example.com']);
             $tokenUser = createUser(['email' => 'token-'.uniqid().'@example.com']);
 
@@ -494,8 +444,8 @@ describe('BearerGuard', function (): void {
 
             $response->assertOk();
 
-            expect($response->json('user_id'))->toBe($sessionUser->id);
-            expect($response->json('token_type'))->toBe(TransientToken::class);
+            expect($response->json('user_id'))->toBe($tokenUser->id);
+            expect($response->json('token_type'))->toBe(AccessToken::class);
         });
 
         test('null IP allowlist allows all IPs', function (): void {
