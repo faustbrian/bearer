@@ -4,7 +4,6 @@ namespace Cline\Bearer\Guards;
 
 use Cline\Bearer\BearerManager;
 use Illuminate\Auth\AuthManager;
-use Illuminate\Auth\RequestGuard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 
@@ -25,7 +24,7 @@ final readonly class StatefulBearerRequestGuardFactory
     /**
      * @param array<string, mixed> $config
      */
-    public function make(AuthManager $auth, array $config, Request $request): RequestGuard
+    public function make(AuthManager $auth, array $config, Request $request): RefreshingRequestGuard
     {
         /** @var null|int $expiration */
         $expiration = Config::get('bearer.expiration');
@@ -33,7 +32,7 @@ final readonly class StatefulBearerRequestGuardFactory
         /** @var null|string $provider */
         $provider = $config['provider'] ?? null;
 
-        return new RequestGuard(
+        return new RefreshingRequestGuard(
             new StatefulBearerGuard(
                 $auth,
                 new BearerTokenAuthenticator(

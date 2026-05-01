@@ -1,8 +1,11 @@
 <?php declare(strict_types=1);
 
+use Cline\Bearer\Facades\Bearer;
+use Cline\Bearer\Guards\RefreshingRequestGuard;
 use Cline\Bearer\TransientToken;
 use Illuminate\Auth\RequestGuard;
 use Illuminate\Contracts\Auth\Factory;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
@@ -61,4 +64,23 @@ test('resolved stateful bearer guard still honors session authentication', funct
     $response->assertOk();
     expect($response->json('user_id'))->toBe($user->id);
     expect($response->json('token_type'))->toBe(TransientToken::class);
+});
+
+test('resolved bearer guard forgets the prior user when the request changes', function (): void {
+    $guard = new RefreshingRequestGuard(
+        static fn (Request $request): ?string => $request->bearerToken(),
+        Request::create('/integration-sequential-auth', 'POST', [], [], [], [
+            'HTTP_AUTHORIZATION' => 'Bearer sk_test_secret',
+        ]),
+    );
+
+    expect($guard->user())->toBe('sk_test_secret');
+
+    $guard->setRequest(
+        Request::create('/integration-sequential-auth', 'GET', [], [], [], [
+            'HTTP_AUTHORIZATION' => 'Bearer pk_test_public',
+        ]),
+    );
+
+    expect($guard->user())->toBe('pk_test_public');
 });
