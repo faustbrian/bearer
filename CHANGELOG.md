@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+- Bearer guard registration now remains bound to the package service provider
+  when Laravel 13 rebinds custom authentication driver callbacks.
 - Token rotation now preserves the original finite expiration timestamp,
   preventing rotated credentials from silently becoming non-expiring or
   renewing expired access. Grace-period rotation also no longer extends an
@@ -32,6 +34,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   key registry wiring.
 
 ### Breaking
+- Laravel 13 is now the only supported framework version. Applications on
+  Laravel 12 or earlier must upgrade before installing this release.
 - Renamed public contracts and abstract exception base classes, including
   `TokenType` to `TokenTypeInterface`, `HasAccessTokens` to
   `HasAccessTokensInterface`, `HasAccessTokens` trait to

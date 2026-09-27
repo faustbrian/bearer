@@ -17,7 +17,7 @@
 
 ## Requirements
 
-Bearer requires PHP 8.4+ and Laravel 11+.
+Bearer requires PHP 8.5+ and Laravel 13.
 
 ## Installation
 

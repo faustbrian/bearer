@@ -594,8 +594,8 @@ trait HasAccessTokensTrait
      * Registers model event listeners for cascade deletion of tokens when the
      * tokenable model is deleted.
      *
-     * Laravel 10 compatibility: Uses boot{TraitName} naming convention instead
-     * of #[Boot] attribute (which only works in Laravel 11+).
+     * Uses Laravel's boot{TraitName} naming convention so model lifecycle
+     * registration remains explicit.
      */
     protected static function bootHasAccessTokensTrait(): void
     {
