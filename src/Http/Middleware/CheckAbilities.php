@@ -12,9 +12,9 @@ use Illuminate\Http\Request;
 /**
  * Middleware to ensure the current token has ALL specified abilities.
  *
- * This middleware validates that the authenticated user's current access token
- * possesses every ability listed in the middleware parameters. If any ability
- * is missing, a AbstractMissingAbilityException is thrown.
+ * This middleware validates that the authenticated user's current access
+ * token possesses every ability listed in the middleware parameters. If any
+ * ability is missing, a AbstractMissingAbilityException is thrown.
  *
  * Use this when an endpoint requires multiple permissions simultaneously.
  *
@@ -27,9 +27,9 @@ final class CheckAbilities
     /**
      * Handle the incoming request.
      *
-     * Verifies that: 1. A user is authenticated 2. The user has a current
-     * access token (not session-based auth) 3. The token has ALL specified
-     * abilities
+     * Verifies that: 1. A user is authenticated 2. The user has a
+     * current access token (not session-based auth) 3. The token has
+     * ALL specified abilities
      *
      * @param Request                 $request      The incoming HTTP request
      * @param Closure(Request): mixed $next         The next middleware handler

@@ -21,8 +21,8 @@ use function array_keys;
  *
  * // Register strategies $registry->register('immediate', new
  * ImmediateStrategy()); $registry->register('grace_period', new
- * GracePeriodStrategy(60)); $registry->register('dual_valid', new
- * DualValidStrategy());
+ * GracePeriodStrategy(60)); $registry->register('dual_valid',
+ * new DualValidStrategy());
  *
  * // Retrieve a specific strategy $strategy = $registry->get('grace_period');
  *
@@ -49,8 +49,8 @@ final class RotationStrategyRegistry
     /**
      * Register a rotation strategy with a given name.
      *
-     * If this is the first strategy registered and no default has been set, it
-     * will automatically become the default strategy.
+     * If this is the first strategy registered and no default has been set,
+     * it will automatically become the default strategy.
      *
      * @param string                    $name     Unique identifier for this strategy
      * @param RotationStrategyInterface $strategy The strategy implementation to register

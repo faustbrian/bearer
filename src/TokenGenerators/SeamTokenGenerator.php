@@ -16,8 +16,8 @@ use function sprintf;
 /**
  * Stripe/Seam-style token generator using base58 encoding.
  *
- * Generates tokens in the format: {prefix}_{env}_{base58random} Example:
- * sk_test_EXAMPLE1234567890abcdef
+ * Generates tokens in the format: {prefix}_{env}_{base58random}
+ * Example: sk_test_EXAMPLE1234567890abcdef
  *
  * Uses base58 alphabet (excludes 0, O, I, l to avoid confusion) with 24
  * character random parts for high entropy while maintaining readability.
@@ -40,8 +40,8 @@ final class SeamTokenGenerator implements TokenGeneratorInterface
     /**
      * Generate a new base58-encoded token.
      *
-     * Creates a token in the format: {prefix}_{environment}_{base58random} The
-     * base58 encoding ensures tokens are URL-safe and easily transcribable
+     * Creates a token in the format: {prefix}_{environment}_{base58random}
+     * The base58 encoding ensures tokens are URL-safe and easily transcribable
      * while maintaining high entropy through 24 random characters.
      *
      * @param  string $prefix      Token type prefix (e.g., 'sk', 'pk', 'rk')
@@ -58,9 +58,9 @@ final class SeamTokenGenerator implements TokenGeneratorInterface
     /**
      * Parse a token string into its component parts.
      *
-     * Validates the token structure and extracts the prefix, environment, and
-     * secret portions. Returns null if the token format is invalid (not exactly
-     * 3 underscore-separated parts or if any part is empty).
+     * Validates the token structure and extracts the prefix, environment,
+     * and secret portions. Returns null if the token format is invalid (not
+     * exactly 3 underscore-separated parts or if any part is empty).
      *
      * @param  string               $token The complete token string to parse
      * @return null|TokenComponents Parsed token components, or null if invalid
@@ -90,9 +90,9 @@ final class SeamTokenGenerator implements TokenGeneratorInterface
     /**
      * Hash a token using SHA-256.
      *
-     * Generates a cryptographic hash suitable for secure storage in the
-     * database. The full token string is hashed to prevent exposure of the
-     * plaintext token.
+     * Generates a cryptographic hash suitable for secure storage in
+     * the database. The full token string is hashed to prevent exposure
+     * of the plaintext token.
      *
      * @param  string $token The plaintext token to hash
      * @return string The SHA-256 hash of the token
@@ -106,8 +106,8 @@ final class SeamTokenGenerator implements TokenGeneratorInterface
      * Verify a plaintext token against a stored hash.
      *
      * Uses timing-safe comparison to prevent timing attacks during
-     * verification. This ensures constant-time comparison regardless of where
-     * the hash differs.
+     * verification. This ensures constant-time comparison regardless
+     * of where the hash differs.
      *
      * @param  string $plainToken  The plaintext token to verify
      * @param  string $hashedToken The stored hash to compare against

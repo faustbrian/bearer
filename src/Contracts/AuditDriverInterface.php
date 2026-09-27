@@ -16,12 +16,12 @@ use Illuminate\Support\Collection;
  *
  * Audit logging captures critical token lifecycle events: - Creation and
  * initial assignment - Authentication attempts (successful and failed) -
- * Permission checks and denials - Token rotation and renewal - Revocation and
- * deletion - Suspicious activity patterns
+ * Permission checks and denials - Token rotation and renewal - Revocation
+ * and deletion - Suspicious activity patterns
  *
- * Use cases include: - Compliance requirements (SOC 2, GDPR, HIPAA) - Security
- * incident investigation - Usage analytics and reporting - Anomaly detection
- * and alerting - Debugging authentication issues
+ * Use cases include: - Compliance requirements (SOC 2, GDPR, HIPAA) -
+ * Security incident investigation - Usage analytics and reporting - Anomaly
+ * detection and alerting - Debugging authentication issues
  *
  * ```php class DatabaseAuditDriver implements AuditDriverInterface {
  *     public function log(AccessToken $token, AuditEvent $event, array $context = []): void
@@ -70,13 +70,13 @@ interface AuditDriverInterface
     /**
      * Retrieve all audit logs for a specific token.
      *
-     * Returns a collection of audit events associated with the given token,
-     * typically ordered chronologically (newest first) for easy review. This
-     * enables investigation of token usage history, security reviews, and
-     * compliance audits.
+     * Returns a collection of audit events associated with the given
+     * token, typically ordered chronologically (newest first) for easy
+     * review. This enables investigation of token usage history, security
+     * reviews, and compliance audits.
      *
-     * Implementations may: - Apply pagination for large log sets - Filter by
-     * date ranges if requested - Include related data (user info, IP
+     * Implementations may: - Apply pagination for large log sets - Filter
+     * by date ranges if requested - Include related data (user info, IP
      * geolocation) - Aggregate or summarize events
      *
      * @param  AccessToken            $token The token to retrieve logs for

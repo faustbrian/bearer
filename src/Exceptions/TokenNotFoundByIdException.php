@@ -7,16 +7,16 @@ use function sprintf;
 /**
  * Exception thrown when a token cannot be found by its ID.
  *
- * This occurs when searching for a token using its database ID but no token
- * with that ID exists in the system.
+ * This occurs when searching for a token using its database ID but no
+ * token with that ID exists in the system.
  */
 final class TokenNotFoundByIdException extends AbstractTokenNotFoundException
 {
     /**
      * Create an exception for a token not found by its ID.
      *
-     * This occurs when searching for a token using its database ID but no token
-     * with that ID exists in the system.
+     * This occurs when searching for a token using its database ID but
+     * no token with that ID exists in the system.
      *
      * @param  int|string $id The token ID that was not found
      * @return self       Exception instance with descriptive error message

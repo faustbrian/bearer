@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   revocation timestamp instead of moving it forward.
 
 ### Changed
+- Synchronized source formatting, Laravel 13 model and command declarations,
+  and static-analysis types with the current ECS, Rector, and PHPStan rules.
 - Updated package dependency constraints and refreshed docblocks to match
   the current codebase.
 - Renamed package interfaces to `*Interface`, traits to `*Trait`, and

@@ -16,12 +16,12 @@ use function sprintf;
 /**
  * Sanctum-style random token generator with CRC32 checksum.
  *
- * Generates tokens in the format: {prefix}_{env}_{random40}{crc32} Example:
- * sk_test_EXAMPLE1234567890abcdefgKpQ6yTdWaXcZ1b92a8f4e3c
+ * Generates tokens in the format: {prefix}_{env}_{random40}{crc32}
+ * Example: sk_test_EXAMPLE1234567890abcdefgKpQ6yTdWaXcZ1b92a8f4e3c
  *
- * Uses Laravel's Str::random() for 40 character entropy, appended with an 8
- * character CRC32 checksum for additional integrity verification. This mirrors
- * Laravel Sanctum's token generation approach.
+ * Uses Laravel's Str::random() for 40 character entropy, appended with an
+ * 8 character CRC32 checksum for additional integrity verification. This
+ * mirrors Laravel Sanctum's token generation approach.
  */
 final class RandomTokenGenerator implements TokenGeneratorInterface
 {
@@ -53,10 +53,10 @@ final class RandomTokenGenerator implements TokenGeneratorInterface
     /**
      * Parse a token string into its component parts.
      *
-     * Validates the token structure and extracts the prefix, environment, and
-     * secret portions. Returns null if the token format is invalid or the
-     * secret length doesn't match the expected 48 characters (40 entropy + 8
-     * checksum).
+     * Validates the token structure and extracts the prefix, environment,
+     * and secret portions. Returns null if the token format is invalid
+     * or the secret length doesn't match the expected 48 characters
+     * (40 entropy + 8 checksum).
      *
      * @param  string               $token The complete token string to parse
      * @return null|TokenComponents Parsed token components, or null if invalid
@@ -91,9 +91,9 @@ final class RandomTokenGenerator implements TokenGeneratorInterface
     /**
      * Hash a token using SHA-256.
      *
-     * Generates a cryptographic hash suitable for secure storage in the
-     * database. The full token string is hashed to prevent exposure of the
-     * plaintext token.
+     * Generates a cryptographic hash suitable for secure storage in
+     * the database. The full token string is hashed to prevent exposure
+     * of the plaintext token.
      *
      * @param  string $token The plaintext token to hash
      * @return string The SHA-256 hash of the token
@@ -107,8 +107,8 @@ final class RandomTokenGenerator implements TokenGeneratorInterface
      * Verify a plaintext token against a stored hash.
      *
      * Uses timing-safe comparison to prevent timing attacks during
-     * verification. This ensures constant-time comparison regardless of where
-     * the hash differs.
+     * verification. This ensures constant-time comparison regardless
+     * of where the hash differs.
      *
      * @param  string $plainToken  The plaintext token to verify
      * @param  string $hashedToken The stored hash to compare against

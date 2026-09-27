@@ -34,15 +34,15 @@ use function sprintf;
 /**
  * Authentication guard for Bearer token-based authentication.
  *
- * This guard handles authentication via personal access tokens, providing: -
- * Stateful session authentication fallback for web requests - Bearer token
- * validation and parsing - Token expiration and revocation checks - IP and
- * domain restriction enforcement - Automatic last_used_at tracking -
- * Authentication event dispatching
+ * This guard handles authentication via personal access tokens, providing:
+ * - Stateful session authentication fallback for web requests - Bearer
+ * token validation and parsing - Token expiration and revocation checks
+ * - IP and domain restriction enforcement - Automatic last_used_at
+ * tracking - Authentication event dispatching
  *
  * The guard follows a two-step authentication flow: 1. First check stateful
- * guards (web sessions) for authenticated users 2. If no session user, validate
- * bearer token from request headers
+ * guards (web sessions) for authenticated users 2. If no session user,
+ * validate bearer token from request headers
  *
  * @psalm-immutable
  */
@@ -162,9 +162,9 @@ final readonly class BearerGuard
     /**
      * Determine if the provided access token is valid.
      *
-     * Validates: - Token exists - Token is not expired (both expiration and
-     * created_at checks) - Token is not revoked - Owner matches configured
-     * provider (if specified)
+     * Validates: - Token exists - Token is not expired (both expiration
+     * and created_at checks) - Token is not revoked - Owner matches
+     * configured provider (if specified)
      *
      * @param  null|AccessToken $token The token to validate
      * @return bool             True if valid, false otherwise
@@ -197,8 +197,8 @@ final readonly class BearerGuard
     /**
      * Validate IP address restrictions.
      *
-     * If the token has IP restrictions, ensures the request IP is in the
-     * allowlist.
+     * If the token has IP restrictions, ensures the request IP
+     * is in the allowlist.
      *
      * @param AccessToken $token   The token to validate
      * @param Request     $request The incoming request
@@ -257,8 +257,8 @@ final readonly class BearerGuard
     /**
      * Determine if the owner model supports access tokens.
      *
-     * Checks if the owner model implements the HasAccessTokensInterface
-     * contract.
+     * Checks if the owner model implements the
+     * HasAccessTokensInterface contract.
      *
      * @param  mixed $owner The model to check
      * @return bool  True if model supports tokens, false otherwise
@@ -279,8 +279,8 @@ final readonly class BearerGuard
     /**
      * Determine if the owner model matches the provider's model type.
      *
-     * If a provider is configured, validates that the owner is an instance of
-     * the provider's configured model class.
+     * If a provider is configured, validates that the owner is an instance
+     * of the provider's configured model class.
      *
      * @param  mixed $owner The owner model to validate
      * @return bool  True if provider is valid or not configured, false otherwise

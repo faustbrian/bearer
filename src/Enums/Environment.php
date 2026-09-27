@@ -5,8 +5,8 @@ namespace Cline\Bearer\Enums;
 /**
  * Defines token environments for test/live separation.
  *
- * Similar to payment gateway environments (like Stripe's test/live modes), this
- * enum allows tokens to be scoped to specific environments, preventing
+ * Similar to payment gateway environments (like Stripe's test/live modes),
+ * this enum allows tokens to be scoped to specific environments, preventing
  * accidental use of test tokens in production or vice versa.
  */
 enum Environment: string
@@ -14,8 +14,8 @@ enum Environment: string
     /**
      * Test environment for development and staging.
      *
-     * Tokens in this environment are for testing purposes only and should not
-     * be used in production contexts.
+     * Tokens in this environment are for testing purposes only and should
+     * not be used in production contexts.
      */
     case Test = 'test';
 

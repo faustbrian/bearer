@@ -7,10 +7,10 @@ use InvalidArgumentException;
 /**
  * Base exception for token hasher registration errors.
  *
- * Token hashers are responsible for securely hashing and verifying token
- * values. This exception occurs when attempting to use a hasher that hasn't
- * been registered with the BearerManager, or when no default hasher is
- * configured.
+ * Token hashers are responsible for securely hashing and verifying
+ * token values. This exception occurs when attempting to use a hasher
+ * that hasn't been registered with the BearerManager, or when no
+ * default hasher is configured.
  */
 abstract class AbstractTokenHasherNotRegisteredException extends InvalidArgumentException implements BearerExceptionInterface
 {

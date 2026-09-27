@@ -370,12 +370,13 @@ describe('HasAccessTokensInterface Trait', function (): void {
         it('creates token group with null environment', function (): void {
             // Arrange
             $user = createUser();
+            $environment = null;
 
             // Act
             $group = $user->createAccessTokenGroup(
                 types: ['sk', 'pk'],
                 name: 'Null Environment',
-                environment: null,
+                environment: $environment,
             );
 
             // Assert - when null is passed, Bearer uses its default environment

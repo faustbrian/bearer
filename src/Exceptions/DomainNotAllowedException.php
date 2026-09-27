@@ -8,10 +8,10 @@ use function sprintf;
 /**
  * Exception thrown when a token is used from a domain not in the allowed list.
  *
- * This exception occurs when the request's origin domain does not match any of
- * the domains explicitly permitted by the token's configuration. The exception
- * message includes both the attempted domain and the full list of allowed
- * domains.
+ * This exception occurs when the request's origin domain does not match
+ * any of the domains explicitly permitted by the token's configuration.
+ * The exception message includes both the attempted domain and the
+ * full list of allowed domains.
  */
 final class DomainNotAllowedException extends AbstractDomainRestrictionException
 {

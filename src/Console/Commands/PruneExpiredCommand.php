@@ -4,9 +4,10 @@ namespace Cline\Bearer\Console\Commands;
 
 use Cline\Bearer\Database\Models\AccessToken;
 use Cline\Bearer\Facades\Bearer;
+use Illuminate\Console\Attributes\Description;
+use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Config;
-use Override;
 
 use function assert;
 use function is_int;
@@ -20,25 +21,11 @@ use function sprintf;
  * for longer than a specified time period. Regular pruning helps maintain
  * database performance and removes unnecessary token records.
  */
+#[Description('Prune expired personal access tokens from the database')]
+#[Signature('bearer:prune-expired
+                            {--hours= : Prune tokens expired more than this many hours ago}')]
 final class PruneExpiredCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    #[Override()]
-    protected $signature = 'bearer:prune-expired
-                            {--hours= : Prune tokens expired more than this many hours ago}';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    #[Override()]
-    protected $description = 'Prune expired personal access tokens from the database';
-
     /**
      * Execute the console command.
      *

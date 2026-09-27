@@ -6,7 +6,7 @@ use Cline\Bearer\Exceptions\InvalidStatefulDomainException;
 use Closure;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Pipeline;
 use Illuminate\Session\Middleware\StartSession;
@@ -30,13 +30,13 @@ use function mb_trim;
  * token-based authentication for third-party API consumers.
  *
  * When a request originates from a configured stateful domain: - Session
- * cookies are encrypted and HTTP-only - CSRF protection is enabled - Standard
- * Laravel session middleware is applied - The request is marked as coming from
- * a trusted frontend
+ * cookies are encrypted and HTTP-only - CSRF protection is enabled -
+ * Standard Laravel session middleware is applied - The request is marked
+ * as coming from a trusted frontend
  *
- * This provides the security benefits of session authentication for your own
- * applications while still supporting token authentication for external API
- * access.
+ * This provides the security benefits of session authentication for
+ * your own applications while still supporting token authentication
+ * for external API access.
  *
  * Configuration: ```php // config/bearer.php 'stateful' => [
  *     'localhost',
@@ -134,7 +134,7 @@ final class EnsureFrontendRequestsAreStateful
             config('bearer.middleware.encrypt_cookies', EncryptCookies::class),
             config('bearer.middleware.add_queued_cookies', AddQueuedCookiesToResponse::class),
             config('bearer.middleware.start_session', StartSession::class),
-            config('bearer.middleware.validate_csrf_token', config('bearer.middleware.verify_csrf_token', VerifyCsrfToken::class)),
+            config('bearer.middleware.validate_csrf_token', config('bearer.middleware.verify_csrf_token', PreventRequestForgery::class)),
             config('bearer.middleware.authenticate_session'),
         ];
 

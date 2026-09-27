@@ -6,6 +6,8 @@ use Cline\Bearer\Database\Models\AccessTokenGroup;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Override;
 
+use function fake;
+
 /**
  * Factory for generating AccessTokenGroup model instances in tests and seeders.
  *
@@ -37,7 +39,7 @@ final class AccessTokenGroupFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->words(3, true),
+            'name' => fake()->words(3, true),
             'metadata' => null,
         ];
     }

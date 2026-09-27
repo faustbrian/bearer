@@ -16,15 +16,15 @@ use function now;
  * This allows for delayed invalidation, giving users or systems time to
  * transition away from a token before it becomes invalid.
  *
- * The token will remain valid until the scheduled revocation time, after which
- * it will be treated as revoked. This is useful for planned maintenance
- * windows, gradual rollouts of new credentials, or giving advance notice of
- * revocation.
+ * The token will remain valid until the scheduled revocation time,
+ * after which it will be treated as revoked. This is useful for planned
+ * maintenance windows, gradual rollouts of new credentials, or giving
+ * advance notice of revocation.
  *
  * Use this strategy when: - You need to give advance notice before revoking
- * tokens - Scheduled maintenance requires token invalidation - Users need time
- * to transition to new credentials - You want to coordinate revocation with
- * other system changes
+ * tokens - Scheduled maintenance requires token invalidation - Users
+ * need time to transition to new credentials - You want to coordinate
+ * revocation with other system changes
  *
  * @psalm-immutable
  */
@@ -45,10 +45,10 @@ final readonly class TimedStrategy implements RevocationStrategyInterface
     /**
      * Schedule the token for future revocation.
      *
-     * Sets the token's revocation timestamp to a future time instead of
-     * immediately revoking it. The token will remain valid until the scheduled
-     * revocation time arrives. This enables grace periods for credential
-     * rotation or planned maintenance windows.
+     * Sets the token's revocation timestamp to a future time instead
+     * of immediately revoking it. The token will remain valid until the
+     * scheduled revocation time arrives. This enables grace periods for
+     * credential rotation or planned maintenance windows.
      *
      * @param AccessToken $token The token to schedule for revocation
      */
@@ -60,10 +60,10 @@ final readonly class TimedStrategy implements RevocationStrategyInterface
     /**
      * Get all tokens that will be affected by revoking this token.
      *
-     * Since this strategy only affects the single token (albeit on a delayed
-     * schedule), this method returns a collection containing only the given
-     * token. This provides consistency with other revocation strategies'
-     * interfaces.
+     * Since this strategy only affects the single token (albeit on a
+     * delayed schedule), this method returns a collection containing
+     * only the given token. This provides consistency with other
+     * revocation strategies' interfaces.
      *
      * @param  AccessToken                  $token The token to check
      * @return Collection<int, AccessToken> Collection containing only the given token

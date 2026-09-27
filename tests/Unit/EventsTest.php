@@ -461,12 +461,13 @@ describe('TokenAuthenticationFailed Event', function (): void {
         $token = createAccessToken($user, 'sk');
         $reason = AuditEvent::IpBlocked;
         $context = ['user_agent' => 'Mozilla/5.0', 'endpoint' => '/api/users'];
+        $ipAddress = null;
 
         // Act
         $event = new TokenAuthenticationFailed(
             token: $token,
             reason: $reason,
-            ipAddress: null,
+            ipAddress: $ipAddress,
             context: $context,
         );
 

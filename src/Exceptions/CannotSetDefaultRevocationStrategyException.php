@@ -7,17 +7,17 @@ use function sprintf;
 /**
  * Exception thrown when attempting to set an unregistered strategy as default.
  *
- * This occurs when trying to set a revocation strategy as the default that has
- * not been registered in the revocation strategy registry.
+ * This occurs when trying to set a revocation strategy as the default that
+ * has not been registered in the revocation strategy registry.
  */
 final class CannotSetDefaultRevocationStrategyException extends AbstractRevocationStrategyNotRegisteredException
 {
     /**
-     * Create an exception when trying to set an unregistered strategy as
-     * default.
+     * Create an exception when trying to set an unregistered
+     * strategy as default.
      *
-     * This occurs when attempting to set a strategy as the default that has not
-     * been registered in the registry.
+     * This occurs when attempting to set a strategy as the default that
+     * has not been registered in the registry.
      *
      * @param  string $name The name of the unregistered strategy
      * @return self   Exception instance with descriptive error message

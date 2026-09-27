@@ -21,21 +21,21 @@ use function now;
 /**
  * Fluent conductor for token issuance with chainable configuration.
  *
- * Provides a builder pattern for creating personal access tokens with optional
- * configuration before final issuance. Supports setting abilities,
- * environments, IP restrictions, domain restrictions, rate limits, expiration,
- * context, and boundary.
+ * Provides a builder pattern for creating personal access tokens
+ * with optional configuration before final issuance. Supports setting
+ * abilities, environments, IP restrictions, domain restrictions, rate
+ * limits, expiration, context, and boundary.
  *
- * Bearer uses a three-tier relationship model: - Owner: The entity that
- * created/owns the token (required, set via for()) - Context: The entity the
- * token acts on behalf of (optional) - Boundary: The tenant/workspace isolation
- * scope (optional)
+ * Bearer uses a three-tier relationship model: - Owner: The entity
+ * that created/owns the token (required, set via for()) - Context:
+ * The entity the token acts on behalf of (optional) - Boundary: The
+ * tenant/workspace isolation scope (optional)
  *
  * Example usage: ```php // Simple token issuance (owner only) $token =
  * Bearer::for($user)->issue('sk', 'My Secret Key');
  *
- * // Token with context (acting on behalf of a service account) $token =
- * Bearer::for($user)
+ * // Token with context (acting on behalf of a service account)
+ * $token = Bearer::for($user)
  *     ->context($serviceAccount)
  *     ->issue('sk', 'Service Account Key');
  *
@@ -118,8 +118,8 @@ final readonly class TokenIssuanceConductor
      * Issue a single token.
      *
      * Creates and persists a new personal access token with the configured
-     * settings. Returns a NewAccessToken containing both the database model and
-     * the plain-text token (only available once).
+     * settings. Returns a NewAccessToken containing both the database model
+     * and the plain-text token (only available once).
      *
      * ```php $token = Bearer::for($user)->issue('sk', 'My Secret Key');
      *
@@ -222,8 +222,8 @@ final readonly class TokenIssuanceConductor
      *     'API Keys'
      * );
      *
-     * $secretKey = $group->secretKey(); $publishableKey =
-     * $group->publishableKey();
+     * $secretKey = $group->secretKey(); $publishableKey
+     * = $group->publishableKey();
      *
      * // With context and boundary $group = Bearer::for($user)
      *     ->context($serviceAccount)

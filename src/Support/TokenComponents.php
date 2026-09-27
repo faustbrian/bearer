@@ -5,10 +5,10 @@ namespace Cline\Bearer\Support;
 /**
  * Data transfer object for parsed token components.
  *
- * Represents the individual parts of a parsed token string, including the
- * prefix (token type), environment marker, secret portion, and the complete
- * token string. Used by token generators to return structured data when parsing
- * tokens.
+ * Represents the individual parts of a parsed token string, including
+ * the prefix (token type), environment marker, secret portion, and the
+ * complete token string. Used by token generators to return structured
+ * data when parsing tokens.
  *
  * @psalm-immutable
  */

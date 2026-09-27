@@ -8,10 +8,10 @@ use Cline\Bearer\Contracts\TokenTypeInterface;
 /**
  * Base implementation for token types with configurable behavior.
  *
- * Provides a reusable foundation for implementing concrete token types with
- * different characteristics. Subclasses can configure all aspects of token
- * behavior through constructor parameters or override specific methods for
- * custom logic.
+ * Provides a reusable foundation for implementing concrete token
+ * types with different characteristics. Subclasses can configure all
+ * aspects of token behavior through constructor parameters or override
+ * specific methods for custom logic.
  */
 abstract class AbstractTokenType implements RevealableTokenTypeInterface, TokenTypeInterface
 {

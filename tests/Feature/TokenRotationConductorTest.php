@@ -245,6 +245,7 @@ describe('TokenRotationConductor', function (): void {
         $revokedAt = now()->subHour()->startOfSecond();
         $token = createAccessToken($user);
         $token->update(['revoked_at' => $revokedAt]);
+
         $manager = resolve(BearerManager::class);
 
         new TokenRotationConductor($manager, $token)->immediate()->rotate();

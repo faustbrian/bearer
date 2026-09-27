@@ -6,13 +6,13 @@ use Cline\Bearer\Database\Models\AccessToken;
 use RuntimeException;
 
 /**
- * Exception thrown when attempting to derive a token from a parent that cannot
- * derive.
+ * Exception thrown when attempting to derive a token from a parent
+ * that cannot derive.
  *
  * Token derivation is restricted based on several factors including the
  * parent's validity status, current depth in the hierarchy, and configured
- * depth limits. This exception occurs when derivation is attempted but the
- * parent token doesn't meet the requirements.
+ * depth limits. This exception occurs when derivation is attempted but
+ * the parent token doesn't meet the requirements.
  */
 final class CannotDeriveTokenException extends RuntimeException implements BearerExceptionInterface
 {

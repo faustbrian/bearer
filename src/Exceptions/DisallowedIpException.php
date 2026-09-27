@@ -7,18 +7,18 @@ use function sprintf;
 /**
  * Exception thrown when an IP address is not allowed for a token.
  *
- * This occurs when the request's source IP address is not permitted by the
- * token's configuration. This exception provides a simple error message without
- * listing allowed IPs.
+ * This occurs when the request's source IP address is not permitted
+ * by the token's configuration. This exception provides a simple error
+ * message without listing allowed IPs.
  */
 final class DisallowedIpException extends AbstractIpRestrictionException
 {
     /**
-     * Create an exception for a disallowed IP address without listing allowed
-     * IPs.
+     * Create an exception for a disallowed IP address without
+     * listing allowed IPs.
      *
-     * This occurs when the request's source IP address is not permitted by the
-     * token's configuration.
+     * This occurs when the request's source IP address is not permitted
+     * by the token's configuration.
      *
      * @param  string $ip The IP address that attempted to use the token
      * @return self   Exception instance with descriptive error message
