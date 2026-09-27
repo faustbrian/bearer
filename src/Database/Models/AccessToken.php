@@ -9,6 +9,8 @@ use Cline\Bearer\Database\Models as DatabaseModels;
 use Cline\Bearer\Enums\AuditEvent;
 use Cline\Bearer\Facades\Bearer;
 use Cline\VariableKeys\Database\Concerns\HasVariablePrimaryKey;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -34,16 +36,16 @@ use function now;
  * restrictions (IP/domain whitelisting), lifecycle management (expiration,
  * revocation), and hierarchical relationships (token derivation).
  *
- * Key features: - Ability-based authorization with wildcard support - Token
- * grouping for related tokens (e.g., secret/publishable key pairs) -
- * Hierarchical token derivation for delegated access - IP and domain
+ * Key features: - Ability-based authorization with wildcard support -
+ * Token grouping for related tokens (e.g., secret/publishable key pairs)
+ * - Hierarchical token derivation for delegated access - IP and domain
  * whitelisting for security - Rate limiting per token - Environment scoping
- * (test/live separation) - Comprehensive audit logging integration - Three-tier
- * relationship model: owner, context, and boundary
+ * (test/live separation) - Comprehensive audit logging integration -
+ * Three-tier relationship model: owner, context, and boundary
  *
  * Relationship model: - Owner: The entity that created/owns the token (e.g.,
- * User who generated it) - Context: The entity the token acts on behalf of
- * (e.g., ServiceAccount, Application) - Boundary: The tenant/workspace
+ * User who generated it) - Context: The entity the token acts on behalf
+ * of (e.g., ServiceAccount, Application) - Boundary: The tenant/workspace
  * isolation scope (e.g., Team, Organization)
  *
  * @property array<int, string>        $abilities             Token abilities/permissions (e.g., ['api:read', 'api:write'])
@@ -75,6 +77,32 @@ use function now;
  * @property string                    $type                  Token type identifier (e.g., 'secret_key', 'publishable_key')
  * @property Carbon                    $updated_at            Record last modification timestamp
  */
+#[Fillable([
+    'group_id',
+    'type',
+    'environment',
+    'name',
+    'token',
+    'plain_text_token',
+    'prefix',
+    'abilities',
+    'metadata',
+    'derived_metadata',
+    'allowed_ips',
+    'allowed_domains',
+    'rate_limit_per_minute',
+    'expires_at',
+    'revoked_at',
+    'last_used_at',
+    'context_type',
+    'context_id',
+    'boundary_type',
+    'boundary_id',
+])]
+#[Hidden([
+    'token',
+    'plain_text_token',
+])]
 final class AccessToken extends Model implements HasAbilitiesInterface, HasAbilityClaimsInterface
 {
     /** @use HasFactory<Factory<static>> */
@@ -83,70 +111,12 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     use HasAncestry;
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string, string>
-     */
-    #[Override()]
-    protected $casts = [
-        'abilities' => 'json',
-        'metadata' => 'json',
-        'derived_metadata' => 'json',
-        'allowed_ips' => 'json',
-        'allowed_domains' => 'json',
-        'last_used_at' => 'datetime',
-        'expires_at' => 'datetime',
-        'revoked_at' => 'datetime',
-        'plain_text_token' => 'encrypted',
-    ];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    #[Override()]
-    protected $fillable = [
-        'group_id',
-        'type',
-        'environment',
-        'name',
-        'token',
-        'plain_text_token',
-        'prefix',
-        'abilities',
-        'metadata',
-        'derived_metadata',
-        'allowed_ips',
-        'allowed_domains',
-        'rate_limit_per_minute',
-        'expires_at',
-        'revoked_at',
-        'last_used_at',
-        'context_type',
-        'context_id',
-        'boundary_type',
-        'boundary_id',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    #[Override()]
-    protected $hidden = [
-        'token',
-        'plain_text_token',
-    ];
-
-    /**
      * Check if a set of abilities is a subset of another.
      *
-     * Determines whether all abilities in the child set are present in the
-     * parent set. If the parent has the wildcard '*' ability, all child
-     * abilities are considered valid. Useful for validating token derivation
-     * and delegation scenarios.
+     * Determines whether all abilities in the child set are present in
+     * the parent set. If the parent has the wildcard '*' ability, all
+     * child abilities are considered valid. Useful for validating token
+     * derivation and delegation scenarios.
      *
      * @param  array<int, string> $childAbilities  The abilities to validate
      * @param  array<int, string> $parentAbilities The abilities to validate against
@@ -179,8 +149,8 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     /**
      * Get the owner model that created/owns this access token.
      *
-     * The owner is the entity that generated this token, typically a User. This
-     * represents who has administrative control over the token.
+     * The owner is the entity that generated this token, typically a User.
+     * This represents who has administrative control over the token.
      *
      * @return MorphTo<Model, $this> The polymorphic relationship to the owning entity
      */
@@ -200,8 +170,8 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
      * Get the context model that this token acts on behalf of.
      *
      * The context is the entity the token operates within or for. For example,
-     * a ServiceAccount, Application, or another User. This is optional - if
-     * null, the token acts on behalf of the owner.
+     * a ServiceAccount, Application, or another User. This is optional -
+     * if null, the token acts on behalf of the owner.
      *
      * @return MorphTo<Model, $this> The polymorphic relationship to the context entity
      */
@@ -241,8 +211,8 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     /**
      * Get the token group this token belongs to.
      *
-     * Defines the relationship to the AccessTokenGroup that links related
-     * tokens together.
+     * Defines the relationship to the AccessTokenGroup that links
+     * related tokens together.
      *
      * @return BelongsTo<AccessTokenGroup, $this> The relationship to the token group
      */
@@ -277,8 +247,8 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     /**
      * Reveal the token plaintext when a recoverable copy exists.
      *
-     * Emits an audit log entry for explicit reveal operations and returns null
-     * for tokens that do not store a recoverable copy.
+     * Emits an audit log entry for explicit reveal operations and returns
+     * null for tokens that do not store a recoverable copy.
      *
      * @return null|string The revealed plaintext token or null when unavailable
      */
@@ -300,8 +270,8 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     /**
      * Determine if the token has a given ability.
      *
-     * Checks whether the token possesses the specified ability/permission. The
-     * wildcard ability '*' grants all permissions.
+     * Checks whether the token possesses the specified ability/permission.
+     * The wildcard ability '*' grants all permissions.
      *
      * @param  string $ability The ability to check (e.g., 'users:read', 'posts:write')
      * @return bool   True if the token has this ability, false otherwise
@@ -315,8 +285,8 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     /**
      * Determine if the token is missing a given ability.
      *
-     * Inverse of can(). Provides a more expressive API for checking the absence
-     * of permissions.
+     * Inverse of can(). Provides a more expressive API for checking
+     * the absence of permissions.
      *
      * @param  string $ability The ability to check for absence
      * @return bool   True if the token lacks this ability, false if it has it
@@ -340,8 +310,8 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     /**
      * Check if the token is expired.
      *
-     * Tokens with no expiration date (expires_at is null) never expire. Tokens
-     * with a future expiration are still valid.
+     * Tokens with no expiration date (expires_at is null) never expire.
+     * Tokens with a future expiration are still valid.
      *
      * @return bool True if the token has an expiration date and it has passed
      */
@@ -353,9 +323,9 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     /**
      * Check if the token is revoked.
      *
-     * Revocation becomes effective once the stored timestamp is in the past.
-     * Future timestamps represent scheduled revocation windows during which the
-     * token is still valid.
+     * Revocation becomes effective once the stored timestamp is in the
+     * past. Future timestamps represent scheduled revocation windows
+     * during which the token is still valid.
      *
      * @return bool True if revocation has taken effect
      */
@@ -391,10 +361,10 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     /**
      * Get a sibling token of a specific type from the same group.
      *
-     * Retrieves another token from the same group with a different type. Common
-     * use case is finding the secret_key when you have the publishable_key in a
-     * Stripe-like token pairing scenario. Returns null if this token doesn't
-     * belong to a group.
+     * Retrieves another token from the same group with a different
+     * type. Common use case is finding the secret_key when you have the
+     * publishable_key in a Stripe-like token pairing scenario. Returns
+     * null if this token doesn't belong to a group.
      *
      * @param  string    $type The type of sibling token to retrieve (e.g., 'secret_key')
      * @return null|self The sibling token if found, null otherwise
@@ -414,9 +384,9 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     /**
      * Revoke this token.
      *
-     * Sets the revoked_at timestamp to mark the token as invalid and persists
-     * the change to the database. Revoked tokens cannot be used for
-     * authentication and the operation is permanent.
+     * Sets the revoked_at timestamp to mark the token as invalid and
+     * persists the change to the database. Revoked tokens cannot be used
+     * for authentication and the operation is permanent.
      *
      * @return bool True if the revocation was successfully saved to the database
      */
@@ -430,9 +400,9 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     /**
      * Check if this token is a root token (has no parent).
      *
-     * Root tokens are the top-level tokens in a derivation hierarchy and were
-     * not derived from any parent token. They can create child tokens if
-     * derivation is enabled.
+     * Root tokens are the top-level tokens in a derivation hierarchy
+     * and were not derived from any parent token. They can create child
+     * tokens if derivation is enabled.
      *
      * @return bool True if the token has no parent in the derivation hierarchy
      */
@@ -447,10 +417,10 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     /**
      * Check if this token can derive child tokens.
      *
-     * Determines whether this token is eligible to create derived child tokens
-     * based on maximum depth configuration, revocation status, and expiration.
-     * Tokens cannot derive children if they are revoked, expired, or have
-     * reached the maximum derivation depth.
+     * Determines whether this token is eligible to create derived child
+     * tokens based on maximum depth configuration, revocation status, and
+     * expiration. Tokens cannot derive children if they are revoked, expired,
+     * or have reached the maximum derivation depth.
      *
      * @return bool True if the token can derive children based on validity and depth limits
      */
@@ -505,9 +475,9 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
     /**
      * Get all descendant tokens (children, grandchildren, etc.).
      *
-     * Returns the complete tree of all tokens derived from this token at any
-     * depth level. Useful for cascading revocation or analyzing delegation
-     * chains.
+     * Returns the complete tree of all tokens derived from this
+     * token at any depth level. Useful for cascading revocation or
+     * analyzing delegation chains.
      *
      * @return Collection<int, self> Collection of all descendant tokens
      */
@@ -518,5 +488,25 @@ final class AccessToken extends Model implements HasAbilitiesInterface, HasAbili
 
         /** @var Collection<int, self> */
         return $this->getAncestryDescendants($hierarchyType);
+    }
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'abilities' => 'json',
+            'metadata' => 'json',
+            'derived_metadata' => 'json',
+            'allowed_ips' => 'json',
+            'allowed_domains' => 'json',
+            'last_used_at' => 'datetime',
+            'expires_at' => 'datetime',
+            'revoked_at' => 'datetime',
+            'plain_text_token' => 'encrypted',
+        ];
     }
 }

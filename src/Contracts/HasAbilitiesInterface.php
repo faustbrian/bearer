@@ -5,17 +5,17 @@ namespace Cline\Bearer\Contracts;
 /**
  * Contract for objects that can check token abilities/permissions.
  *
- * This contract defines the ability-checking interface for access tokens,
- * enabling fine-grained permission control beyond simple authentication. Tokens
- * can be scoped to specific abilities, restricting what actions they can
- * perform.
+ * This contract defines the ability-checking interface for access
+ * tokens, enabling fine-grained permission control beyond simple
+ * authentication. Tokens can be scoped to specific abilities, restricting
+ * what actions they can perform.
  *
- * Common use cases include: - Read-only tokens that can only fetch data but not
- * modify it - Service tokens with specific operational permissions - User
+ * Common use cases include: - Read-only tokens that can only fetch data but
+ * not modify it - Service tokens with specific operational permissions - User
  * tokens with role-based abilities - Temporary tokens with limited scopes
  *
- * ```php // Check if token has specific ability if ($token->can('users:write'))
- * {
+ * ```php // Check if token has specific ability if
+ * ($token->can('users:write')) {
  *     // Perform write operation
  * }
  *
@@ -30,11 +30,11 @@ interface HasAbilitiesInterface
      *
      * Checks whether the token possesses the specified ability/permission.
      * Ability names are typically namespaced (e.g., 'users:read',
-     * 'posts:write') but the format is flexible and determined by your
-     * application's needs.
+     * 'posts:write') but the format is flexible and determined by
+     * your application's needs.
      *
-     * Wildcard abilities (e.g., '*') typically grant all permissions, but this
-     * behavior depends on the implementation.
+     * Wildcard abilities (e.g., '*') typically grant all permissions, but
+     * this behavior depends on the implementation.
      *
      * @param  string $ability The ability to check (e.g., 'users:read', 'posts:write')
      * @return bool   True if the token has this ability, false otherwise

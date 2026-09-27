@@ -9,8 +9,8 @@ use Cline\Bearer\Enums\AuditEvent;
  * Event fired when authentication fails.
  *
  * Dispatched whenever a token authentication attempt fails, whether due to
- * invalid credentials, expired tokens, or other security violations. Useful for
- * security monitoring, rate limiting, and tracking attack patterns.
+ * invalid credentials, expired tokens, or other security violations. Useful
+ * for security monitoring, rate limiting, and tracking attack patterns.
  *
  * @psalm-immutable
  */

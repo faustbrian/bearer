@@ -5,8 +5,8 @@ namespace Cline\Bearer\Exceptions;
 /**
  * Exception thrown when the name field is missing or empty.
  *
- * This occurs when a token type configuration does not include a valid name
- * field.
+ * This occurs when a token type configuration does not include
+ * a valid name field.
  */
 final class MissingNameConfigurationException extends AbstractInvalidConfigurationException
 {

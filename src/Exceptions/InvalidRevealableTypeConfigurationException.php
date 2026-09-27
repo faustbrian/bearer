@@ -5,8 +5,8 @@ namespace Cline\Bearer\Exceptions;
 /**
  * Exception thrown when the revealable field has an invalid type.
  *
- * This occurs when a token type configuration has a revealable field that is
- * not a boolean.
+ * This occurs when a token type configuration has a revealable field
+ * that is not a boolean.
  */
 final class InvalidRevealableTypeConfigurationException extends AbstractInvalidConfigurationException
 {

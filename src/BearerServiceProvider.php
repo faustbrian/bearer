@@ -64,6 +64,7 @@ use function class_exists;
 use function config;
 use function is_array;
 use function is_string;
+use function request;
 use function tap;
 
 /**
@@ -653,26 +654,43 @@ final class BearerServiceProvider extends PackageServiceProvider
             ], $existingGuardConfig),
         ]);
 
-        Auth::resolved(function (AuthManager $auth): void {
-            $auth->extend('bearer', static function ($app, $name, array $config) use ($auth): RequestGuard {
-                /** @var array<string, mixed> $config */
-                /** @var BearerRequestGuardFactory $factory */
-                $factory = $app->make(BearerRequestGuardFactory::class);
+        $createBearerGuard = $this->makeBearerRequestGuard(...);
+        $createStatefulBearerGuard = $this->makeStatefulBearerRequestGuard(...);
 
-                return tap($factory->make($auth, $config, $app['request']), static function (RequestGuard $guard) use ($app): void {
-                    $app->refresh('request', $guard, 'setRequest');
-                });
+        Auth::resolved(static function (AuthManager $auth) use ($createBearerGuard, $createStatefulBearerGuard): void {
+            $auth->extend('bearer', function ($app, $name, array $config) use ($auth, $createBearerGuard): RequestGuard {
+                /** @var array<string, mixed> $config */
+                return $createBearerGuard($auth, $config);
             });
 
-            $auth->extend('stateful-bearer', static function ($app, $name, array $config) use ($auth): RequestGuard {
+            $auth->extend('stateful-bearer', function ($app, $name, array $config) use ($auth, $createStatefulBearerGuard): RequestGuard {
                 /** @var array<string, mixed> $config */
-                /** @var StatefulBearerRequestGuardFactory $factory */
-                $factory = $app->make(StatefulBearerRequestGuardFactory::class);
-
-                return tap($factory->make($auth, $config, $app['request']), static function (RequestGuard $guard) use ($app): void {
-                    $app->refresh('request', $guard, 'setRequest');
-                });
+                return $createStatefulBearerGuard($auth, $config);
             });
+        });
+    }
+
+    /**
+     * @param array<string, mixed> $config
+     */
+    private function makeBearerRequestGuard(AuthManager $auth, array $config): RequestGuard
+    {
+        $factory = $this->app->make(BearerRequestGuardFactory::class);
+
+        return tap($factory->make($auth, $config, request()), static function (RequestGuard $guard): void {
+            app()->refresh('request', $guard, 'setRequest');
+        });
+    }
+
+    /**
+     * @param array<string, mixed> $config
+     */
+    private function makeStatefulBearerRequestGuard(AuthManager $auth, array $config): RequestGuard
+    {
+        $factory = $this->app->make(StatefulBearerRequestGuardFactory::class);
+
+        return tap($factory->make($auth, $config, request()), static function (RequestGuard $guard): void {
+            app()->refresh('request', $guard, 'setRequest');
         });
     }
 

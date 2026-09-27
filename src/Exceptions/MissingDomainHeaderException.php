@@ -14,8 +14,8 @@ final class MissingDomainHeaderException extends AbstractDomainRestrictionExcept
     /**
      * Create an exception when origin/referer headers are missing.
      *
-     * This occurs when domain validation is required but no origin or referer
-     * header is present in the request.
+     * This occurs when domain validation is required but no origin or
+     * referer header is present in the request.
      *
      * @return self Exception instance with descriptive error message
      */

@@ -2,9 +2,10 @@
 
 namespace Cline\Bearer\Console\Commands;
 
+use Illuminate\Console\Attributes\Description;
+use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
-use Override;
 
 use function assert;
 use function class_exists;
@@ -21,25 +22,11 @@ use function sprintf;
  * retention period. Regular pruning helps control database growth while
  * maintaining compliance with audit retention policies.
  */
+#[Description('Prune old token audit logs from the database')]
+#[Signature('bearer:prune-audit-logs
+                            {--days= : Prune logs older than this many days (uses config default)}')]
 final class PruneAuditLogsCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    #[Override()]
-    protected $signature = 'bearer:prune-audit-logs
-                            {--days= : Prune logs older than this many days (uses config default)}';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    #[Override()]
-    protected $description = 'Prune old token audit logs from the database';
-
     /**
      * Execute the console command.
      *

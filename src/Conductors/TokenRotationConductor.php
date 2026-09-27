@@ -21,8 +21,8 @@ use function now;
  * rotation modes and grace periods. Supports immediate invalidation, grace
  * period rotation, and dual-valid rotation strategies.
  *
- * Example usage: ```php // Simple rotation (immediate invalidation) $newToken =
- * Bearer::rotate($token)->immediate()->rotate();
+ * Example usage: ```php // Simple rotation (immediate invalidation) $newToken
+ * = Bearer::rotate($token)->immediate()->rotate();
  *
  * // Rotation with grace period $newToken = Bearer::rotate($token)
  *     ->withGracePeriod(60)
@@ -64,14 +64,14 @@ final readonly class TokenRotationConductor
     /**
      * Rotate the token with configured settings.
      *
-     * Creates a new token with the same configuration as the old token, then
-     * handles the old token based on the rotation mode: - Immediate: Old token
-     * is invalid immediately - GracePeriod: Old token remains valid for the
-     * grace period - DualValid: Both tokens remain valid until explicit
-     * revocation
+     * Creates a new token with the same configuration as the old
+     * token, then handles the old token based on the rotation mode: -
+     * Immediate: Old token is invalid immediately - GracePeriod: Old
+     * token remains valid for the grace period - DualValid: Both tokens
+     * remain valid until explicit revocation
      *
-     * ```php // Immediate rotation $newToken =
-     * Bearer::rotate($token)->immediate()->rotate();
+     * ```php // Immediate rotation $newToken
+     * = Bearer::rotate($token)->immediate()->rotate();
      *
      * // Grace period rotation $newToken = Bearer::rotate($token)
      *     ->withGracePeriod(30)
@@ -240,8 +240,8 @@ final readonly class TokenRotationConductor
     /**
      * Handle dual-valid rotation mode.
      *
-     * Both tokens remain valid until explicitly revoked. No changes to the old
-     * token.
+     * Both tokens remain valid until explicitly revoked. No
+     * changes to the old token.
      */
     private function handleDualValid(): void
     {

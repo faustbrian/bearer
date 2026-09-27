@@ -1,6 +1,4 @@
 <?php declare(strict_types=1);
-
-use Cline\Bearer\Facades\Bearer;
 use Cline\Bearer\Guards\RefreshingRequestGuard;
 use Cline\Bearer\TransientToken;
 use Illuminate\Auth\RequestGuard;
@@ -62,6 +60,7 @@ test('resolved stateful bearer guard still honors session authentication', funct
     $response = $this->actingAs($user, 'web')->get('/integration-stateful-auth');
 
     $response->assertOk();
+
     expect($response->json('user_id'))->toBe($user->id);
     expect($response->json('token_type'))->toBe(TransientToken::class);
 });

@@ -32,8 +32,8 @@ use function throw_unless;
  * Example usage: ```php // Reseller creates master token $resellerMaster =
  * Bearer::for($reseller)->issue('sk', 'Reseller Master');
  *
- * // Derive customer token $customerToken =
- * Bearer::derive($resellerMaster->accessToken)
+ * // Derive customer token $customerToken
+ * = Bearer::derive($resellerMaster->accessToken)
  *     ->abilities(['invoices:read', 'webhooks:receive'])
  *     ->metadata(['reseller_customer_id' => 'cust_xyz'])
  *     ->expiresAt(now()->addYear())
@@ -89,8 +89,8 @@ final readonly class TokenDerivationConductor
     }
 
     /**
-     * Set expiration timestamp for the derived token (must be <= parent
-     * expiration).
+     * Set expiration timestamp for the derived token (must be <=
+     * parent expiration).
      *
      * @param  null|DateTimeInterface $expiresAt Expiration timestamp
      * @return self                   New conductor instance with expiration configured

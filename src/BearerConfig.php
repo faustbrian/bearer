@@ -19,8 +19,8 @@ final class BearerConfig
     /**
      * The personal access token model class name.
      *
-     * Defines which Eloquent model class should be used for personal access
-     * tokens. Applications can override this to use custom model
+     * Defines which Eloquent model class should be used for personal
+     * access tokens. Applications can override this to use custom model
      * implementations with additional fields, relationships, or business logic.
      *
      * @var class-string<AccessToken>
@@ -31,8 +31,8 @@ final class BearerConfig
      * The token group model class name.
      *
      * Defines which Eloquent model class should be used for token groups.
-     * Applications can override this to use custom model implementations for
-     * organizing related tokens into logical groupings.
+     * Applications can override this to use custom model implementations
+     * for organizing related tokens into logical groupings.
      *
      * @var class-string
      */
@@ -42,8 +42,8 @@ final class BearerConfig
      * Custom callback for retrieving access tokens from requests.
      *
      * Allows applications to implement custom token extraction logic from
-     * incoming HTTP requests. When set, this callback is invoked instead of the
-     * default bearer token extraction mechanism.
+     * incoming HTTP requests. When set, this callback is invoked instead
+     * of the default bearer token extraction mechanism.
      *
      * @var null|(Closure(Request): (null|string))
      */
@@ -52,10 +52,10 @@ final class BearerConfig
     /**
      * Custom callback for additional access token validation.
      *
-     * Allows applications to implement custom authentication logic beyond the
-     * default token verification. This callback can enforce additional security
-     * constraints like IP whitelisting, rate limiting, or context-based
-     * validation.
+     * Allows applications to implement custom authentication logic
+     * beyond the default token verification. This callback can enforce
+     * additional security constraints like IP whitelisting, rate
+     * limiting, or context-based validation.
      *
      * @var null|Closure(AccessToken, Request): bool
      */
@@ -104,10 +104,10 @@ final class BearerConfig
     /**
      * Set the callback for custom token retrieval from requests.
      *
-     * Registers a custom callback that will be used to extract access tokens
-     * from incoming HTTP requests. This allows applications to implement
-     * non-standard token extraction logic (e.g., from custom headers, cookies,
-     * or query parameters).
+     * Registers a custom callback that will be used to extract access
+     * tokens from incoming HTTP requests. This allows applications to
+     * implement non-standard token extraction logic (e.g., from custom
+     * headers, cookies, or query parameters).
      *
      * @param null|(Closure(Request): (null|string)) $callback The token retrieval callback or null to reset
      */
@@ -120,9 +120,9 @@ final class BearerConfig
      * Set the callback for custom token authentication.
      *
      * Registers a custom callback that will be invoked during token
-     * authentication to perform additional validation beyond the standard token
-     * verification. This enables custom security policies like IP restrictions,
-     * environment checks, or contextual authorization.
+     * authentication to perform additional validation beyond the standard
+     * token verification. This enables custom security policies like IP
+     * restrictions, environment checks, or contextual authorization.
      *
      * @param null|Closure(AccessToken, Request): bool $callback The authentication callback or null to reset
      */

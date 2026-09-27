@@ -15,14 +15,14 @@ use function in_array;
  * configured with specific abilities and a token type, enabling accurate
  * testing of authorization logic without requiring database interaction.
  *
- * This is particularly useful for unit tests where you need to verify that
- * ability checks work correctly for different permission combinations and token
- * types.
+ * This is particularly useful for unit tests where you need to
+ * verify that ability checks work correctly for different permission
+ * combinations and token types.
  *
  * ```php // Create a token with specific abilities $token = new
  * TestingToken(['read:users', 'write:posts'], 'sk');
  *
- * // Test ability checks $token->can('read:users');  // true
+ * // Test ability checks $token->can('read:users'); // true
  * $token->cant('delete:all'); // true ```
  *
  * @psalm-immutable
@@ -65,9 +65,9 @@ final readonly class TestingToken implements HasAbilitiesInterface, HasAbilityCl
     /**
      * Determine if the token has a given ability.
      *
-     * Returns true if the token either has a wildcard ability ('*') or if the
-     * specific ability exists in the abilities array. Uses strict comparison
-     * for security.
+     * Returns true if the token either has a wildcard ability ('*')
+     * or if the specific ability exists in the abilities array. Uses
+     * strict comparison for security.
      *
      * @param  string $ability The ability to check (e.g., 'read:users', 'write:posts')
      * @return bool   True if the token has the ability or wildcard permissions

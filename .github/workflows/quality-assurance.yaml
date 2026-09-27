@@ -6,22 +6,8 @@ on:
 
 jobs:
   tests:
-    name: Tests (L${{ matrix.laravel }})
+    name: Tests (Laravel 13)
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        laravel: ['10', '11', '12']
-        include:
-          # Laravel 10
-          - laravel: '10'
-            testbench: '^8.0'
-          # Laravel 11
-          - laravel: '11'
-            testbench: '^9.0'
-          # Laravel 12
-          - laravel: '12'
-            testbench: '^10.0'
     steps:
       - name: Check out code
         uses: actions/checkout@v6

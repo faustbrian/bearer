@@ -14,11 +14,11 @@ use function sprintf;
 final class DisallowedDomainException extends AbstractDomainRestrictionException
 {
     /**
-     * Create an exception for a disallowed domain without listing allowed
-     * domains.
+     * Create an exception for a disallowed domain without
+     * listing allowed domains.
      *
-     * This occurs when the request's origin domain is not permitted by the
-     * token's configuration.
+     * This occurs when the request's origin domain is not permitted
+     * by the token's configuration.
      *
      * @param  string $domain The domain that attempted to use the token
      * @return self   Exception instance with descriptive error message

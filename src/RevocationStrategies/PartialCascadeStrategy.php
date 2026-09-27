@@ -12,19 +12,19 @@ use function now;
 /**
  * Partial cascade revocation strategy.
  *
- * Revokes only specific token types within a token group, allowing other types
- * to remain valid. This enables selective invalidation patterns where certain
- * token types should be revoked together while others (like publishable keys)
- * should survive.
+ * Revokes only specific token types within a token group, allowing other
+ * types to remain valid. This enables selective invalidation patterns
+ * where certain token types should be revoked together while others
+ * (like publishable keys) should survive.
  *
  * By default, revokes 'sk' (secret) and 'rk' (restricted) tokens while leaving
  * 'pk' (publishable) tokens active. This is useful when you want to invalidate
  * server-side credentials without breaking client-side integrations.
  *
- * Use this strategy when: - You need fine-grained control over group revocation
- * - Certain token types should survive security incidents - Client-side tokens
- * should remain valid when server keys rotate - Different token types have
- * different security requirements
+ * Use this strategy when: - You need fine-grained control over group
+ * revocation - Certain token types should survive security incidents -
+ * Client-side tokens should remain valid when server keys rotate - Different
+ * token types have different security requirements
  *
  * @psalm-immutable
  */
@@ -45,10 +45,10 @@ final readonly class PartialCascadeStrategy implements RevocationStrategyInterfa
     /**
      * Revoke only specific token types within a group.
      *
-     * If the token belongs to a group, revokes only tokens in that group whose
-     * prefixes match the configured list. If the token is standalone, revokes
-     * only the token itself. This enables selective invalidation where some
-     * token types survive while others are revoked.
+     * If the token belongs to a group, revokes only tokens in that group
+     * whose prefixes match the configured list. If the token is standalone,
+     * revokes only the token itself. This enables selective invalidation
+     * where some token types survive while others are revoked.
      *
      * @param AccessToken $token The token to revoke
      */
@@ -66,10 +66,10 @@ final readonly class PartialCascadeStrategy implements RevocationStrategyInterfa
     /**
      * Get all tokens that will be affected by revoking this token.
      *
-     * Returns all tokens in the same group whose prefixes match the configured
-     * list. If the token is not part of a group, returns only the token itself.
-     * This provides visibility into which tokens will be revoked based on their
-     * type prefix.
+     * Returns all tokens in the same group whose prefixes match the
+     * configured list. If the token is not part of a group, returns only
+     * the token itself. This provides visibility into which tokens will
+     * be revoked based on their type prefix.
      *
      * @param  AccessToken                  $token The token to check
      * @return Collection<int, AccessToken> Collection of affected tokens

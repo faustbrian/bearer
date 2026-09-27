@@ -15,11 +15,11 @@ use Orchestra\Testbench\TestCase as Orchestra;
 /**
  * Base test case for Bearer package tests.
  *
- * Provides test infrastructure including: - Orchestra Testbench setup for
- * package testing - RefreshDatabase trait for clean database state per test -
- * Automatic loading of package migrations - SQLite in-memory database
- * configuration - Bearer service provider registration - Package configuration
- * defaults
+ * Provides test infrastructure including: - Orchestra Testbench setup
+ * for package testing - RefreshDatabase trait for clean database state
+ * per test - Automatic loading of package migrations - SQLite in-memory
+ * database configuration - Bearer service provider registration -
+ * Package configuration defaults
  *
  * @internal
  */

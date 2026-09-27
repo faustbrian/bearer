@@ -12,13 +12,13 @@ use Illuminate\Http\Request;
 /**
  * Middleware to ensure the current token has ANY of the specified abilities.
  *
- * This middleware validates that the authenticated user's current access token
- * possesses at least one of the abilities listed in the middleware parameters.
- * If none of the abilities are present, a AbstractMissingAbilityException is
- * thrown.
+ * This middleware validates that the authenticated user's current
+ * access token possesses at least one of the abilities listed in
+ * the middleware parameters. If none of the abilities are present, a
+ * AbstractMissingAbilityException is thrown.
  *
- * Use this when an endpoint can be accessed with any one of several
- * permissions.
+ * Use this when an endpoint can be accessed with any one of
+ * several permissions.
  *
  * Usage in routes: ```php Route::get('/posts', function () {
  *     // Tokens with 'posts:read' OR 'admin:access' can access
@@ -30,8 +30,8 @@ final class CheckForAnyAbility
      * Handle the incoming request.
      *
      * Verifies that: 1. A user is authenticated 2. The user has a current
-     * access token (not session-based auth) 3. The token has AT LEAST ONE of
-     * the specified abilities
+     * access token (not session-based auth) 3. The token has AT LEAST
+     * ONE of the specified abilities
      *
      * @param Request                 $request      The incoming HTTP request
      * @param Closure(Request): mixed $next         The next middleware handler

@@ -22,8 +22,8 @@ enum RotationMode: string
      * Old token valid for grace period.
      *
      * The previous token remains valid for a configured time period after
-     * rotation. Allows for gradual migration and prevents disruption during
-     * deployments or updates.
+     * rotation. Allows for gradual migration and prevents disruption
+     * during deployments or updates.
      */
     case GracePeriod = 'grace';
 

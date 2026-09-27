@@ -17,16 +17,16 @@ use function array_keys;
  * different audit driver strategies. Allows applications to configure which
  * driver to use as the default and switch between implementations as needed.
  *
- * This registry pattern enables: - Pluggable audit storage backends - Runtime
- * driver switching - Custom driver implementations - Multiple concurrent
- * drivers - Testing with mock drivers
+ * This registry pattern enables: - Pluggable audit storage backends -
+ * Runtime driver switching - Custom driver implementations - Multiple
+ * concurrent drivers - Testing with mock drivers
  *
  * Example usage: ```php $registry = new AuditDriverRegistry();
  *
  * // Register drivers $registry->register('database', new
  * DatabaseAuditDriver()); $registry->register('spatie', new
- * SpatieActivityLogDriver('access-tokens')); $registry->register('null', new
- * NullAuditDriver());
+ * SpatieActivityLogDriver('access-tokens')); $registry->register('null',
+ * new NullAuditDriver());
  *
  * // Retrieve a specific driver $driver = $registry->get('database');
  *

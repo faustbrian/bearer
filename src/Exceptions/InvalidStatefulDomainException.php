@@ -7,9 +7,9 @@ use InvalidArgumentException;
 /**
  * Exception thrown when a stateful domain configuration is invalid.
  *
- * The stateful domain configuration must contain string values to properly
- * match frontend request origins. Non-string values cannot be used for domain
- * pattern matching.
+ * The stateful domain configuration must contain string values to
+ * properly match frontend request origins. Non-string values cannot
+ * be used for domain pattern matching.
  */
 final class InvalidStatefulDomainException extends InvalidArgumentException implements BearerExceptionInterface
 {

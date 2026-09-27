@@ -19,8 +19,8 @@ use function array_keys;
  *
  * Example usage: ```php $registry = new TokenGeneratorRegistry();
  *
- * // Register generators $registry->register('seam', new SeamTokenGenerator());
- * $registry->register('uuid', new UuidTokenGenerator());
+ * // Register generators $registry->register('seam', new
+ * SeamTokenGenerator()); $registry->register('uuid', new UuidTokenGenerator());
  * $registry->register('random', new RandomTokenGenerator());
  *
  * // Retrieve a specific generator $generator = $registry->get('uuid');

@@ -13,8 +13,8 @@ use function request;
 /**
  * Database-backed audit driver using the access_token_audit_logs table.
  *
- * This is the default audit driver that stores token activity logs directly in
- * the application database using the AccessTokenAuditLog model. It provides
+ * This is the default audit driver that stores token activity logs directly
+ * in the application database using the AccessTokenAuditLog model. It provides
  * efficient querying and strong consistency guarantees.
  *
  * Use cases: - Standard applications needing basic audit logging - Compliance
@@ -36,8 +36,8 @@ final class DatabaseAuditDriver implements AuditDriverInterface
      * Log an audit event for a token.
      *
      * Creates a new AccessTokenAuditLog entry with the event details,
-     * automatically capturing IP address and user agent from the current
-     * request context.
+     * automatically capturing IP address and user agent from the
+     * current request context.
      *
      * @param AccessToken          $token   The token this event relates to
      * @param AuditEvent           $event   The event being logged
@@ -57,8 +57,8 @@ final class DatabaseAuditDriver implements AuditDriverInterface
     /**
      * Retrieve all audit logs for a specific token.
      *
-     * Returns audit logs ordered by creation time (newest first) for easy
-     * review of recent activity.
+     * Returns audit logs ordered by creation time (newest first) for
+     * easy review of recent activity.
      *
      * @param  AccessToken                          $token The token to retrieve logs for
      * @return Collection<int, AccessTokenAuditLog> Collection of audit log entries

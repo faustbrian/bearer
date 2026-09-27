@@ -5,9 +5,9 @@ namespace Cline\Bearer\Enums;
 /**
  * Defines audit log event types for token lifecycle tracking.
  *
- * This enum represents all significant events in a token's lifecycle that
- * should be recorded in audit logs for security, compliance, and debugging
- * purposes.
+ * This enum represents all significant events in a token's lifecycle
+ * that should be recorded in audit logs for security, compliance,
+ * and debugging purposes.
  */
 enum AuditEvent: string
 {
@@ -21,8 +21,8 @@ enum AuditEvent: string
     /**
      * Token was successfully authenticated.
      *
-     * Logged when a token passes authentication and is used to access protected
-     * resources.
+     * Logged when a token passes authentication and is used to access
+     * protected resources.
      */
     case Authenticated = 'authenticated';
 
@@ -95,8 +95,8 @@ enum AuditEvent: string
     /**
      * Token plaintext was explicitly revealed.
      *
-     * Logged when a recoverable token is decrypted and returned after the
-     * original creation flow has completed.
+     * Logged when a recoverable token is decrypted and returned after
+     * the original creation flow has completed.
      */
     case Revealed = 'revealed';
 }

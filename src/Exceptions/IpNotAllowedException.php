@@ -17,9 +17,9 @@ final class IpNotAllowedException extends AbstractIpRestrictionException
     /**
      * Create an exception for a disallowed IP address.
      *
-     * This occurs when the request's source IP address does not match any of
-     * the IP addresses or CIDR ranges explicitly permitted by the token's
-     * configuration.
+     * This occurs when the request's source IP address does not match
+     * any of the IP addresses or CIDR ranges explicitly permitted by
+     * the token's configuration.
      *
      * @param  string        $ip         The IP address that attempted to use the token
      * @param  array<string> $allowedIps List of permitted IP addresses/ranges for this token

@@ -14,8 +14,8 @@ use function is_object;
 use function is_string;
 
 /**
- * Authentication guard that prefers configured stateful session guards before
- * falling back to bearer-token authentication.
+ * Authentication guard that prefers configured stateful session guards
+ * before falling back to bearer-token authentication.
  *
  * This is useful for first-party browser flows that want one guard to accept
  * both an existing session and an Authorization bearer token.

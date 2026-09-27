@@ -25,8 +25,8 @@ use function collect;
  *     'driver' => 'null',
  * ],
  *
- * // Or programmatically $driver = new NullAuditDriver(); $driver->log($token,
- * AuditEvent::Authenticated); // Does nothing $logs =
+ * // Or programmatically $driver = new NullAuditDriver();
+ * $driver->log($token, AuditEvent::Authenticated); // Does nothing $logs =
  * $driver->getLogsForToken($token); // Returns empty collection ```
  */
 final class NullAuditDriver implements AuditDriverInterface

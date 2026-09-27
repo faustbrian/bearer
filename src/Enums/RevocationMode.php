@@ -5,9 +5,9 @@ namespace Cline\Bearer\Enums;
 /**
  * Defines revocation cascade modes for token invalidation.
  *
- * This enum determines the scope of token revocation, allowing fine-grained
- * control over which tokens should be invalidated when a revocation is
- * triggered.
+ * This enum determines the scope of token revocation, allowing
+ * fine-grained control over which tokens should be invalidated when
+ * a revocation is triggered.
  */
 enum RevocationMode: string
 {
