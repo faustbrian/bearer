@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Token rotation now preserves the original finite expiration timestamp,
+  preventing rotated credentials from silently becoming non-expiring or
+  renewing expired access. Grace-period rotation also no longer extends an
+  earlier expiration, postpones an earlier revocation, or reactivates an
+  expired or revoked predecessor. Immediate rotation now preserves an earlier
+  revocation timestamp instead of moving it forward.
+
 ### Changed
 - Updated package dependency constraints and refreshed docblocks to match
   the current codebase.

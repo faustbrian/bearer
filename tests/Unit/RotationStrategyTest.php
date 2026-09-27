@@ -435,7 +435,7 @@ describe('ImmediateInvalidationStrategy', function (): void {
             expect($result)->toBeFalse();
         });
 
-        test('rotate() overwrites existing revoked_at timestamp', function (): void {
+        test('rotate() preserves an earlier revoked_at timestamp', function (): void {
             // Arrange
             Date::setTestNow('2024-01-15 10:00:00');
             $strategy = new ImmediateInvalidationStrategy();
@@ -450,7 +450,7 @@ describe('ImmediateInvalidationStrategy', function (): void {
 
             // Assert
             $oldToken->refresh();
-            expect($oldToken->revoked_at->format('Y-m-d H:i:s'))->toBe('2024-01-15 10:00:00');
+            expect($oldToken->revoked_at->format('Y-m-d H:i:s'))->toBe('2024-01-10 10:00:00');
         });
     });
 
@@ -483,7 +483,7 @@ describe('ImmediateInvalidationStrategy', function (): void {
             expect($result)->toBeFalse();
         });
 
-        test('multiple rotations update revoked_at each time', function (): void {
+        test('multiple rotations preserve the earliest revoked_at timestamp', function (): void {
             // Arrange
             Date::setTestNow('2024-01-15 10:00:00');
             $strategy = new ImmediateInvalidationStrategy();
@@ -502,8 +502,8 @@ describe('ImmediateInvalidationStrategy', function (): void {
 
             // Assert
             $oldToken->refresh();
-            expect($oldToken->revoked_at->format('Y-m-d H:i:s'))->toBe('2024-01-15 11:00:00');
-            expect($oldToken->revoked_at)->not->toEqual($firstRevocation);
+            expect($oldToken->revoked_at->format('Y-m-d H:i:s'))->toBe('2024-01-15 10:00:00');
+            expect($oldToken->revoked_at)->toEqual($firstRevocation);
         });
     });
 });

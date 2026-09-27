@@ -1455,7 +1455,8 @@ $token = Bearer::for($user)->issue('sk', 'API Key');
 // Simple rotation (immediate invalidation of old token)
 $newToken = Bearer::rotate($token->accessToken);
 
-// The new token has the same configuration
+// The new token has the same configuration and expiration timestamp.
+// Rotation replaces credentials; it does not extend token lifetime.
 echo $newToken->plainTextToken; // sk_test_newtoken...
 
 // Old token is now invalid
@@ -1477,6 +1478,9 @@ $newToken = Bearer::rotate($token->accessToken, RotationMode::Immediate);
 // Result: Old token is revoked immediately
 ```
 
+If the old token was already revoked, rotation preserves that earlier
+revocation timestamp while issuing a new replacement credential.
+
 ### Grace Period
 
 Old token valid for a grace period (default 60 minutes):
@@ -1485,6 +1489,11 @@ Old token valid for a grace period (default 60 minutes):
 $newToken = Bearer::rotate($token->accessToken, RotationMode::GracePeriod);
 // Result: Both tokens work for 60 minutes, then old token becomes invalid
 ```
+
+The grace period never extends an existing expiration. Tokens that expire
+sooner keep their original deadline, and already-expired tokens stay expired.
+It also never postpones an earlier scheduled revocation or reactivates an
+already-revoked token.
 
 ### Dual Valid
 

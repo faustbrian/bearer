@@ -23,8 +23,8 @@ use function now;
  * zero downtime during token rotation. Clients can gradually transition to the
  * new token while still being able to fall back to the old one if needed.
  *
- * Use this strategy when: - You need zero-downtime token rotation - Clients may
- * take time to process and store new tokens - Network issues could prevent
+ * Use this strategy when: - You need zero-downtime token rotation - Clients
+ * may take time to process and store new tokens - Network issues could prevent
  * immediate token updates - You want to balance security with reliability
  *
  * @psalm-immutable
@@ -43,8 +43,8 @@ final readonly class GracePeriodStrategy implements RotationStrategyInterface
     ) {}
 
     /**
-     * Rotate the token and schedule the old token for revocation after the
-     * grace period.
+     * Rotate the token and schedule the old token for revocation
+     * after the grace period.
      *
      * Sets the old token's revoked_at timestamp to a future time based on the
      * configured grace period. During this period, both old and new tokens
@@ -55,7 +55,13 @@ final readonly class GracePeriodStrategy implements RotationStrategyInterface
      */
     public function rotate(AccessToken $oldToken, AccessToken $newToken): void
     {
-        $oldToken->update(['revoked_at' => now()->addMinutes($this->gracePeriodMinutes)]);
+        $graceRevokesAt = now()->addMinutes($this->gracePeriodMinutes);
+        $revokesAt = $oldToken->revoked_at !== null
+            && $oldToken->revoked_at->lessThan($graceRevokesAt)
+                ? $oldToken->revoked_at
+                : $graceRevokesAt;
+
+        $oldToken->update(['revoked_at' => $revokesAt]);
     }
 
     /**

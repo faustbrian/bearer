@@ -240,6 +240,18 @@ describe('TokenRotationConductor', function (): void {
         expect($refreshedToken->isRevoked())->toBeTrue();
     });
 
+    it('handleImmediate preserves an earlier revocation boundary', function (): void {
+        $user = createUser();
+        $revokedAt = now()->subHour()->startOfSecond();
+        $token = createAccessToken($user);
+        $token->update(['revoked_at' => $revokedAt]);
+        $manager = resolve(BearerManager::class);
+
+        new TokenRotationConductor($manager, $token)->immediate()->rotate();
+
+        expect($token->fresh()->revoked_at?->equalTo($revokedAt))->toBeTrue();
+    });
+
     it('handleGracePeriod sets expires_at on old token', function (): void {
         $user = createUser();
         $token = createAccessToken($user);
@@ -267,6 +279,42 @@ describe('TokenRotationConductor', function (): void {
         expect($refreshedToken->expires_at)->not->toBeNull();
         expect($refreshedToken->expires_at->isFuture())->toBeTrue();
         expect(now()->diffInMinutes($refreshedToken->expires_at, false))->toBeGreaterThanOrEqual(29);
+    });
+
+    it('does not extend an existing expiration during a grace period', function (): void {
+        $user = createUser();
+        $expiresAt = now()->addMinutes(5)->startOfSecond();
+        $token = Bearer::for($user)
+            ->expiresAt($expiresAt)
+            ->issue('sk', 'Short-lived Key')
+            ->accessToken;
+        $manager = resolve(BearerManager::class);
+
+        $newToken = new TokenRotationConductor($manager, $token)
+            ->withGracePeriod(30)
+            ->rotate();
+
+        expect($token->fresh()->expires_at?->equalTo($expiresAt))->toBeTrue()
+            ->and($newToken->accessToken->expires_at?->equalTo($expiresAt))->toBeTrue();
+    });
+
+    it('does not resurrect an expired token during a grace period', function (): void {
+        $user = createUser();
+        $expiresAt = now()->subMinute()->startOfSecond();
+        $token = Bearer::for($user)
+            ->expiresAt($expiresAt)
+            ->issue('sk', 'Expired Key')
+            ->accessToken;
+        $manager = resolve(BearerManager::class);
+
+        $newToken = new TokenRotationConductor($manager, $token)
+            ->withGracePeriod(30)
+            ->rotate();
+
+        expect($token->fresh()->expires_at?->equalTo($expiresAt))->toBeTrue()
+            ->and($token->fresh()->isValid())->toBeFalse()
+            ->and($newToken->accessToken->expires_at?->equalTo($expiresAt))->toBeTrue()
+            ->and($newToken->accessToken->isValid())->toBeFalse();
     });
 
     it('handleDualValid marks old token as rotated', function (): void {
