@@ -18,8 +18,8 @@ use Cline\Bearer\Contracts\HasAbilityClaimsInterface;
  * for the request lifetime - Is never persisted to the database
  *
  * This provides a consistent HasAbilitiesInterface interface whether
- * authentication is via session or token, simplifying authorization logic
- * throughout the application.
+ * authentication is via session or token, simplifying authorization
+ * logic throughout the application.
  *
  * Example usage: ```php // In guard when session user is found
  * $user->withAccessToken(new TransientToken());

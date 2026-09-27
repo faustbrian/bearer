@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 /**
  * Authentication guard for Bearer token-based authentication.
  *
- * Authenticates strictly from the request bearer token. This is the package's
- * canonical API guard for transport surfaces that must not silently succeed via
- * an existing web session.
+ * Authenticates strictly from the request bearer token. This is the
+ * package's canonical API guard for transport surfaces that must not
+ * silently succeed via an existing web session.
  *
  * @psalm-immutable
  */

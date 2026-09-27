@@ -7,7 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Updated the default stateful CSRF middleware to Laravel 13's
+  `PreventRequestForgery` class and added rejection coverage for stateful
+  write requests without a valid CSRF token.
+- Synchronized the ECS, Rector, and PHPStan baseline with Laravel 13 while
+  preserving both the stateless and stateful bearer guard integrations.
+
 ### Changed
+- CI now tests the package against its supported Laravel 13 runtime instead
+  of displaying obsolete Laravel 10 through 12 matrix jobs.
 - Bearer auth driver registration now builds `RequestGuard` instances
   through dedicated bearer and stateful bearer guard factories instead of
   constructing them inside the service provider. This keeps auth driver

@@ -909,7 +909,7 @@ return [
         'encrypt_cookies' => \Illuminate\Cookie\Middleware\EncryptCookies::class,
         'add_queued_cookies' => \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
         'start_session' => \Illuminate\Session\Middleware\StartSession::class,
-        'validate_csrf_token' => \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
+        'validate_csrf_token' => \Illuminate\Foundation\Http\Middleware\PreventRequestForgery::class,
         'authenticate_session' => null, // null = disabled by default
     ],
     /*

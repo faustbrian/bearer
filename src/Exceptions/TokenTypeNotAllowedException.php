@@ -17,8 +17,8 @@ final class TokenTypeNotAllowedException extends AbstractInvalidTokenTypeExcepti
     /**
      * Create an exception when a token type is not allowed for a request.
      *
-     * This occurs when middleware validates that the current token's type is
-     * not among the allowed types for an endpoint.
+     * This occurs when middleware validates that the current token's type
+     * is not among the allowed types for an endpoint.
      *
      * @param  string        $currentType  The actual token type from the request
      * @param  array<string> $allowedTypes List of allowed token types

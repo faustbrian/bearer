@@ -17,13 +17,13 @@ use function now;
  * Cascade descendants revocation strategy for hierarchical tokens.
  *
  * Revokes the specified token and all of its descendant tokens in the
- * derivation hierarchy. This ensures that when a parent token is revoked, all
- * derived child tokens are automatically invalidated as well.
+ * derivation hierarchy. This ensures that when a parent token is revoked,
+ * all derived child tokens are automatically invalidated as well.
  *
  * Use this strategy when: - Tokens are organized in a hierarchical derivation
- * structure - You want to revoke a master token and all derived customer tokens
- * - Security incidents affect a parent token and all its derivatives -
- * Resellers need to invalidate all customer tokens at once
+ * structure - You want to revoke a master token and all derived customer
+ * tokens - Security incidents affect a parent token and all its derivatives
+ * - Resellers need to invalidate all customer tokens at once
  */
 final class CascadeDescendantsStrategy implements RevocationStrategyInterface
 {
@@ -56,9 +56,9 @@ final class CascadeDescendantsStrategy implements RevocationStrategyInterface
     /**
      * Get all tokens that will be affected by revoking this token.
      *
-     * Returns the token itself plus all of its descendants in the derivation
-     * hierarchy. This provides visibility into the scope of a revocation
-     * operation before it is executed.
+     * Returns the token itself plus all of its descendants in the
+     * derivation hierarchy. This provides visibility into the scope of a
+     * revocation operation before it is executed.
      *
      * @param  AccessToken                  $token The token to check
      * @return Collection<int, AccessToken> Collection containing the token and all descendants

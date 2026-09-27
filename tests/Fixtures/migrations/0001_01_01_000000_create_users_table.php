@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Create users table migration for testing.
  *
- * Creates a minimal users table with the essential columns needed for testing
- * the Bearer package functionality. This table is used by the User fixture
- * model in tests.
+ * Creates a minimal users table with the essential columns needed for
+ * testing the Bearer package functionality. This table is used by the
+ * User fixture model in tests.
  *
  * The table includes: - id: Auto-incrementing primary key - name: User's
  * display name - email: Unique email address for authentication - password:

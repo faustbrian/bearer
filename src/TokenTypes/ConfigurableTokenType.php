@@ -22,10 +22,10 @@ use function is_string;
 /**
  * Configurable token type for user-defined types.
  *
- * Enables applications to define custom token types through configuration
- * without creating dedicated PHP classes. This is useful for
- * application-specific token types that don't warrant a full class
- * implementation.
+ * Enables applications to define custom token types through
+ * configuration without creating dedicated PHP classes. This is
+ * useful for application-specific token types that don't warrant a
+ * full class implementation.
  *
  * Configuration structure: ```php [
  *     'name' => 'integration',           // Required: Token type name
@@ -60,22 +60,22 @@ use function is_string;
  * ConfigurableTokenType::fromConfig(config('bearer.token_types.integration'));
  * ```
  *
- * Common use cases: - Integration partner tokens - Temporary access tokens -
- * Testing tokens with specific constraints - Partner/vendor-specific token
+ * Common use cases: - Integration partner tokens - Temporary access tokens
+ * - Testing tokens with specific constraints - Partner/vendor-specific token
  * types - Trial/demo account tokens - Webhook receiver tokens
  *
- * Best practices: - Use descriptive names that indicate purpose - Choose unique
- * prefixes to avoid conflicts - Document custom types in your application -
- * Start with restrictive settings and expand as needed - Consider creating a
- * dedicated class for frequently-used types
+ * Best practices: - Use descriptive names that indicate purpose - Choose
+ * unique prefixes to avoid conflicts - Document custom types in your
+ * application - Start with restrictive settings and expand as needed -
+ * Consider creating a dedicated class for frequently-used types
  */
 final class ConfigurableTokenType extends AbstractTokenType
 {
     /**
      * Create a configurable token type from configuration array.
      *
-     * Validates the configuration and creates a new token type instance with
-     * the specified characteristics.
+     * Validates the configuration and creates a new token type instance
+     * with the specified characteristics.
      *
      * @param array<string, mixed> $config Configuration array
      *

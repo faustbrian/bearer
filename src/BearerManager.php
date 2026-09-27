@@ -39,8 +39,8 @@ use function str_contains;
 /**
  * Central manager for personal access token operations.
  *
- * Manages token types, generators, audit drivers, and provides the main API for
- * token issuance, retrieval, revocation, and rotation operations. Uses
+ * Manages token types, generators, audit drivers, and provides the main API
+ * for token issuance, retrieval, revocation, and rotation operations. Uses
  * dependency injection for registries and container access.
  *
  * @psalm-immutable
@@ -70,10 +70,10 @@ final readonly class BearerManager
     /**
      * Create a token issuance conductor for the given owner model.
      *
-     * Provides a fluent interface for configuring and issuing new tokens for an
-     * owner entity (typically a User model). The conductor allows chaining
-     * methods to set abilities, restrictions, metadata, context, boundary, and
-     * other token properties before issuing the final token.
+     * Provides a fluent interface for configuring and issuing new tokens for
+     * an owner entity (typically a User model). The conductor allows chaining
+     * methods to set abilities, restrictions, metadata, context, boundary,
+     * and other token properties before issuing the final token.
      *
      * @param  HasAccessTokensInterface&Model $owner The model that will own the issued token
      * @return TokenIssuanceConductor         Fluent conductor for token configuration
@@ -88,8 +88,8 @@ final readonly class BearerManager
      *
      * Provides a fluent interface for configuring and executing token
      * revocation operations. Allows selection of different revocation
-     * strategies (none, cascade, partial, timed) and attachment of metadata
-     * describing the revocation reason.
+     * strategies (none, cascade, partial, timed) and attachment of
+     * metadata describing the revocation reason.
      *
      * @param  AccessToken              $token The token to revoke
      * @return TokenRevocationConductor Fluent conductor for revocation configuration
@@ -118,9 +118,9 @@ final readonly class BearerManager
     /**
      * Find a personal access token by its plain-text token string.
      *
-     * Supports two token formats: - Direct hash lookup: plain token without '|'
-     * separator - ID-prefixed format: "{id}|{plain_token}" for faster database
-     * lookups
+     * Supports two token formats: - Direct hash lookup: plain token
+     * without '|' separator - ID-prefixed format: "{id}|{plain_token}"
+     * for faster database lookups
      *
      * @param  string           $token The plain-text token string to find
      * @return null|AccessToken The matched token or null if not found
@@ -169,8 +169,8 @@ final readonly class BearerManager
     /**
      * Determine if a token type should store a recoverable plaintext copy.
      *
-     * Custom token types that do not implement the revealable interface default
-     * to false.
+     * Custom token types that do not implement the revealable
+     * interface default to false.
      *
      * @param  TokenTypeInterface $tokenType The token type to inspect
      * @return bool               True when recoverable plaintext storage is enabled
@@ -187,10 +187,10 @@ final readonly class BearerManager
     /**
      * Execute token revocation with a specific strategy.
      *
-     * Internal method that performs the actual revocation using the specified
-     * or default strategy. Logs the revocation event to the configured audit
-     * driver, but silently ignores audit failures to ensure revocation
-     * completes.
+     * Internal method that performs the actual revocation using the
+     * specified or default strategy. Logs the revocation event to the
+     * configured audit driver, but silently ignores audit failures to
+     * ensure revocation completes.
      *
      * @internal Use revoke() conductor pattern instead for public API
      *
@@ -218,11 +218,11 @@ final readonly class BearerManager
     /**
      * Rotate a personal access token using the specified strategy.
      *
-     * Creates a new token with identical configuration to the original token,
-     * then applies the specified rotation strategy to handle the old token
-     * (e.g., immediate invalidation, grace period, or dual validity). Preserves
-     * all settings including abilities, restrictions, metadata, and group
-     * membership.
+     * Creates a new token with identical configuration to the original
+     * token, then applies the specified rotation strategy to handle the
+     * old token (e.g., immediate invalidation, grace period, or dual
+     * validity). Preserves all settings including abilities, restrictions,
+     * metadata, and group membership.
      *
      * @param  AccessToken    $token    The token to rotate
      * @param  null|string    $strategy Strategy name (null uses default from config)
@@ -497,10 +497,10 @@ final readonly class BearerManager
     /**
      * Set the current authenticated user for testing.
      *
-     * Creates a testing token with the specified abilities and authenticates
-     * the user in the application. Primarily used in test scenarios to simulate
-     * authenticated API requests without going through the full authentication
-     * flow.
+     * Creates a testing token with the specified abilities and
+     * authenticates the user in the application. Primarily used in test
+     * scenarios to simulate authenticated API requests without going
+     * through the full authentication flow.
      *
      * @param  Authenticatable&HasAccessTokensInterface $user      The user to authenticate
      * @param  array<string>                            $abilities Token abilities (defaults to ['*'] for all)

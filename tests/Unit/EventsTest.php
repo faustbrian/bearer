@@ -466,7 +466,6 @@ describe('TokenAuthenticationFailed Event', function (): void {
         $event = new TokenAuthenticationFailed(
             token: $token,
             reason: $reason,
-            ipAddress: null,
             context: $context,
         );
 

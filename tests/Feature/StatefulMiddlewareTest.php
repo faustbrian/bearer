@@ -1,14 +1,17 @@
 <?php declare(strict_types=1);
 
 use Cline\Bearer\Http\Middleware\EnsureFrontendRequestsAreStateful;
+use Illuminate\Contracts\Encryption\Encrypter;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Http\Request;
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 
 describe('EnsureFrontendRequestsAreStateful', function (): void {
     beforeEach(function (): void {
         // Set up a test route with the middleware
-        Route::middleware(EnsureFrontendRequestsAreStateful::class)->get('/test-stateful', fn (Request $request) => response()->json([
+        Route::middleware(EnsureFrontendRequestsAreStateful::class)->match(['GET', 'POST'], '/test-stateful', fn (Request $request) => response()->json([
             'bearer' => $request->attributes->get('bearer'),
             'session_http_only' => config('session.http_only'),
             'session_same_site' => config('session.same_site'),
@@ -77,6 +80,24 @@ describe('EnsureFrontendRequestsAreStateful', function (): void {
             $response->assertOk();
             // Request should be marked as from frontend
             expect($response->json('bearer'))->toBeTrue();
+        });
+
+        it('rejects stateful write requests without a CSRF token', function (): void {
+            $this->app->bind(PreventRequestForgery::class, fn ($app): PreventRequestForgery => new class($app, resolve(Encrypter::class)) extends PreventRequestForgery
+            {
+                protected function runningUnitTests(): bool
+                {
+                    return false;
+                }
+            });
+
+            Config::set('bearer.stateful', ['localhost']);
+
+            $this->post('/test-stateful')->assertOk();
+            $this->withoutExceptionHandling();
+
+            expect(fn () => $this->withHeader('Referer', 'http://localhost/app')->post('/test-stateful'))
+                ->toThrow(TokenMismatchException::class);
         });
 
         it('supports wildcard domain matching', function (): void {

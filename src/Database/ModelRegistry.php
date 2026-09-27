@@ -9,10 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Registry for managing polymorphic relationship key mappings.
  *
- * This registry allows you to configure which primary key column should be used
- * for each model type in polymorphic relationships. This is particularly useful
- * when different models use different key types (e.g., User with 'uuid', Team
- * with 'id').
+ * This registry allows you to configure which primary key column should
+ * be used for each model type in polymorphic relationships. This is
+ * particularly useful when different models use different key types
+ * (e.g., User with 'uuid', Team with 'id').
  *
  * Morph key functionality is delegated to the Morphism MorphKeyRegistry
  * package, providing a facade for Bearer-specific polymorphic key management.
@@ -25,8 +25,8 @@ use Illuminate\Database\Eloquent\Model;
  *     Organization::class => 'ulid',
  * ]);
  *
- * // Or enforce mappings (throws if model not mapped)
- * $registry->enforceMorphKeyMap([
+ * // Or enforce mappings (throws if model not
+ * mapped) $registry->enforceMorphKeyMap([
  *     User::class => 'uuid',
  * ]); ```
  *
@@ -48,9 +48,9 @@ final readonly class ModelRegistry
     /**
      * Register polymorphic key mappings.
      *
-     * Establishes which primary key column should be used for each model class
-     * in polymorphic relationships. This is a soft mapping that doesn't throw
-     * exceptions for unmapped models.
+     * Establishes which primary key column should be used for each model
+     * class in polymorphic relationships. This is a soft mapping that
+     * doesn't throw exceptions for unmapped models.
      *
      * @param array<class-string, string> $map Model class => column name mappings
      *                                         (e.g., [User::class => 'uuid', Team::class => 'id'])
@@ -63,9 +63,9 @@ final readonly class ModelRegistry
     /**
      * Register polymorphic key mappings and enforce their usage.
      *
-     * Similar to morphKeyMap(), but throws exceptions when attempting to use
-     * models that haven't been explicitly mapped. Use this for strict type
-     * safety in polymorphic relationships.
+     * Similar to morphKeyMap(), but throws exceptions when attempting to
+     * use models that haven't been explicitly mapped. Use this for strict
+     * type safety in polymorphic relationships.
      *
      * @param array<class-string, string> $map Model class => column name mappings
      *                                         (e.g., [User::class => 'uuid'])
@@ -78,9 +78,9 @@ final readonly class ModelRegistry
     /**
      * Enable strict enforcement of key mappings.
      *
-     * After calling this method, all polymorphic key lookups will require an
-     * explicit mapping. Useful for ensuring all models are properly configured
-     * before being used in production.
+     * After calling this method, all polymorphic key lookups will require
+     * an explicit mapping. Useful for ensuring all models are properly
+     * configured before being used in production.
      */
     public function requireKeyMap(): void
     {
@@ -118,8 +118,8 @@ final readonly class ModelRegistry
     /**
      * Reset all registry state.
      *
-     * Clears all registered mappings and enforcement settings. Primarily useful
-     * for testing to ensure a clean state between test runs.
+     * Clears all registered mappings and enforcement settings. Primarily
+     * useful for testing to ensure a clean state between test runs.
      */
     public function reset(): void
     {

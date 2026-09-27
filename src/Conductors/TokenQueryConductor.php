@@ -19,11 +19,11 @@ use function resolve;
  * Fluent conductor for querying tokens with chainable filters.
  *
  * Provides a builder pattern for constructing complex token queries with
- * chainable filter methods. Supports filtering by type, environment, validity
- * status, expiration, and revocation status.
+ * chainable filter methods. Supports filtering by type, environment,
+ * validity status, expiration, and revocation status.
  *
- * Example usage: ```php // Get all valid production secret keys $tokens =
- * Bearer::for($user)
+ * Example usage: ```php // Get all valid production secret keys
+ * $tokens = Bearer::for($user)
  *     ->query()
  *     ->type('secret_key')
  *     ->environment('production')
@@ -98,8 +98,8 @@ final readonly class TokenQueryConductor
      * Filter to only valid tokens.
      *
      * Valid tokens are those that are not expired and are not effectively
-     * revoked. Tokens with a future `revoked_at` are still valid until that
-     * instant arrives.
+     * revoked. Tokens with a future `revoked_at` are still valid
+     * until that instant arrives.
      *
      * @return self Current conductor instance for method chaining
      */
@@ -196,8 +196,8 @@ final readonly class TokenQueryConductor
     /**
      * Order tokens by creation date.
      *
-     * @param  string $direction Sort direction ('asc' or 'desc')
-     * @return self   Current conductor instance for method chaining
+     * @param  'asc'|'desc' $direction Sort direction
+     * @return self         Current conductor instance for method chaining
      */
     public function orderByCreated(string $direction = 'desc'): self
     {
@@ -209,8 +209,8 @@ final readonly class TokenQueryConductor
     /**
      * Order tokens by last used date.
      *
-     * @param  string $direction Sort direction ('asc' or 'desc')
-     * @return self   Current conductor instance for method chaining
+     * @param  'asc'|'desc' $direction Sort direction
+     * @return self         Current conductor instance for method chaining
      */
     public function orderByLastUsed(string $direction = 'desc'): self
     {

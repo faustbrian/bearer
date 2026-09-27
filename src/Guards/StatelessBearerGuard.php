@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 /**
  * Authentication guard for bearer-token-only transport surfaces.
  *
- * Unlike {@see BearerGuard}, this guard never falls back to configured stateful
- * session guards. It resolves authentication strictly from the request bearer
- * token, which makes it suitable for public API routes that must not silently
- * succeed via an existing web session.
+ * Unlike {@see BearerGuard}, this guard never falls back to configured
+ * stateful session guards. It resolves authentication strictly from the
+ * request bearer token, which makes it suitable for public API routes that
+ * must not silently succeed via an existing web session.
  *
  * @psalm-immutable
  */

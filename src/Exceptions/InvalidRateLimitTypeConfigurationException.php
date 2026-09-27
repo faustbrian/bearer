@@ -5,8 +5,8 @@ namespace Cline\Bearer\Exceptions;
 /**
  * Exception thrown when the rate_limit field has an invalid type.
  *
- * This occurs when a token type configuration has a rate_limit field that is
- * not a positive integer or null.
+ * This occurs when a token type configuration has a rate_limit field
+ * that is not a positive integer or null.
  */
 final class InvalidRateLimitTypeConfigurationException extends AbstractInvalidConfigurationException
 {

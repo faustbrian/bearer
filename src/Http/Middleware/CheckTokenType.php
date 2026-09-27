@@ -18,9 +18,9 @@ use function method_exists;
  * matches one of the allowed token types (e.g., 'sk', 'pk', 'rk'). This is
  * useful for restricting endpoints to specific token categories.
  *
- * For example, you might want certain endpoints to only accept secret keys (sk)
- * and not publishable keys (pk), or restrict admin operations to restricted
- * keys (rk).
+ * For example, you might want certain endpoints to only accept secret
+ * keys (sk) and not publishable keys (pk), or restrict admin operations
+ * to restricted keys (rk).
  *
  * Usage in routes: ```php Route::post('/webhooks', function () {
  *     // Only secret keys can configure webhooks
@@ -35,9 +35,9 @@ final class CheckTokenType
     /**
      * Handle the incoming request.
      *
-     * Verifies that: 1. A user is authenticated 2. The user has a current
-     * access token (not session-based auth) 3. The token's type matches one of
-     * the allowed types
+     * Verifies that: 1. A user is authenticated 2. The user has a
+     * current access token (not session-based auth) 3. The token's type
+     * matches one of the allowed types
      *
      * @param Request                 $request  The incoming HTTP request
      * @param Closure(Request): mixed $next     The next middleware handler

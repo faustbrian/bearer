@@ -5,7 +5,9 @@ namespace Cline\Bearer\Database\Models;
 use Cline\Bearer\Database\Factories\AccessTokenAuditLogFactory;
 use Cline\Bearer\Enums\AuditEvent;
 use Cline\VariableKeys\Database\Concerns\HasVariablePrimaryKey;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,9 +22,9 @@ use function now;
 /**
  * Eloquent model representing audit log entries for token events.
  *
- * Records significant events in a token's lifecycle for security, compliance,
- * and debugging purposes. Each log entry captures the event type, associated
- * token, request metadata, and timestamp.
+ * Records significant events in a token's lifecycle for security,
+ * compliance, and debugging purposes. Each log entry captures the event
+ * type, associated token, request metadata, and timestamp.
  *
  * @property Carbon                    $created_at Event timestamp
  * @property AuditEvent                $event      Type of audit event
@@ -34,48 +36,20 @@ use function now;
  * @property null|string               $user_agent User agent string from the request
  */
 #[UseFactory(AccessTokenAuditLogFactory::class)]
+#[Fillable([
+    'token_id',
+    'event',
+    'ip_address',
+    'user_agent',
+    'metadata',
+    'created_at',
+])]
+#[WithoutTimestamps()]
 final class AccessTokenAuditLog extends Model
 {
     /** @use HasFactory<Factory<static>> */
     use HasFactory;
     use HasVariablePrimaryKey;
-
-    /**
-     * Indicates if the model should use timestamps.
-     *
-     * We only track creation time for audit logs, not updates.
-     *
-     * @var bool
-     */
-    #[Override()]
-    public $timestamps = false;
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string, string>
-     */
-    #[Override()]
-    protected $casts = [
-        'event' => AuditEvent::class,
-        'metadata' => 'json',
-        'created_at' => 'datetime',
-    ];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    #[Override()]
-    protected $fillable = [
-        'token_id',
-        'event',
-        'ip_address',
-        'user_agent',
-        'metadata',
-        'created_at',
-    ];
 
     /**
      * Get the table name from configuration.
@@ -107,8 +81,8 @@ final class AccessTokenAuditLog extends Model
     /**
      * Boot the model.
      *
-     * Automatically sets the created_at timestamp when creating audit logs
-     * since we disabled automatic timestamps.
+     * Automatically sets the created_at timestamp when creating audit
+     * logs since we disabled automatic timestamps.
      */
     #[Override()]
     protected static function boot(): void
@@ -122,5 +96,19 @@ final class AccessTokenAuditLog extends Model
 
             $model->created_at = now();
         });
+    }
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'event' => AuditEvent::class,
+            'metadata' => 'json',
+            'created_at' => 'datetime',
+        ];
     }
 }

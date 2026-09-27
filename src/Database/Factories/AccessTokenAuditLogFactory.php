@@ -7,13 +7,15 @@ use Cline\Bearer\Enums\AuditEvent;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Override;
 
+use function fake;
+
 /**
- * Factory for generating AccessTokenAuditLog model instances in tests and
- * seeders.
+ * Factory for generating AccessTokenAuditLog model instances
+ * in tests and seeders.
  *
- * Creates realistic audit log entries with randomized event types, IP
- * addresses, and user agents for testing token activity tracking and security
- * logging.
+ * Creates realistic audit log entries with randomized event types,
+ * IP addresses, and user agents for testing token activity tracking
+ * and security logging.
  *
  * @extends Factory<AccessTokenAuditLog>
  */
@@ -30,9 +32,9 @@ final class AccessTokenAuditLogFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * Generates a token audit log entry with a random audit event type, IPv4
-     * address, and user agent string. The token_id must be set when creating
-     * instances as it's a required foreign key.
+     * Generates a token audit log entry with a random audit event type,
+     * IPv4 address, and user agent string. The token_id must be set when
+     * creating instances as it's a required foreign key.
      *
      * @return array<string, mixed> Model attribute defaults
      */
@@ -40,9 +42,9 @@ final class AccessTokenAuditLogFactory extends Factory
     public function definition(): array
     {
         return [
-            'event' => $this->faker->randomElement(AuditEvent::cases()),
-            'ip_address' => $this->faker->ipv4(),
-            'user_agent' => $this->faker->userAgent(),
+            'event' => fake()->randomElement(AuditEvent::cases()),
+            'ip_address' => fake()->ipv4(),
+            'user_agent' => fake()->userAgent(),
             'metadata' => null,
         ];
     }

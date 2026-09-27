@@ -7,16 +7,16 @@ use function sprintf;
 /**
  * Exception thrown when a revocation strategy is not found by name.
  *
- * This occurs when code references a revocation strategy by name that has not
- * been registered in the revocation strategy registry.
+ * This occurs when code references a revocation strategy by name that has
+ * not been registered in the revocation strategy registry.
  */
 final class RevocationStrategyNotFoundException extends AbstractRevocationStrategyNotRegisteredException
 {
     /**
      * Create an exception for an unregistered revocation strategy.
      *
-     * This occurs when code references a revocation strategy by name that has
-     * not been registered in the registry.
+     * This occurs when code references a revocation strategy by name that
+     * has not been registered in the registry.
      *
      * @param  string $name The name of the unregistered strategy
      * @return self   Exception instance with descriptive error message

@@ -5,8 +5,8 @@ namespace Cline\Bearer\Exceptions;
 /**
  * Exception thrown when the prefix field is missing or empty.
  *
- * This occurs when a token type configuration does not include a valid prefix
- * field.
+ * This occurs when a token type configuration does not include a
+ * valid prefix field.
  */
 final class MissingPrefixConfigurationException extends AbstractInvalidConfigurationException
 {

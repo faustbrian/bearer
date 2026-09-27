@@ -19,8 +19,8 @@ use function array_keys;
  *
  * Example usage: ```php $registry = new RevocationStrategyRegistry();
  *
- * // Register strategies $registry->register('none', new NoneStrategy());
- * $registry->register('cascade', new CascadeStrategy());
+ * // Register strategies $registry->register('none', new
+ * NoneStrategy()); $registry->register('cascade', new CascadeStrategy());
  * $registry->register('partial', new PartialCascadeStrategy(['sk', 'rk']));
  *
  * // Retrieve a specific strategy $strategy = $registry->get('cascade');
@@ -48,9 +48,9 @@ final class RevocationStrategyRegistry
     /**
      * Register a revocation strategy with a given name.
      *
-     * Stores the strategy in the registry and automatically sets it as the
-     * default if no default has been configured yet. This ensures the registry
-     * always has a usable default strategy.
+     * Stores the strategy in the registry and automatically sets it as
+     * the default if no default has been configured yet. This ensures the
+     * registry always has a usable default strategy.
      *
      * @param string                      $name     Unique identifier for this strategy
      * @param RevocationStrategyInterface $strategy The strategy implementation to register
@@ -115,9 +115,9 @@ final class RevocationStrategyRegistry
     /**
      * Set the default revocation strategy by name.
      *
-     * Changes which strategy will be used when no specific strategy is
-     * requested. The strategy must already be registered before it can be set
-     * as default.
+     * Changes which strategy will be used when no specific strategy
+     * is requested. The strategy must already be registered before
+     * it can be set as default.
      *
      * @param string $name The name of the strategy to set as default
      *
