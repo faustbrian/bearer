@@ -7,8 +7,8 @@ use function sprintf;
 /**
  * Exception thrown when a morph type configuration is invalid.
  *
- * This occurs when a polymorphic relationship morph type is configured with an
- * invalid value or references a class that does not exist.
+ * This occurs when a polymorphic relationship morph type is configured with
+ * an invalid value or references a class that does not exist.
  */
 final class InvalidMorphTypeConfigurationException extends AbstractInvalidConfigurationException
 {

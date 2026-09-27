@@ -15,9 +15,9 @@ final class TokenHasherNotFoundException extends AbstractTokenHasherNotRegistere
     /**
      * Create an exception for an unregistered hasher.
      *
-     * This occurs when attempting to retrieve or use a token hasher by name
-     * that hasn't been registered via registerTokenHasher() on the
-     * BearerManager.
+     * This occurs when attempting to retrieve or use a token hasher
+     * by name that hasn't been registered via registerTokenHasher()
+     * on the BearerManager.
      *
      * @param  string $name The hasher name that was not found
      * @return self   Exception instance with descriptive error message

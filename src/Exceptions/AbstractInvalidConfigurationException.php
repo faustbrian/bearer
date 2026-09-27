@@ -10,8 +10,8 @@ use RuntimeException;
 /**
  * Base exception for all configuration-related errors.
  *
- * Configuration errors can prevent the package from functioning correctly. This
- * exception occurs when required configuration values are missing or when
+ * Configuration errors can prevent the package from functioning correctly.
+ * This exception occurs when required configuration values are missing or when
  * configuration values reference components that do not exist in the system.
  */
 abstract class AbstractInvalidConfigurationException extends RuntimeException implements BearerExceptionInterface, ProvidesSolution

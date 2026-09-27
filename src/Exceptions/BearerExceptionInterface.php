@@ -7,8 +7,8 @@ use Throwable;
 /**
  * Marker interface for all Bearer package exceptions.
  *
- * Consumers can catch this interface to handle any exception thrown by the
- * Bearer package.
+ * Consumers can catch this interface to handle any exception thrown
+ * by the Bearer package.
  */
 interface BearerExceptionInterface extends Throwable
 {

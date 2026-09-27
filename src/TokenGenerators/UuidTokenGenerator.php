@@ -15,8 +15,8 @@ use function sprintf;
 /**
  * UUID-based token generator.
  *
- * Generates tokens in the format: {prefix}_{env}_{uuid} Example:
- * sk_test_550e8400-e29b-41d4-a716-446655440000
+ * Generates tokens in the format: {prefix}_{env}_{uuid}
+ * Example: sk_test_550e8400-e29b-41d4-a716-446655440000
  *
  * Uses Laravel's Str::uuid() method to generate version 4 UUIDs, providing a
  * standardized format that is widely recognized and easily validated.
@@ -26,9 +26,9 @@ final class UuidTokenGenerator implements TokenGeneratorInterface
     /**
      * Generate a new token with UUID as the secret component.
      *
-     * Creates a token in the format: {prefix}_{environment}_{uuid} The UUID is
-     * generated using Laravel's Str::uuid() method, which produces a version 4
-     * (random) UUID.
+     * Creates a token in the format: {prefix}_{environment}_{uuid}
+     * The UUID is generated using Laravel's Str::uuid() method, which
+     * produces a version 4 (random) UUID.
      *
      * @param  string $prefix      Token prefix indicating the type (e.g., 'sk', 'pk')
      * @param  string $environment Environment identifier (e.g., 'test', 'live')
@@ -44,9 +44,9 @@ final class UuidTokenGenerator implements TokenGeneratorInterface
     /**
      * Parse a token string into its constituent components.
      *
-     * Validates the token structure and ensures the secret portion is a valid
-     * UUID. Returns null if the token format is invalid or the secret is not a
-     * properly formatted UUID.
+     * Validates the token structure and ensures the secret portion is
+     * a valid UUID. Returns null if the token format is invalid or the
+     * secret is not a properly formatted UUID.
      *
      * Expected format: {prefix}_{environment}_{uuid}
      *
@@ -97,8 +97,8 @@ final class UuidTokenGenerator implements TokenGeneratorInterface
     /**
      * Verify a plain token against its hashed version.
      *
-     * Uses timing-safe comparison to prevent timing attacks. Hashes the plain
-     * token and compares it against the stored hash.
+     * Uses timing-safe comparison to prevent timing attacks. Hashes the
+     * plain token and compares it against the stored hash.
      *
      * @param  string $plainToken  The plain token to verify
      * @param  string $hashedToken The stored hash to compare against

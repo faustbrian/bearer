@@ -92,8 +92,8 @@ final class TokenTypeRegistry
      * Find a token type by its prefix.
      *
      * Searches through all registered token types to find one with a matching
-     * prefix. This is useful for automatically determining token type from a
-     * token string (e.g., 'sk_abc123' -> SecretTokenType).
+     * prefix. This is useful for automatically determining token type from
+     * a token string (e.g., 'sk_abc123' -> SecretTokenType).
      *
      * @param  string                  $prefix Token prefix to search for
      * @return null|TokenTypeInterface The matching token type, or null if none found

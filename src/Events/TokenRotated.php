@@ -8,9 +8,9 @@ use Cline\Bearer\Enums\RotationMode;
 /**
  * Event fired when a token is rotated.
  *
- * Dispatched whenever a personal access token is rotated to a new token. Useful
- * for auditing token rotation, tracking security best practices, and
- * implementing lifecycle management for tokens.
+ * Dispatched whenever a personal access token is rotated to a new token.
+ * Useful for auditing token rotation, tracking security best practices,
+ * and implementing lifecycle management for tokens.
  *
  * @psalm-immutable
  */

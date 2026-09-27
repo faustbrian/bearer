@@ -2,6 +2,8 @@
 
 use Cline\Bearer\Concerns\HasAccessTokensTrait;
 use Cline\Bearer\Facades\Bearer;
+use Illuminate\Database\Eloquent\Attributes\Table;
+use Illuminate\Database\Eloquent\Attributes\Unguarded;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -10,28 +12,20 @@ use Tests\Fixtures\User;
 uses(RefreshDatabase::class);
 
 // Create a simple mock model for context/boundary testing
+#[Unguarded()]
+#[Table(name: 'service_accounts')]
 final class ServiceAccount extends Model
 {
     use HasFactory;
     use HasAccessTokensTrait;
-
-    #[Override()]
-    protected $table = 'service_accounts';
-
-    #[Override()]
-    protected $guarded = [];
 }
 
+#[Unguarded()]
+#[Table(name: 'teams')]
 final class Team extends Model
 {
     use HasFactory;
     use HasAccessTokensTrait;
-
-    #[Override()]
-    protected $table = 'teams';
-
-    #[Override()]
-    protected $guarded = [];
 }
 
 beforeEach(function (): void {

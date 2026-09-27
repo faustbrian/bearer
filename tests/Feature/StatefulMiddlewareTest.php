@@ -1,7 +1,12 @@
 <?php declare(strict_types=1);
 
 use Cline\Bearer\Http\Middleware\EnsureFrontendRequestsAreStateful;
+use Illuminate\Contracts\Encryption\Encrypter;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Http\Request;
+use Illuminate\Session\ArraySessionHandler;
+use Illuminate\Session\Store;
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 
@@ -13,7 +18,6 @@ describe('EnsureFrontendRequestsAreStateful', function (): void {
             'session_http_only' => config('session.http_only'),
             'session_same_site' => config('session.same_site'),
         ]));
-
         // Set app key for encryption
         Config::set('app.key', 'base64:'.base64_encode(random_bytes(32)));
     });
@@ -77,6 +81,27 @@ describe('EnsureFrontendRequestsAreStateful', function (): void {
             $response->assertOk();
             // Request should be marked as from frontend
             expect($response->json('bearer'))->toBeTrue();
+        });
+
+        it('rejects stateful write requests without a CSRF token', function (): void {
+            $middlewareClass = config('bearer.middleware.validate_csrf_token');
+            $request = Request::create('/test-stateful', 'POST');
+            $request->setLaravelSession(
+                new Store('test', new ArraySessionHandler(120)),
+            );
+
+            expect($middlewareClass)->toBe(PreventRequestForgery::class);
+
+            $middleware = new class($this->app, resolve(Encrypter::class)) extends PreventRequestForgery
+            {
+                protected function runningUnitTests(): bool
+                {
+                    return false;
+                }
+            };
+
+            expect(fn () => $middleware->handle($request, fn () => response()->noContent()))
+                ->toThrow(TokenMismatchException::class);
         });
 
         it('supports wildcard domain matching', function (): void {

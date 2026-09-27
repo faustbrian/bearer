@@ -19,8 +19,8 @@ use function now;
  *
  * Example usage: ```php // Simple revocation Bearer::revoke($token)->revoke();
  *
- * // Cascade revocation (revoke entire group)
- * Bearer::revoke($token)->cascade()->revoke();
+ * // Cascade revocation (revoke entire
+ * group) Bearer::revoke($token)->cascade()->revoke();
  *
  * // With specific mode Bearer::revoke($token)
  *     ->using(RevocationMode::Cascade)
@@ -59,10 +59,10 @@ final readonly class TokenRevocationConductor
     /**
      * Revoke the token with configured settings.
      *
-     * Executes the revocation operation based on the configured mode: - None:
-     * Revoke only the specified token - Cascade: Revoke all tokens in the same
-     * group - Partial: Revoke specific types in the group - Timed: Schedule
-     * revocation for later
+     * Executes the revocation operation based on the configured mode: -
+     * None: Revoke only the specified token - Cascade: Revoke all tokens
+     * in the same group - Partial: Revoke specific types in the group
+     * - Timed: Schedule revocation for later
      *
      * ```php // Basic revocation Bearer::revoke($token)->revoke();
      *
@@ -97,8 +97,8 @@ final readonly class TokenRevocationConductor
     /**
      * Use cascade mode for revocation.
      *
-     * Shorthand for using(RevocationMode::Cascade). Revokes all tokens in the
-     * same group as the specified token.
+     * Shorthand for using(RevocationMode::Cascade). Revokes all tokens
+     * in the same group as the specified token.
      *
      * @return self New conductor instance with cascade mode configured
      */
@@ -110,8 +110,8 @@ final readonly class TokenRevocationConductor
     /**
      * Revoke this token and all its derived descendant tokens in the hierarchy.
      *
-     * Uses the cascade_descendants strategy to revoke the parent token and all
-     * child/grandchild tokens derived from it. Useful for master/reseller
+     * Uses the cascade_descendants strategy to revoke the parent token and
+     * all child/grandchild tokens derived from it. Useful for master/reseller
      * tokens where revoking the parent should invalidate all customer tokens.
      */
     public function withDescendants(): void
@@ -122,8 +122,8 @@ final readonly class TokenRevocationConductor
     /**
      * Set the revocation reason.
      *
-     * Provides additional context for the revocation in the audit trail. Useful
-     * for compliance and security analysis.
+     * Provides additional context for the revocation in the audit trail.
+     * Useful for compliance and security analysis.
      *
      * @param  string $reason Reason for revocation
      * @return self   New conductor instance with reason configured

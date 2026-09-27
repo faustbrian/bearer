@@ -8,8 +8,8 @@ use Cline\Bearer\Database\Models\AccessToken;
  * Event fired when a token is used for authentication.
  *
  * Dispatched whenever a personal access token is successfully authenticated.
- * Useful for auditing token usage, tracking authentication patterns, and
- * implementing security monitoring.
+ * Useful for auditing token usage, tracking authentication patterns,
+ * and implementing security monitoring.
  *
  * @psalm-immutable
  */

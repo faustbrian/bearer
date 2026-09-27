@@ -19,13 +19,13 @@ use function request;
  * driver is ideal when you're already using Spatie's activity log for other
  * models and want consistent logging infrastructure.
  *
- * Features: - Unified activity log interface across all models - Rich query
- * capabilities from Spatie's Activity model - Support for causer tracking (who
- * performed the action) - Custom log names for filtering and organization -
- * Properties and metadata support
+ * Features: - Unified activity log interface across all models - Rich
+ * query capabilities from Spatie's Activity model - Support for causer
+ * tracking (who performed the action) - Custom log names for filtering
+ * and organization - Properties and metadata support
  *
- * Requirements: - spatie/laravel-activitylog package installed - Activity log
- * migrations run
+ * Requirements: - spatie/laravel-activitylog package installed -
+ * Activity log migrations run
  *
  * Example usage: ```php $driver = new SpatieActivityLogDriver('access-tokens');
  *
@@ -56,9 +56,9 @@ final readonly class SpatieActivityLogDriver implements AuditDriverInterface
     /**
      * Log an audit event for a token.
      *
-     * Creates an activity log entry using Spatie's activity() helper, recording
-     * the token as the subject, the owner as the causer, and capturing request
-     * metadata in properties.
+     * Creates an activity log entry using Spatie's activity() helper,
+     * recording the token as the subject, the owner as the causer, and
+     * capturing request metadata in properties.
      *
      * @param AccessToken          $token   The token this event relates to
      * @param AuditEvent           $event   The event being logged

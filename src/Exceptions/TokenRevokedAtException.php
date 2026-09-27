@@ -8,17 +8,17 @@ use DateTimeInterface;
  * Exception thrown when a token was revoked at a specific time.
  *
  * This occurs when a token's revocation timestamp exists and has passed,
- * indicating that the token has been explicitly invalidated by an administrator
- * or automated revocation strategy.
+ * indicating that the token has been explicitly invalidated by an
+ * administrator or automated revocation strategy.
  */
 final class TokenRevokedAtException extends AbstractTokenRevokedException
 {
     /**
      * Create an exception for a token that was revoked at a specific time.
      *
-     * This occurs when a token's revocation timestamp exists and has passed,
-     * indicating that the token has been explicitly invalidated by an
-     * administrator or automated revocation strategy.
+     * This occurs when a token's revocation timestamp exists and has
+     * passed, indicating that the token has been explicitly invalidated by
+     * an administrator or automated revocation strategy.
      *
      * @param  DateTimeInterface $revokedAt The timestamp when the token was revoked
      * @return self              Exception instance with descriptive error message

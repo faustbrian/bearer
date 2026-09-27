@@ -7,16 +7,16 @@ use function sprintf;
 /**
  * Exception thrown when an unregistered rotation strategy is requested.
  *
- * This occurs when code references a rotation strategy by name that has not
- * been registered in the registry.
+ * This occurs when code references a rotation strategy by name that has
+ * not been registered in the registry.
  */
 final class RotationStrategyNotFoundException extends AbstractRotationStrategyNotRegisteredException
 {
     /**
      * Create an exception for an unregistered rotation strategy.
      *
-     * This occurs when code references a rotation strategy by name that has not
-     * been registered in the registry.
+     * This occurs when code references a rotation strategy by name that
+     * has not been registered in the registry.
      *
      * @param  string $name The name of the unregistered strategy
      * @return self   Exception instance with descriptive error message

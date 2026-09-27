@@ -5,6 +5,7 @@ namespace Cline\Bearer\Database\Models;
 use Cline\Bearer\Database\Factories\AccessTokenGroupFactory;
 use Cline\Bearer\Database\Models as DatabaseModels;
 use Cline\VariableKeys\Database\Concerns\HasVariablePrimaryKey;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -27,8 +28,8 @@ use function now;
  * operations like batch revocation and sibling token lookups.
  *
  * Common use case: Stripe-like token pairs where a secret key and publishable
- * key belong to the same group, allowing you to revoke all related tokens at
- * once or retrieve sibling tokens for validation.
+ * key belong to the same group, allowing you to revoke all related tokens
+ * at once or retrieve sibling tokens for validation.
  *
  * Example usage: ```php $group = AccessTokenGroup::create(['name' =>
  * 'Production Keys']); $group->accessTokens()->create([...secretKeyData...]);
@@ -46,32 +47,15 @@ use function now;
  * @property Carbon                       $updated_at   Record last modification timestamp
  */
 #[UseFactory(AccessTokenGroupFactory::class)]
+#[Fillable([
+    'name',
+    'metadata',
+])]
 final class AccessTokenGroup extends Model
 {
     /** @use HasFactory<Factory<static>> */
     use HasFactory;
     use HasVariablePrimaryKey;
-
-    /**
-     * Attributes that should be cast to native types.
-     *
-     * @var array<string, string>
-     */
-    #[Override()]
-    protected $casts = [
-        'metadata' => 'json',
-    ];
-
-    /**
-     * Attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    #[Override()]
-    protected $fillable = [
-        'name',
-        'metadata',
-    ];
 
     /**
      * Get the table name from configuration.
@@ -91,8 +75,8 @@ final class AccessTokenGroup extends Model
     /**
      * Get the owner model that the token group belongs to.
      *
-     * Defines the relationship to the model that owns this token group, such as
-     * a User or Organization.
+     * Defines the relationship to the model that owns this token group,
+     * such as a User or Organization.
      *
      * @return MorphTo<Model, $this> The polymorphic relationship to the owning entity
      */
@@ -185,14 +169,26 @@ final class AccessTokenGroup extends Model
     /**
      * Revoke all tokens in this group.
      *
-     * Performs a batch update to set the revoked_at timestamp on all tokens in
-     * the group. This is useful for invalidating all related tokens at once,
-     * such as when a user requests to revoke all API keys.
+     * Performs a batch update to set the revoked_at timestamp on all tokens
+     * in the group. This is useful for invalidating all related tokens at
+     * once, such as when a user requests to revoke all API keys.
      *
      * @return int The number of tokens that were revoked
      */
     public function revokeAll(): int
     {
         return $this->accessTokens()->update(['revoked_at' => now()]);
+    }
+
+    /**
+     * Attributes that should be cast to native types.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'metadata' => 'json',
+        ];
     }
 }

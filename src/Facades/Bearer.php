@@ -24,8 +24,8 @@ use Illuminate\Support\Facades\Facade;
  * tokens, token types, hashers, rotation strategies, and audit logging. This
  * facade simplifies token operations throughout your application.
  *
- * ```php // Issue a new token $token = Bearer::for($user)->create('Mobile App',
- * ['posts:read']);
+ * ```php // Issue a new token $token = Bearer::for($user)->create('Mobile
+ * App', ['posts:read']);
  *
  * // Find and validate tokens $accessToken = Bearer::findAccessToken($token);
  *
@@ -65,8 +65,8 @@ final class Bearer extends Facade
     /**
      * Get the registered name of the component.
      *
-     * Returns the service container binding for the BearerManager instance that
-     * this facade proxies to.
+     * Returns the service container binding for the BearerManager
+     * instance that this facade proxies to.
      *
      * @return string The fully qualified class name of BearerManager
      */

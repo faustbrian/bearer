@@ -13,8 +13,8 @@ final class NoDefaultTokenGeneratorException extends AbstractTokenGeneratorNotRe
     /**
      * Create an exception when no default generator is registered.
      *
-     * This occurs when requesting the default generator but none has been set
-     * or registered.
+     * This occurs when requesting the default generator but none has
+     * been set or registered.
      *
      * @return self Exception instance with descriptive error message
      */

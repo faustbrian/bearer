@@ -9,9 +9,9 @@ use JsonSerializable;
 /**
  * Data transfer object for newly created access tokens.
  *
- * Encapsulates a newly created personal access token along with its plain-text
- * representation. The plain-text token is only available at creation time and
- * cannot be retrieved later.
+ * Encapsulates a newly created personal access token along with its
+ * plain-text representation. The plain-text token is only available at
+ * creation time and cannot be retrieved later.
  *
  * @implements Arrayable<string, mixed>
  *

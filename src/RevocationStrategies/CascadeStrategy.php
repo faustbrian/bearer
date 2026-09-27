@@ -17,18 +17,18 @@ use function now;
  * is useful for invalidating all tokens associated with a specific logical
  * grouping (e.g., all tokens for a specific device or session).
  *
- * Use this strategy when: - Tokens are organized into logical groups - You want
- * to revoke all related tokens together - Security incidents affect an entire
- * group - Users want to logout from all devices in a group
+ * Use this strategy when: - Tokens are organized into logical groups - You
+ * want to revoke all related tokens together - Security incidents affect an
+ * entire group - Users want to logout from all devices in a group
  */
 final class CascadeStrategy implements RevocationStrategyInterface
 {
     /**
      * Revoke the token and all tokens in its group.
      *
-     * If the token belongs to a group, revokes all tokens in that group. If the
-     * token is standalone (not part of a group), only revokes the token itself.
-     * This enables group-level invalidation for related tokens.
+     * If the token belongs to a group, revokes all tokens in that group. If
+     * the token is standalone (not part of a group), only revokes the token
+     * itself. This enables group-level invalidation for related tokens.
      *
      * @param AccessToken $token The token to revoke
      */
@@ -44,8 +44,8 @@ final class CascadeStrategy implements RevocationStrategyInterface
     /**
      * Get all tokens that will be affected by revoking this token.
      *
-     * Returns all tokens in the same group as the given token. If the token is
-     * not part of a group, returns only the token itself. This provides
+     * Returns all tokens in the same group as the given token. If the token
+     * is not part of a group, returns only the token itself. This provides
      * visibility into the scope of a revocation operation before execution.
      *
      * @param  AccessToken                  $token The token to check

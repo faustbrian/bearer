@@ -9,8 +9,8 @@ use Override;
 /**
  * Facade for accessing the Bearer model registry.
  *
- * Provides static access to polymorphic key configuration while keeping the
- * registry container-bound for Octane compatibility.
+ * Provides static access to polymorphic key configuration while keeping
+ * the registry container-bound for Octane compatibility.
  *
  * @method static void   enforceMorphKeyMap(array<class-string, string> $map)
  * @method static string getModelKey(Model $model)
