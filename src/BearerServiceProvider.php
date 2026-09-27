@@ -652,10 +652,12 @@ final class BearerServiceProvider extends PackageServiceProvider
             ], $existingGuardConfig),
         ]);
 
-        Auth::resolved(function (AuthManager $auth): void {
-            $auth->extend('bearer', function ($app, $name, array $config) use ($auth): RequestGuard {
+        $createGuard = fn (AuthManager $auth, array $config): RequestGuard => $this->createGuard($auth, $config);
+
+        Auth::resolved(static function (AuthManager $auth) use ($createGuard): void {
+            $auth->extend('bearer', function ($app, $name, array $config) use ($auth, $createGuard): RequestGuard {
                 /** @var array<string, mixed> $config */
-                return tap($this->createGuard($auth, $config), function ($guard): void {
+                return tap($createGuard($auth, $config), static function ($guard): void {
                     app()->refresh('request', $guard, 'setRequest');
                 });
             });
@@ -666,7 +668,7 @@ final class BearerServiceProvider extends PackageServiceProvider
      * Create a new Bearer request guard instance.
      *
      * @param  AuthManager          $auth   The authentication manager
-     * @param  array<string, mixed> $config Guard configuration
+     * @param  array<array-key, mixed> $config Guard configuration
      * @return RequestGuard         The configured request guard
      */
     private function createGuard(AuthManager $auth, array $config): RequestGuard

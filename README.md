@@ -9,7 +9,7 @@ Stripe-style typed API tokens with groups, environments, and audit logging for L
 
 ## Requirements
 
-> **Requires [PHP 8.4+](https://php.net/releases/)** and Laravel 11+
+> **Requires [PHP 8.5+](https://php.net/releases/)** and Laravel 13
 
 ## Installation
 
